@@ -3,7 +3,8 @@
 // Card ringkasan status pengajuan Inbound (data dummy dulu, belum konek database).
 
 $judul      = 'Status Inbound';
-$linkDaftar = '/daftar-inbound';
+$basePath   = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
+$linkDaftar = ($basePath ?: '') . '/daftar-inbound';
 
 $statusConfig = [
     'Baru Diajukan' => ['label' => 'Diajukan',  'bar' => 'bg-[#4aa8f8]', 'dot' => 'bg-[#4aa8f8]'],

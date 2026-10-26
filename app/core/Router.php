@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 
-$requestId = uniqid();
-
 class Router {
     protected array $routes = [];
-    public string $path = '';
 
     protected static function compilePattern(string $route): array {
         $fields = [];
@@ -85,23 +82,32 @@ class Router {
             }
         }
 
-        $base = str_replace('\\', '', trim(dirname($_SERVER['SCRIPT_NAME'])));
+        $base = str_replace('\\', '/', trim(dirname($_SERVER['SCRIPT_NAME'] ?? '')));
         $base = preg_replace('#/public$#', '', $base);
+        if ($base === '/' || $base === '\\') {
+            $base = '';
+        }
         $path = parse_url(
             $_SERVER['REQUEST_URI'] ?? "/",
             PHP_URL_PATH
         ) ?: "/";
 
-        if($method === "GET" && is_file(__DIR__ . "/../../$path")) {
+        $checkPath = ltrim($path, '/');
+        if($method === "GET" && (is_file(__DIR__ . "/../../public/" . $checkPath) || is_file(__DIR__ . "/../../" . $checkPath))) {
             return false;
         }
 
-        if(strlen($base) > 1) {
+        if(strlen($base) > 0 && str_starts_with($path, $base)) {
             $path = substr($path, strlen($base));
         }
 
-        define("BASE_URL", $base);
-        $this->path = $path;
+        if (empty($path)) {
+            $path = '/';
+        }
+
+        if (!defined('BASE_URL')) {
+            define('BASE_URL', $base);
+        }
 
         // // Find match url
         foreach($this->routes[$method] as $route) {

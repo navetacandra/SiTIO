@@ -1,211 +1,164 @@
 <?php
+// app/views/daftar-tiket.view.php
 
-/* ---------- Konfigurasi ---------- */
-$statusList = ['Diajukan', 'Pending', 'Tuntas'];
-$badge = [
-    'Diajukan' => 'bg-sky-100 text-sky-700',
-    'Pending'  => 'bg-amber-100 text-amber-700',
-    'Tuntas'   => 'bg-green-100 text-green-700',
-];
+$basePath = defined("BASE_URL") ? rtrim(BASE_URL, "/") : "";
+
+if (class_exists('TiketController')) {
+    TiketController::initSession();
+} else {
+    require_once __DIR__ . '/../controllers/TiketController.php';
+    TiketController::initSession();
+}
+
 $e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 
-/* ---------- Data dummy ---------- */
-// Validasi struktur session tiket agar tidak bentrok dengan data tiket penerbangan lama
-if (!isset($_SESSION['tiket']) || !isset($_SESSION['tiket'][0]['pelapor'])) {
-    $_SESSION['tiket'] = [
-        ['id' => 501, 'pelapor' => 'Rina Marlina',        'jabatan' => 'Mahasiswa',  'kategori' => 'Teknis',      'judul' => 'Form pengajuan PDLN tidak bisa disubmit', 'deskripsi' => 'Tombol kirim tidak merespons setelah semua kolom diisi.', 'tanggal' => '2026-10-20', 'status' => 'Diajukan', 'tanggapan' => ''],
-        ['id' => 502, 'pelapor' => 'Dr. Siti Nurhaliza',  'jabatan' => 'Dosen',      'kategori' => 'Administrasi','judul' => 'Data paspor salah tercatat',             'deskripsi' => 'Nomor paspor di sistem tidak sesuai dokumen.',          'tanggal' => '2026-10-18', 'status' => 'Pending',  'tanggapan' => 'Menunggu dokumen pembanding dari pelapor.'],
-        ['id' => 503, 'pelapor' => 'Dimas Prasetyo',      'jabatan' => 'Mahasiswa',  'kategori' => 'Layanan',     'judul' => 'Status pengajuan tidak berubah',         'deskripsi' => 'Sudah seminggu masih berstatus diajukan.',              'tanggal' => '2026-10-10', 'status' => 'Tuntas',   'tanggapan' => 'Pengajuan sudah diproses dan statusnya diperbarui.'],
-        ['id' => 504, 'pelapor' => 'Prof. Hendra Wijaya', 'jabatan' => 'Struktural', 'kategori' => 'Teknis',      'judul' => 'Tidak bisa unduh surat tugas',           'deskripsi' => 'File surat tugas gagal diunduh (error 404).',           'tanggal' => '2026-10-22', 'status' => 'Diajukan', 'tanggapan' => ''],
-        ['id' => 505, 'pelapor' => 'Budi Santoso',        'jabatan' => 'Tendik',     'kategori' => 'Lainnya',     'judul' => 'Usulan penambahan kolom instansi',       'deskripsi' => 'Mohon ditambahkan kolom instansi di daftar outbound.',  'tanggal' => '2026-10-05', 'status' => 'Tuntas',   'tanggapan' => 'Usulan sudah diteruskan dan diimplementasikan.'],
-        ['id' => 506, 'pelapor' => 'Ahmad Zulfikar',      'jabatan' => 'Mahasiswa',  'kategori' => 'Layanan',     'judul' => 'Jadwal keberangkatan berubah',           'deskripsi' => 'Tanggal berangkat perlu direvisi dari 15 ke 17 Juli.',  'tanggal' => '2026-10-23', 'status' => 'Pending',  'tanggapan' => 'Menunggu konfirmasi dari pihak penyelenggara.'],
-    ];
-}
-$_SESSION['csrf'] = $_SESSION['csrf'] ?? bin2hex(random_bytes(16));
-
-/* ---------- Handler POST ---------- */
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_tiket') {
-    $error     = null;
-    $id        = (int)($_POST['tiket_id'] ?? 0);
-    $status    = (string)($_POST['status'] ?? '');
-    $tanggapan = trim((string)($_POST['tanggapan'] ?? ''));
-    $idx       = array_search($id, array_column($_SESSION['tiket'], 'id'), true);
+$allTiket = $_SESSION['tiket'] ?? [];
 
-    $sessionCsrf   = $_SESSION['csrf'] ?? '';
-    $submittedCsrf = (string)($_POST['csrf'] ?? '');
+// Hitung jumlah status
+$countPending = count(array_filter($allTiket, fn($t) => ($t['status'] ?? '') === 'Pending'));
+$countDone    = count(array_filter($allTiket, fn($t) => ($t['status'] ?? '') === 'Done'));
 
-    if (!is_string($sessionCsrf) || !hash_equals($sessionCsrf, $submittedCsrf)) {
-        $error = 'Sesi tidak valid, silakan muat ulang halaman.';
-    } elseif ($idx === false) {
-        $error = 'Data tiket tidak ditemukan.';
-    } elseif (!in_array($status, $statusList, true)) {
-        $error = 'Status tidak valid.';
-    } elseif (mb_strlen($tanggapan) > 1000) {
-        $error = 'Tanggapan maksimal 1000 karakter.';
-    } elseif ($status === 'Tuntas' && $tanggapan === '') {
-        $error = 'Isi tanggapan dulu sebelum menandai tuntas.';
-    }
-
-    if (!$error) {
-        $_SESSION['tiket'][$idx]['status']    = $status;
-        $_SESSION['tiket'][$idx]['tanggapan'] = $tanggapan;
-        $_SESSION['flash'] = ['type' => 'success', 'msg' => "Tiket #{$id} diperbarui menjadi {$status}."];
-    } else {
-        $_SESSION['flash'] = ['type' => 'error', 'msg' => $error];
-    }
-
-    if (!headers_sent()) {
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
-    }
-    $flash = $_SESSION['flash'];
-    unset($_SESSION['flash']);
+// Filter berdasarkan tab (Pending / Done / Semua)
+$filter = strtolower(trim((string)($_GET['filter'] ?? 'all')));
+if ($filter === 'pending') {
+    $tiket = array_filter($allTiket, fn($t) => ($t['status'] ?? '') === 'Pending');
+} elseif ($filter === 'done') {
+    $tiket = array_filter($allTiket, fn($t) => ($t['status'] ?? '') === 'Done');
+} else {
+    $tiket = $allTiket;
 }
-
-$tiket = $_SESSION['tiket'];
 ?>
 
-<div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
-  <div class="flex items-center mb-4">
-    <span class="text-base font-semibold text-slate-800">Daftar Tiket Pelaporan</span>
-  </div>
+<div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+    <!-- Header & Filter Tab (Sesuai Sketsa Gambar 1: Pending / Done) -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-100 gap-4">
+        <div>
+            <h2 class="text-xl font-bold text-slate-800">Daftar Pertanyaan & Tiket</h2>
+            <p class="text-xs text-slate-500 mt-1">Daftar pertanyaan masuk dari pengguna yang membutuhkan tindak lanjut</p>
+        </div>
 
-  <?php if ($flash): ?>
-    <div class="mb-4 px-4 py-3 rounded-lg text-sm <?= $flash['type'] === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200' ?>">
-      <?= $e($flash['msg']) ?>
+        <!-- Filter Tab Kapsul Pending | Done -->
+        <div class="inline-flex items-center p-1 bg-slate-100 rounded-2xl border border-slate-200 self-start sm:self-auto shadow-2xs">
+            <a href="<?= ($basePath ?: '') ?>/daftar-tiket"
+               class="px-4 py-1.5 rounded-xl text-xs font-semibold transition-all <?= $filter === 'all' ? 'bg-white text-slate-900 shadow-xs' : 'text-slate-600 hover:text-slate-900' ?>">
+                Semua (<?= count($allTiket) ?>)
+            </a>
+            <a href="<?= ($basePath ?: '') ?>/daftar-tiket?filter=pending"
+               class="px-4 py-1.5 rounded-xl text-xs font-semibold transition-all <?= $filter === 'pending' ? 'bg-[#f4a340] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900' ?>">
+                Pending (<?= $countPending ?>)
+            </a>
+            <a href="<?= ($basePath ?: '') ?>/daftar-tiket?filter=done"
+               class="px-4 py-1.5 rounded-xl text-xs font-semibold transition-all <?= $filter === 'done' ? 'bg-[#22c55e] text-white shadow-xs' : 'text-slate-600 hover:text-slate-900' ?>">
+                Done (<?= $countDone ?>)
+            </a>
+        </div>
     </div>
-  <?php endif; ?>
 
-  <div class="overflow-x-auto">
-    <table class="w-full text-sm text-left">
-      <thead class="bg-slate-50 text-xs uppercase text-slate-500">
-        <tr>
-          <th scope="col" class="px-4 py-3 font-medium">ID</th>
-          <th scope="col" class="px-4 py-3 font-medium">Pelapor</th>
-          <th scope="col" class="px-4 py-3 font-medium">Jabatan</th>
-          <th scope="col" class="px-4 py-3 font-medium">Kategori</th>
-          <th scope="col" class="px-4 py-3 font-medium">Judul Laporan</th>
-          <th scope="col" class="px-4 py-3 font-medium">Tanggal</th>
-          <th scope="col" class="px-4 py-3 font-medium">Status</th>
-          <th scope="col" class="px-4 py-3 font-medium">Aksi</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-100">
-        <?php if (empty($tiket)): ?>
-          <tr>
-            <td colspan="8" class="px-4 py-3 text-slate-500">Belum ada tiket pelaporan.</td>
-          </tr>
-        <?php endif; ?>
+    <!-- Flash Message -->
+    <?php if ($flash): ?>
+        <div class="mt-4 px-4 py-3 rounded-lg text-sm <?= $flash['type'] === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200' ?>">
+            <?= $e($flash['msg']) ?>
+        </div>
+    <?php endif; ?>
 
-        <?php foreach ($tiket as $t): ?>
-          <tr class="hover:bg-slate-50 align-middle">
-            <th scope="row" class="px-4 py-3 font-normal">
-              <code class="font-mono text-xs text-blue-600">#<?= (int)$t['id'] ?></code>
-            </th>
-            <td class="px-4 py-3 font-medium text-slate-800 whitespace-nowrap"><?= $e($t['pelapor']) ?></td>
-            <td class="px-4 py-3 text-slate-600"><?= $e($t['jabatan']) ?></td>
-            <td class="px-4 py-3 text-slate-600"><?= $e($t['kategori']) ?></td>
-            <td class="px-4 py-3 text-slate-600"><?= $e($t['judul']) ?></td>
-            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e(date('d M Y', strtotime($t['tanggal']))) ?></td>
-            <td class="px-4 py-3">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?= $badge[$t['status']] ?? 'bg-slate-100 text-slate-700' ?>">
-                <?= $e($t['status']) ?>
-              </span>
-            </td>
-            <td class="px-4 py-3">
-              <button type="button" data-open-modal
-                data-id="<?= (int)$t['id'] ?>"
-                data-pelapor="<?= $e($t['pelapor']) ?>"
-                data-kategori="<?= $e($t['kategori']) ?>"
-                data-judul="<?= $e($t['judul']) ?>"
-                data-deskripsi="<?= $e($t['deskripsi']) ?>"
-                data-status="<?= $e($t['status']) ?>"
-                data-tanggapan="<?= $e($t['tanggapan']) ?>"
-                class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50">
-                View
-              </button>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
-  </div>
+    <!-- Tabel Daftar Tiket: Question, Status, Aksi (Sesuai Sketsa Gambar 1) -->
+    <div class="overflow-x-auto mt-4">
+        <table class="w-full text-sm text-left">
+            <thead class="bg-slate-50 text-xs uppercase text-slate-500 border-b border-slate-200">
+                <tr>
+                    <th scope="col" class="px-5 py-3.5 font-bold text-slate-700">Question</th>
+                    <th scope="col" class="px-5 py-3.5 font-bold text-slate-700 w-36 text-center">Status</th>
+                    <th scope="col" class="px-5 py-3.5 font-bold text-slate-700 w-52 text-center">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                <?php if (empty($tiket)): ?>
+                    <tr>
+                        <td colspan="3" class="px-5 py-8 text-center text-slate-400">
+                            Tidak ada tiket pertanyaan pada filter ini.
+                        </td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($tiket as $t): ?>
+                        <?php $isDone = ($t['status'] ?? '') === 'Done'; ?>
+                        <tr class="hover:bg-slate-50/80 transition-colors align-middle">
+                            <!-- Kolom 1: Question -->
+                            <td class="px-5 py-4">
+                                <div class="flex items-start gap-3">
+                                    <span class="font-mono text-xs text-[#008C95] font-bold bg-[#EEF7F8] border border-[#CDE8EB] px-2 py-0.5 rounded-md mt-0.5 shrink-0">
+                                        #<?= (int)$t['id'] ?>
+                                    </span>
+                                    <div class="space-y-1 min-w-0">
+                                        <a href="<?= ($basePath ?: '') ?>/detail-tiket?id=<?= (int)$t['id'] ?>"
+                                           class="font-bold text-slate-900 text-sm hover:text-[#008C95] transition-colors block">
+                                            <?= $e($t['judul'] ?? 'Pertanyaan') ?>
+                                        </a>
+                                        <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                                            <?= $e($t['question'] ?? ($t['deskripsi'] ?? '')) ?>
+                                        </p>
+                                        <div class="flex items-center gap-3 text-[11px] text-slate-400 pt-1 flex-wrap">
+                                            <span class="font-medium text-slate-600"><?= $e($t['pelapor'] ?? '') ?></span>
+                                            <span>&lt;<?= $e($t['email'] ?? '') ?>&gt;</span>
+                                            <?php if (!empty($t['media'])): ?>
+                                                <span>•</span>
+                                                <span class="inline-flex items-center gap-1 text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-md text-[10px]">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                                    <?= count($t['media']) ?> Media
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Kolom 2: Status -->
+                            <td class="px-5 py-4 text-center">
+                                <?php if ($isDone): ?>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                        ✓ Done
+                                    </span>
+                                <?php else: ?>
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200">
+                                        ● Pending
+                                    </span>
+                                <?php endif; ?>
+                            </td>
+
+                            <!-- Kolom 3: Aksi [View] [Mark done] (Sesuai Sketsa Gambar 1) -->
+                            <td class="px-5 py-4 text-center">
+                                <div class="inline-flex items-center justify-center gap-2">
+                                    <!-- Tombol View -->
+                                    <a href="<?= ($basePath ?: '') ?>/detail-tiket?id=<?= (int)$t['id'] ?>"
+                                       class="px-3.5 py-1.5 text-xs font-semibold text-[#008C95] bg-[#EEF7F8] hover:bg-[#D9EFF1] border border-[#CDE8EB] rounded-xl inline-flex items-center gap-1 transition-colors">
+                                        View
+                                    </a>
+
+                                    <!-- Tombol Mark done (jika belum Done) -->
+                                    <?php if (!$isDone): ?>
+                                        <form action="<?= ($basePath ?: '') ?>/mark-done-tiket" method="POST" class="inline">
+                                            <input type="hidden" name="id" value="<?= (int)$t['id'] ?>">
+                                            <button type="submit"
+                                                    class="px-3.5 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-xl inline-flex items-center gap-1 transition-colors cursor-pointer"
+                                                    title="Tandai tiket pertanyaan ini telah selesai dijawab">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                                Mark done
+                                            </button>
+                                        </form>
+                                    <?php else: ?>
+                                        <span class="px-3 py-1 text-xs font-medium text-emerald-600 bg-emerald-50 rounded-lg inline-flex items-center gap-1">
+                                            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                            Selesai
+                                        </span>
+                                    <?php endif; ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<!-- Modal: Detail Laporan + Update Status -->
-<div id="modal-tiket" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/20 rounded-4xl p-4">
-  <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
-    <div class="flex items-start justify-between mb-4">
-      <div>
-        <h3 class="text-lg font-semibold text-slate-800">Detail Tiket</h3>
-        <p id="modal-info" class="text-sm text-slate-500"></p>
-      </div>
-      <button type="button" data-close-modal class="text-slate-400 hover:text-slate-700 text-xl leading-none">&times;</button>
-    </div>
-
-    <div class="mb-4 rounded-lg bg-slate-50 p-3">
-      <p id="modal-judul" class="text-sm font-medium text-slate-800"></p>
-      <p id="modal-deskripsi" class="mt-1 text-sm text-slate-600"></p>
-    </div>
-
-    <form action="" method="POST" class="space-y-4">
-      <input type="hidden" name="action" value="update_tiket">
-      <input type="hidden" name="csrf" value="<?= $e($_SESSION['csrf']) ?>">
-      <input type="hidden" name="tiket_id" id="modal-id">
-
-      <div>
-        <label for="modal-status" class="block text-sm font-medium text-slate-700 mb-1">Status</label>
-        <select id="modal-status" name="status" required
-          class="block w-full text-sm text-slate-700 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200">
-          <?php foreach ($statusList as $s): ?>
-            <option value="<?= $e($s) ?>"><?= $e($s) ?></option>
-          <?php endforeach; ?>
-        </select>
-      </div>
-
-      <div>
-        <label for="modal-tanggapan" class="block text-sm font-medium text-slate-700 mb-1">Tanggapan</label>
-        <textarea id="modal-tanggapan" name="tanggapan" rows="3" maxlength="1000"
-          class="block w-full text-sm text-slate-700 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          placeholder="Tulis tanggapan atau catatan penyelesaian..."></textarea>
-        <p class="mt-1 text-xs text-slate-400">Wajib diisi untuk status Tuntas.</p>
-      </div>
-
-      <div class="flex justify-end gap-2 pt-2">
-        <button type="button" data-close-modal class="px-4 py-2 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100">Batal</button>
-        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Simpan</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<script>
-  (function () {
-        const modal = document.getElementById("modal-tiket"); // sesuaikan id per halaman
-document.body.appendChild(modal);
-    const toggle = (show) => {
-      modal.classList.toggle("hidden", !show);
-      modal.classList.toggle("flex", show);
-    };
-
-    document.querySelectorAll("[data-open-modal]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const d = btn.dataset;
-        document.getElementById("modal-id").value = d.id;
-        document.getElementById("modal-info").textContent = "#" + d.id + " · " + d.pelapor + " (" + d.kategori + ")";
-        document.getElementById("modal-judul").textContent = d.judul;
-        document.getElementById("modal-deskripsi").textContent = d.deskripsi;
-        document.getElementById("modal-status").value = d.status;
-        document.getElementById("modal-tanggapan").value = d.tanggapan || "";
-        toggle(true);
-      });
-    });
-
-    document.querySelectorAll("[data-close-modal]").forEach((b) => b.addEventListener("click", () => toggle(false)));
-    modal.addEventListener("click", (ev) => { if (ev.target === modal) toggle(false); });
-    document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") toggle(false); });
-  })();
-</script>

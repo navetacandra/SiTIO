@@ -1,3 +1,4 @@
+<?php $basePath = defined("BASE_URL") ? rtrim(BASE_URL, "/") : ""; ?>
 <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
   <div class="flex items-center mb-4">
     <span class="text-base font-semibold text-slate-800">Recent Country Visit</span>
@@ -29,7 +30,9 @@
     <td class="px-4 py-3">
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700 text-xs font-medium">Baru Diajukan</span>
     </td>
-    <td class="px-4 py-3 text-slate-600">-</td>
+    <td class="px-4 py-3">
+      <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=101" class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 inline-block transition-colors">View</a>
+    </td>
   </tr>
   <tr class="hover:bg-slate-50 align-middle">
     <th scope="row" class="px-4 py-3 font-normal">
@@ -42,7 +45,9 @@
     <td class="px-4 py-3">
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-medium">Disetujui</span>
     </td>
-    <td class="px-4 py-3"><a href="#" class="text-blue-600 hover:underline">-</a></td>
+    <td class="px-4 py-3">
+      <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=102" class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 inline-block transition-colors">View</a>
+    </td>
   </tr>
   <tr class="hover:bg-slate-50 align-middle">
     <th scope="row" class="px-4 py-3 font-normal">
@@ -55,7 +60,9 @@
     <td class="px-4 py-3">
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700 text-xs font-medium">Diproses</span>
     </td>
-    <td class="px-4 py-3"><a href="#" class="text-blue-600 hover:underline">-</a></td>
+    <td class="px-4 py-3">
+      <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=103" class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 inline-block transition-colors">View</a>
+    </td>
   </tr>
   <tr class="hover:bg-slate-50 align-middle">
     <th scope="row" class="px-4 py-3 font-normal">
@@ -68,7 +75,9 @@
     <td class="px-4 py-3">
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-medium">Ditolak</span>
     </td>
-    <td class="px-4 py-3"><a href="#" class="text-blue-600 hover:underline">-</a></td>
+    <td class="px-4 py-3">
+      <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=104" class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 inline-block transition-colors">View</a>
+    </td>
   </tr>
   <tr class="hover:bg-slate-50 align-middle">
     <th scope="row" class="px-4 py-3 font-normal">
@@ -81,7 +90,9 @@
     <td class="px-4 py-3">
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700 text-xs font-medium">Baru Diajukan</span>
     </td>
-    <td class="px-4 py-3 text-slate-600">-</td>
+    <td class="px-4 py-3">
+      <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=105" class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 inline-block transition-colors">View</a>
+    </td>
   </tr>
   <tr class="hover:bg-slate-50 align-middle">
     <th scope="row" class="px-4 py-3 font-normal">
@@ -94,7 +105,9 @@
     <td class="px-4 py-3">
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-100 text-green-700 text-xs font-medium">Disetujui</span>
     </td>
-    <td class="px-4 py-3"><a href="#" class="text-blue-600 hover:underline">-</a></td>
+    <td class="px-4 py-3">
+      <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=106" class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50 inline-block transition-colors">View</a>
+    </td>
   </tr>
 </tbody>
     </table>

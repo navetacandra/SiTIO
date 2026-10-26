@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= ["pdln" => "Daftar PDLN", "outbound" => "Daftar Outbound", "inbound" => "Daftar Inbound", "tiket" => "Daftar Tiket"][$page ?? "dashboard"] ?? "Dashboard" ?></title>
+    <title><?= ["pdln" => "Daftar PDLN", "detail-pdln" => "Detail PDLN", "outbound" => "Daftar Outbound", "inbound" => "Daftar Inbound", "tiket" => "Daftar Tiket", "detail-tiket" => "Detail Tiket"][$page ?? "dashboard"] ?? "Dashboard" ?></title>
     <link rel="stylesheet" href="<?= (defined("BASE_URL") ? BASE_URL : "") ?>/dist/style.css">
 </head>
 <body class="min-h-screen bg-gradient-to-br  from-[#d1ddc1] via-[#9ec2be] to-[#D9E7E8] bg-fixed font-sans text-slate-800">
 
-    <!-- Tombol Toggle Mobile -->
     <button data-drawer-target="separator-sidebar" data-drawer-toggle="separator-sidebar" aria-controls="separator-sidebar" type="button" class="ms-3 mt-3 inline-flex sm:hidden p-2 text-sm text-slate-600 rounded-lg hover:bg-slate-100 focus:outline-none focus:ring-4 focus:ring-slate-200">
         <span class="sr-only">Open sidebar</span>
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h10"/></svg>
@@ -27,7 +26,11 @@
         <ul class="space-y-2 text-sm font-medium flex-1">
             <?php
             $basePath = defined("BASE_URL") ? rtrim(BASE_URL, "/") : "";
-            $activePage = $page ?? "dashboard";
+            $activePage = match($page ?? "dashboard") {
+                "pdln", "detail-pdln" => "pdln",
+                "tiket", "detail-tiket" => "tiket",
+                default => $page ?? "dashboard"
+            };
             $menu = [
                 ["key" => "dashboard", "href" => ($basePath ?: "") . "/",            "label" => "Dashboard",       "icon" => "M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10"],
                 ["key" => "pdln",      "href" => ($basePath ?: "") . "/daftar-pdln", "label" => "Daftar PDLN",     "icon" => "M3 12a9 9 0 1018 0 9 9 0 00-18 0zm0 0h18M12 3c2.5 2.5 3.5 5.5 3.5 9S14.5 18.5 12 21c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3z"],
@@ -51,7 +54,7 @@
         </ul>
 
         <!-- Keluar -->
-        <a href="<?= ($basePath ?: '') ?>/logout.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white/70 transition">
+        <a href="<?= ($basePath ?: '') ?>/logout" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white/70 transition">
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 12H4m12 0l-4 4m4-4l-4-4m3-4h2a3 3 0 013 3v10a3 3 0 01-3 3h-2"/></svg>
             <span>Keluar</span>
         </a>
@@ -65,7 +68,11 @@
                 <div>
                     <?php require __DIR__ . "/../daftar-pdln.view.php"; ?>
                 </div>
-                        <?php elseif (($page ?? "dashboard") === "outbound"): ?>
+            <?php elseif (($page ?? "dashboard") === "detail-pdln"): ?>
+                <div>
+                    <?php require __DIR__ . "/detail-pdln.php"; ?>
+                </div>
+            <?php elseif (($page ?? "dashboard") === "outbound"): ?>
                 <h1 class="text-2xl font-bold mb-6">Daftar Outbound</h1>
                 <div>
                     <?php require __DIR__ . "/../daftar-outbound.view.php"; ?>
@@ -79,6 +86,10 @@
                 <h1 class="text-2xl font-bold mb-6">Daftar Tiket</h1>
                 <div>
                     <?php require __DIR__ . "/../daftar-tiket.view.php"; ?>
+                </div>
+            <?php elseif (($page ?? "dashboard") === "detail-tiket"): ?>
+                <div>
+                    <?php require __DIR__ . "/detail-tiket.php"; ?>
                 </div>
             <?php else: ?>
                 <h1 class="text-2xl font-bold mb-6">Dashboard</h1>
@@ -173,7 +184,6 @@
                 }
             }
         }
-<<<<<<< HEAD
     }
 });
 chart.render();
@@ -202,11 +212,5 @@ document.querySelectorAll(".range-btn").forEach(btn => {
 });
     </script>
     <?php endif; ?>
-=======
-    });
-    chart.render();
-</script>
-</body>
->>>>>>> master
 </body>
 </html>

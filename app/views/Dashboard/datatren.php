@@ -1,6 +1,4 @@
 <?php
-// app/views/Dashboard/datatren.php
-// Distribusi status + tren pengajuan (landscape, data dummy).
 
 $statusData = [
     ['label' => 'Baru Diajukan',      'value' => 3, 'color' => '#f59e0b'],
@@ -19,7 +17,6 @@ $trenData = [
 $total   = array_sum(array_column($statusData, 'value'));
 $maxTren = max(array_column($trenData, 'value')) ?: 1;
 
-// Geometri donut
 $r      = 40;
 $circ   = 2 * M_PI * $r;
 $offset = 0.0;
@@ -28,12 +25,10 @@ $offset = 0.0;
 <div class="w-full bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
 
-    <!-- Kiri: Distribusi Status -->
     <div class="lg:pr-8 lg:border-r lg:border-slate-200">
       <h5 class="text-lg font-semibold text-slate-800">Distribusi Status</h5>
 
       <div class="mt-4 flex flex-col sm:flex-row items-center gap-6">
-        <!-- Donut -->
         <div class="relative w-44 h-44 shrink-0">
           <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
             <circle cx="50" cy="50" r="<?= $r ?>" fill="none" stroke="#f1f5f9" stroke-width="13"/>
@@ -55,7 +50,6 @@ $offset = 0.0;
           </div>
         </div>
 
-        <!-- Legend -->
         <ul class="w-full space-y-2.5 text-sm">
           <?php foreach ($statusData as $s): ?>
             <li class="flex items-center justify-between gap-3">
@@ -70,7 +64,6 @@ $offset = 0.0;
       </div>
     </div>
 
-    <!-- Kanan: Tren Pengajuan -->
     <div class="lg:pl-8">
       <h5 class="text-lg font-semibold text-slate-800">Tren Pengajuan</h5>
 
