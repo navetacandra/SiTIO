@@ -1,13 +1,16 @@
 <?php
 
 /* ---------- Konfigurasi ---------- */
+$basePath   = defined("BASE_URL") ? rtrim(BASE_URL, "/") : "";
 $uploadDir  = __DIR__ . '/../../public/uploads/sp_setneg/'; // sesuaikan dengan struktur proyekmu
-$uploadUrl  = '/uploads/sp_setneg/';
+$uploadUrl  = ($basePath ?: '') . '/uploads/sp_setneg/';
 $maxSize    = 5 * 1024 * 1024; // 5 MB
-$statusList = ['Diproses', 'Disetujui', 'Ditolak'];
+$statusList = ['Baru Diajukan', 'Pending', 'Diproses', 'Revisi', 'Disetujui', 'Ditolak'];
 $badge = [
     'Baru Diajukan' => 'bg-sky-100 text-sky-700',
-    'Diproses'      => 'bg-amber-100 text-amber-700',
+    'Pending'       => 'bg-amber-100 text-amber-700',
+    'Diproses'      => 'bg-indigo-100 text-indigo-700',
+    'Revisi'        => 'bg-rose-100 text-rose-700',
     'Disetujui'     => 'bg-green-100 text-green-700',
     'Ditolak'       => 'bg-red-100 text-red-700',
 ];
@@ -16,12 +19,12 @@ $e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 /* ---------- Data dummy ---------- */
 if (!isset($_SESSION['pengajuan'])) {
     $_SESSION['pengajuan'] = [
-        ['id' => 101, 'kegiatan' => 'Enthufest',          'peserta' => 'Ahmad Zulfikar',     'jabatan' => 'Mahasiswa',  'tanggal' => '2026-04-09', 'status' => 'Baru Diajukan', 'sp_setneg' => null],
-        ['id' => 102, 'kegiatan' => 'Hackathon',          'peserta' => 'Dr. Siti Nurhaliza', 'jabatan' => 'Dosen',      'tanggal' => '2026-05-02', 'status' => 'Disetujui',     'sp_setneg' => null],
-        ['id' => 103, 'kegiatan' => 'Campfest',           'peserta' => 'Budi Santoso',       'jabatan' => 'Tendik',     'tanggal' => '2026-05-20', 'status' => 'Diproses',      'sp_setneg' => null],
-        ['id' => 104, 'kegiatan' => 'Techno Expo',        'peserta' => 'Rina Marlina',       'jabatan' => 'Mahasiswa',  'tanggal' => '2026-06-03', 'status' => 'Ditolak',       'sp_setneg' => null],
-        ['id' => 105, 'kegiatan' => 'Seminar Nasional',   'peserta' => 'Prof. Hendra Wijaya', 'jabatan' => 'Struktural', 'tanggal' => '2026-06-17', 'status' => 'Baru Diajukan', 'sp_setneg' => null],
-        ['id' => 106, 'kegiatan' => 'Robotics Challenge', 'peserta' => 'Dimas Prasetyo',     'jabatan' => 'Mahasiswa',  'tanggal' => '2026-06-28', 'status' => 'Disetujui',     'sp_setneg' => null],
+        ['id' => 101, 'kegiatan' => 'Enthufest',          'peserta' => 'Ahmad Zulfikar',     'jabatan' => 'Mahasiswa',  'tanggal' => '2026-04-09', 'status' => 'Baru Diajukan'],
+        ['id' => 102, 'kegiatan' => 'Hackathon',          'peserta' => 'Dr. Siti Nurhaliza', 'jabatan' => 'Dosen',      'tanggal' => '2026-05-02', 'status' => 'Disetujui'],
+        ['id' => 103, 'kegiatan' => 'Campfest',           'peserta' => 'Budi Santoso',       'jabatan' => 'Tendik',     'tanggal' => '2026-05-20', 'status' => 'Pending'],
+        ['id' => 104, 'kegiatan' => 'Techno Expo',        'peserta' => 'Rina Marlina',       'jabatan' => 'Mahasiswa',  'tanggal' => '2026-06-03', 'status' => 'Revisi'],
+        ['id' => 105, 'kegiatan' => 'Seminar Nasional',   'peserta' => 'Prof. Hendra Wijaya', 'jabatan' => 'Struktural', 'tanggal' => '2026-06-17', 'status' => 'Diproses'],
+        ['id' => 106, 'kegiatan' => 'Robotics Challenge', 'peserta' => 'Dimas Prasetyo',     'jabatan' => 'Mahasiswa',  'tanggal' => '2026-06-28', 'status' => 'Ditolak'],
     ];
 }
 $_SESSION['csrf'] = $_SESSION['csrf'] ?? bin2hex(random_bytes(16));
@@ -128,7 +131,7 @@ $pengajuan = $_SESSION['pengajuan'];
         <?php foreach ($pengajuan as $p): ?>
           <tr class="hover:bg-slate-50 align-middle">
             <th scope="row" class="px-4 py-3 font-normal">
-              <code class="font-mono text-xs text-blue-600">#<?= (int)$p['id'] ?></code>
+              <code class="font-mono text-xs text-[#008C95] font-semibold">#<?= (int)$p['id'] ?></code>
             </th>
             <td class="px-4 py-3 font-medium text-slate-800"><?= $e($p['kegiatan']) ?></td>
             <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e($p['peserta']) ?></td>
@@ -140,15 +143,10 @@ $pengajuan = $_SESSION['pengajuan'];
               </span>
             </td>
             <td class="px-4 py-3">
-              <button type="button" data-open-modal
-                data-id="<?= (int)$p['id'] ?>"
-                data-kegiatan="<?= $e($p['kegiatan']) ?>"
-                data-peserta="<?= $e($p['peserta']) ?>"
-                data-status="<?= $e($p['status']) ?>"
-                data-sp="<?= $e($p['sp_setneg'] ?? '') ?>"
-                class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50">
+              <a href="<?= ($basePath ?: '') ?>/detail-pdln?id=<?= (int)$p['id'] ?>"
+                class="px-3 py-1 text-xs font-medium text-[#008C95] border border-[#CDE8EB] rounded-md hover:bg-[#EEF7F8] inline-block transition-colors">
                 View
-              </button>
+              </a>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -189,14 +187,14 @@ $pengajuan = $_SESSION['pengajuan'];
           class="block w-full text-sm text-slate-600 border border-slate-300 rounded-lg cursor-pointer file:mr-3 file:px-3 file:py-2 file:border-0 file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
         <p id="modal-sp-current" class="hidden mt-2 text-xs text-slate-500">
           File saat ini:
-          <a id="modal-sp-link" href="#" target="_blank" class="text-blue-600 hover:underline"></a>
+          <a id="modal-sp-link" href="#" target="_blank" class="text-[#008C95] hover:underline"></a>
         </p>
         <p class="mt-1 text-xs text-slate-400">Wajib ada SP Setneg untuk status Disetujui.</p>
       </div>
 
       <div class="flex justify-end gap-2 pt-2">
         <button type="button" data-close-modal class="px-4 py-2 text-sm font-medium text-slate-600 rounded-lg hover:bg-slate-100">Batal</button>
-        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Simpan</button>
+        <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-[#008C95] rounded-lg hover:bg-[#00747c] transition-colors shadow-xs">Simpan</button>
       </div>
     </form>
   </div>

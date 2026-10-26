@@ -1,4 +1,3 @@
-<!-- app/views/Dashboard/status.view.php -->
 <div class="w-full h-full bg-white border border-slate-200 rounded-2xl shadow-sm p-5 flex flex-col">
   <h5 class="text-lg font-semibold text-slate-800 text-center">Jumlah Pengguna</h5>
 

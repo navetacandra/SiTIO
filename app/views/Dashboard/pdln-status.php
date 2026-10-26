@@ -3,7 +3,8 @@
 // Card ringkasan status pengajuan PDLN (data dummy dulu, belum konek database).
 
 $judul      = 'Status PDLN';
-$linkDaftar = '/daftar-pdln';
+$basePath   = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
+$linkDaftar = ($basePath ?: '') . '/daftar-pdln';
 
 $statusConfig = [
     'Baru Diajukan' => ['label' => 'Diajukan',  'bar' => 'bg-[#4aa8f8]', 'dot' => 'bg-[#4aa8f8]'],

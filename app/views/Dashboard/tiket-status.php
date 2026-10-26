@@ -1,27 +1,24 @@
 <?php
-// app/views/Dashboard/tiket-status.php
 // Card ringkasan status pengajuan tiket (data dummy dulu, belum konek database).
 
 $judul      = 'Status tiket';
-$linkDaftar = '/daftar-tiket';
+$basePath   = defined('BASE_URL') ? rtrim(BASE_URL, '/') : '';
+$linkDaftar = ($basePath ?: '') . '/daftar-tiket';
 
 if (isset($_SESSION['tiket']) && is_array($_SESSION['tiket'])) {
     $counts = [
-        'Diajukan' => count(array_filter($_SESSION['tiket'], fn($t) => ($t['status'] ?? '') === 'Diajukan')),
-        'Pending'  => count(array_filter($_SESSION['tiket'], fn($t) => ($t['status'] ?? '') === 'Pending')),
-        'Tuntas'   => count(array_filter($_SESSION['tiket'], fn($t) => ($t['status'] ?? '') === 'Tuntas')),
+        'Pending' => count(array_filter($_SESSION['tiket'], fn($t) => in_array($t['status'] ?? '', ['Pending', 'Diajukan'], true))),
+        'Done'    => count(array_filter($_SESSION['tiket'], fn($t) => in_array($t['status'] ?? '', ['Done', 'Tuntas'], true))),
     ];
 } else {
     $counts = [
-        'Diajukan' => 2,
-        'Pending'  => 2,
-        'Tuntas'   => 2,
+        'Pending' => 4,
+        'Done'    => 2,
     ];
 }
 $statusConfig = [
-    'Diajukan' => ['label' => 'Diajukan', 'bar' => 'bg-[#4aa8f8]', 'dot' => 'bg-[#4aa8f8]'],
-    'Pending'  => ['label' => 'Pending',  'bar' => 'bg-[#f4a340]', 'dot' => 'bg-[#f4a340]'],
-    'Tuntas'   => ['label' => 'Tuntas',   'bar' => 'bg-[#22c55e]', 'dot' => 'bg-[#22c55e]'],
+    'Pending' => ['label' => 'Pending', 'bar' => 'bg-[#f4a340]', 'dot' => 'bg-[#f4a340]'],
+    'Done'    => ['label' => 'Done',    'bar' => 'bg-[#22c55e]', 'dot' => 'bg-[#22c55e]'],
 ];
 $errorStatus = null;
 
@@ -58,7 +55,7 @@ $e      = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
       </div>
 
       <!-- Label + angka -->
-      <div class="mt-3 grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <div class="mt-3 grid grid-cols-2 gap-4">
         <?php foreach ($statusConfig as $key => $cfg): ?>
           <div>
             <div class="text-xs text-slate-500"><?= $e($cfg['label']) ?></div>

@@ -12,9 +12,7 @@ class Request {
     }
 
     public function header(string $field): ?string {
-        // initial header extraction
         if(count($this->headers) < 1) {
-            // do nothing when success/false
             if($this->headers = getallheaders()) {
             } else if($this->headers = apache_request_headers()) {
             }
