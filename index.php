@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/database.php";
+
 $method = $_SERVER["REQUEST_METHOD"];
 if(!isset($_GET['page'])) {
     $route = "/";

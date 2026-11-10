@@ -1,5 +1,18 @@
 RewriteEngine On
 
+# block direct acces file system
+RewriteRule \.(log|ini|php|sql|old)$ - [F,END,NC]
+
+<IfModule mod_suphp.c>
+    suPHP_ConfigPath php.ini
+</IfModule>
+<IfModule mod_php.c>
+    php_flag log_errors on
+    php_value error_log php_error.log
+    php_value date.timezone Asia/Jakarta
+    php_value extension pdo_pgsql
+</IfModule>
+
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]
