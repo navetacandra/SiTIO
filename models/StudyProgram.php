@@ -40,7 +40,8 @@ final class StudyProgram
     public function find(string $id): array|false
     {
         $stmt = $this->db->prepare(
-            "SELECT study_program_id, department_name, study_program_name
+            "SELECT study_program_id, department_id, department_name,
+                study_program_name
             FROM study_programs
             JOIN departments USING (department_id)
             WHERE study_program_id = ? AND study_programs.deleted_at IS NULL
