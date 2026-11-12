@@ -89,6 +89,68 @@ final class User
         return $stmt->fetch();
     }
 
+    public function update(
+        string $id,
+        string $email,
+        string $phone,
+        string $address,
+        string $birthDate,
+        string $birthLocation,
+        ?string $position,
+        ?string $departmentId,
+        ?string $studyProgramId,
+        ?string $admissionDate,
+        bool $isActive,
+        ?string $password = null,
+    ): int {
+        $email = $this->normalizeEmail($email);
+        $phone = $this->normalizePhone($phone);
+        $address = trim($address);
+        $birthDate = trim($birthDate);
+        $birthLocation = trim($birthLocation);
+
+        if ($address === "" || $birthDate === "" || $birthLocation === "") {
+            throw new InvalidArgumentException(
+                "Address, birth date, and birth location are required.",
+            );
+        }
+
+        if ($password !== null && $password === "") {
+            $password = null;
+        }
+
+        $stmt = $this->db->prepare(
+            "UPDATE users
+            SET email = ?, phone = ?, address = ?, birth_date = ?,
+                birth_location = ?, position = ?, department_id = ?,
+                study_program_id = ?, admission_date = ?, is_active = ?,
+                password = COALESCE(?, password)
+            WHERE user_id = ? AND deleted_at IS NULL",
+        );
+
+        $stmt->bindValue(1, $email);
+        $stmt->bindValue(2, $phone);
+        $stmt->bindValue(3, $address);
+        $stmt->bindValue(4, $birthDate);
+        $stmt->bindValue(5, $birthLocation);
+        $this->bindNullable($stmt, 6, $position);
+        $this->bindNullable($stmt, 7, $departmentId);
+        $this->bindNullable($stmt, 8, $studyProgramId);
+        $this->bindNullable($stmt, 9, $admissionDate);
+        $stmt->bindValue(10, $isActive, PDO::PARAM_BOOL);
+        $this->bindNullable(
+            $stmt,
+            11,
+            $password === null
+                ? null
+                : password_hash($password, PASSWORD_BCRYPT),
+        );
+        $stmt->bindValue(12, $id);
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
     public function createStruktural(
         string $email,
         string $phone,
