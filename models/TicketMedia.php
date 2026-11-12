@@ -21,8 +21,19 @@ final class TicketMedia
         $this->db = $conn;
     }
 
-    public function all(string $ticketId): array
+    public function all(?string $ticketId = null): array
     {
+        if ($ticketId === null) {
+            return $this->db
+                ->query(
+                    "SELECT ticket_id, type, path
+                    FROM ticket_media
+                    WHERE deleted_at IS NULL
+                    ORDER BY ticket_id, path",
+                )
+                ->fetchAll();
+        }
+
         $stmt = $this->db->prepare(
             "SELECT ticket_id, type, path
             FROM ticket_media
