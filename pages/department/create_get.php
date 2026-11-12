@@ -1,0 +1,16 @@
+<?php declare(strict_types=1);
+
+require_once __DIR__ . "/../_helpers.php";
+
+page_start("Create Department");
+?>
+<form method="post" action="create_post.php">
+    <p>
+        <label for="name">Name</label><br>
+        <input id="name" name="name" type="text" required>
+    </p>
+    <button type="submit">Save</button>
+</form>
+
+<p><a href="dashboard_get.php">Back</a></p>
+<?php page_end(); ?>
