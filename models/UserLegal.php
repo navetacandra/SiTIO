@@ -70,20 +70,7 @@ final class UserLegal
                 deleted_at = NULL",
         );
 
-        $stmt->bindValue(1, $userId);
-
-        foreach (
-            [$nik, $nim, $nip, $pasporNum, $ktp, $paspor]
-            as $i => $value
-        ) {
-            $stmt->bindValue(
-                $i + 2,
-                $value,
-                $value === null ? PDO::PARAM_NULL : PDO::PARAM_STR,
-            );
-        }
-
-        $stmt->execute();
+        $stmt->execute([$userId, $nik, $nim, $nip, $pasporNum, $ktp, $paspor]);
         return $stmt->rowCount();
     }
 }

@@ -57,11 +57,12 @@ final class DocumentType
                 (document_type_name, document_type_code, is_required, max_size)
             VALUES (?, ?, ?, ?)",
         );
-        $stmt->bindValue(1, $name);
-        $stmt->bindValue(2, $this->generateCode($name));
-        $stmt->bindValue(3, $isRequired, PDO::PARAM_BOOL);
-        $stmt->bindValue(4, $maxSize, PDO::PARAM_INT);
-        $stmt->execute();
+        $stmt->execute([
+            $name,
+            $this->generateCode($name),
+            $isRequired ? "true" : "false",
+            $maxSize,
+        ]);
         return $stmt->rowCount();
     }
 
@@ -77,12 +78,13 @@ final class DocumentType
                 max_size = ?
             WHERE document_type_id = ? AND deleted_at IS NULL",
         );
-        $stmt->bindValue(1, $name);
-        $stmt->bindValue(2, $this->generateCode($name));
-        $stmt->bindValue(3, $isRequired, PDO::PARAM_BOOL);
-        $stmt->bindValue(4, $maxSize, PDO::PARAM_INT);
-        $stmt->bindValue(5, $id);
-        $stmt->execute();
+        $stmt->execute([
+            $name,
+            $this->generateCode($name),
+            $isRequired ? "true" : "false",
+            $maxSize,
+            $id,
+        ]);
         return $stmt->rowCount();
     }
 

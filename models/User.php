@@ -115,7 +115,7 @@ final class User
             );
         }
 
-        if ($password !== null && $password === "") {
+        if ($password === "") {
             $password = null;
         }
 
@@ -128,25 +128,22 @@ final class User
             WHERE user_id = ? AND deleted_at IS NULL",
         );
 
-        $stmt->bindValue(1, $email);
-        $stmt->bindValue(2, $phone);
-        $stmt->bindValue(3, $address);
-        $stmt->bindValue(4, $birthDate);
-        $stmt->bindValue(5, $birthLocation);
-        $this->bindNullable($stmt, 6, $position);
-        $this->bindNullable($stmt, 7, $departmentId);
-        $this->bindNullable($stmt, 8, $studyProgramId);
-        $this->bindNullable($stmt, 9, $admissionDate);
-        $stmt->bindValue(10, $isActive, PDO::PARAM_BOOL);
-        $this->bindNullable(
-            $stmt,
-            11,
+        $stmt->execute([
+            $email,
+            $phone,
+            $address,
+            $birthDate,
+            $birthLocation,
+            $position,
+            $departmentId,
+            $studyProgramId,
+            $admissionDate,
+            $isActive ? "true" : "false",
             $password === null
                 ? null
                 : password_hash($password, PASSWORD_BCRYPT),
-        );
-        $stmt->bindValue(12, $id);
-        $stmt->execute();
+            $id,
+        ]);
 
         return $stmt->rowCount();
     }
@@ -267,9 +264,7 @@ final class User
             "UPDATE users SET is_active = ?
             WHERE user_id = ? AND deleted_at IS NULL",
         );
-        $stmt->bindValue(1, $isActive, PDO::PARAM_BOOL);
-        $stmt->bindValue(2, $id);
-        $stmt->execute();
+        $stmt->execute([$isActive ? "true" : "false", $id]);
         return $stmt->rowCount();
     }
 
@@ -340,18 +335,19 @@ final class User
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 RETURNING user_id",
             );
-            $stmt->bindValue(1, $email);
-            $stmt->bindValue(2, $phone);
-            $stmt->bindValue(3, password_hash($password, PASSWORD_BCRYPT));
-            $stmt->bindValue(4, $role);
-            $stmt->bindValue(5, $address);
-            $stmt->bindValue(6, $birthDate);
-            $stmt->bindValue(7, $birthLocation);
-            $this->bindNullable($stmt, 8, $position);
-            $this->bindNullable($stmt, 9, $departmentId);
-            $this->bindNullable($stmt, 10, $studyProgramId);
-            $this->bindNullable($stmt, 11, $admissionDate);
-            $stmt->execute();
+            $stmt->execute([
+                $email,
+                $phone,
+                password_hash($password, PASSWORD_BCRYPT),
+                $role,
+                $address,
+                $birthDate,
+                $birthLocation,
+                $position,
+                $departmentId,
+                $studyProgramId,
+                $admissionDate,
+            ]);
 
             $userId = (string) $stmt->fetchColumn();
             $this->db
@@ -386,17 +382,5 @@ final class User
         }
 
         return $phone;
-    }
-
-    private function bindNullable(
-        PDOStatement $stmt,
-        int $parameter,
-        ?string $value,
-    ): void {
-        $stmt->bindValue(
-            $parameter,
-            $value,
-            $value === null ? PDO::PARAM_NULL : PDO::PARAM_STR,
-        );
     }
 }
