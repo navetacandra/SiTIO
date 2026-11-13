@@ -1,6 +1,9 @@
 -- SiTIO database schema
 -- Extracted from models/*.php
 
+-- Clear any aborted transaction left by a previous failed run.
+ROLLBACK;
+
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS departments (
@@ -8,6 +11,13 @@ CREATE TABLE IF NOT EXISTS departments (
     department_name VARCHAR(128),
     deleted_at TIMESTAMPTZ
 );
+
+-- Migrate existing departments table created before soft delete.
+ALTER TABLE departments
+    ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+ALTER TABLE departments
+    DROP CONSTRAINT IF EXISTS departments_department_name_key;
 
 CREATE UNIQUE INDEX IF NOT EXISTS departments_name_unique
     ON departments (department_name)
@@ -20,6 +30,21 @@ CREATE TABLE IF NOT EXISTS study_programs (
     study_program_name VARCHAR(128),
     deleted_at TIMESTAMPTZ
 );
+
+-- Migrate existing study_programs table created before soft delete.
+ALTER TABLE study_programs
+    ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
+
+ALTER TABLE study_programs
+    DROP CONSTRAINT IF EXISTS study_programs_study_program_name_key;
+
+ALTER TABLE study_programs
+    DROP CONSTRAINT IF EXISTS study_programs_department_id_fkey;
+
+ALTER TABLE study_programs
+    ADD CONSTRAINT study_programs_department_id_fkey
+    FOREIGN KEY (department_id) REFERENCES departments(department_id)
+    ON DELETE CASCADE;
 
 CREATE UNIQUE INDEX IF NOT EXISTS study_programs_name_department_unique
     ON study_programs (study_program_name, department_id)
