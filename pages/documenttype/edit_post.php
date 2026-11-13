@@ -12,15 +12,18 @@ $isRequired = isset($_POST["is_required"]);
 $maxSize = filter_var($_POST["max_size"] ?? null, FILTER_VALIDATE_INT);
 
 if ($id === "") {
-    fail_page("Document type ID is required.", "/document-types");
+    fail_page("Document type ID is required.", BASE_URL . "/document-types");
 }
 
 if ($name === "") {
-    fail_page("Name is required.", "/document-types/edit");
+    fail_page("Name is required.", BASE_URL . "/document-types/edit");
 }
 
 if ($maxSize === false || $maxSize < 1) {
-    fail_page("Max size must be a positive integer.", "/document-types/edit");
+    fail_page(
+        "Max size must be a positive integer.",
+        BASE_URL . "/document-types/edit",
+    );
 }
 
 $documentType = new DocumentType();
@@ -28,7 +31,7 @@ $documentType = new DocumentType();
 try {
     $documentType->update($id, $name, $isRequired, $maxSize);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/document-types/edit");
+    fail_page($e->getMessage(), BASE_URL . "/document-types/edit");
 }
 
-redirect("/document-types");
+redirect(BASE_URL . "/document-types");

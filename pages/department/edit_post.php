@@ -10,11 +10,11 @@ $id = trim((string) ($_POST["id"] ?? ""));
 $name = trim((string) ($_POST["name"] ?? ""));
 
 if ($id === "") {
-    fail_page("Department ID is required.", "/departments");
+    fail_page("Department ID is required.", BASE_URL . "/departments");
 }
 
 if ($name === "") {
-    fail_page("Name is required.", "/departments/edit");
+    fail_page("Name is required.", BASE_URL . "/departments/edit");
 }
 
 $department = new Department();
@@ -22,7 +22,7 @@ $department = new Department();
 try {
     $department->update($id, $name);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/departments/edit");
+    fail_page($e->getMessage(), BASE_URL . "/departments/edit");
 }
 
-redirect("/departments");
+redirect(BASE_URL . "/departments");

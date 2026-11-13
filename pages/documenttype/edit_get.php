@@ -7,7 +7,7 @@ require_once __DIR__ . "/../../models/DocumentType.php";
 $id = trim((string) ($_GET["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("Document type ID is required.", "/document-types");
+    fail_page("Document type ID is required.", BASE_URL . "/document-types");
 }
 
 $documentType = new DocumentType();
@@ -15,12 +15,12 @@ $row = $documentType->find($id);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("Document type not found.", "/document-types");
+    fail_page("Document type not found.", BASE_URL . "/document-types");
 }
 
 page_start("Edit Document Type");
 ?>
-<form method="post" action="/document-types/edit">
+<form method="post" action="<?= BASE_URL ?>/document-types/edit">
     <input type="hidden" name="id" value="<?= e($id) ?>">
     <p>
         <label for="name">Name</label><br>
@@ -53,5 +53,5 @@ page_start("Edit Document Type");
     <button type="submit">Update</button>
 </form>
 
-<p><a href="/document-types">Back</a></p>
+<p><a href="<?= BASE_URL ?>/document-types">Back</a></p>
 <?php page_end(); ?>

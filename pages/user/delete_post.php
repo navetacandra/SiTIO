@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("User ID is required.", "/users");
+    fail_page("User ID is required.", BASE_URL . "/users");
 }
 
 $user = new User();
@@ -17,7 +17,7 @@ $user = new User();
 try {
     $user->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/users");
+    fail_page($e->getMessage(), BASE_URL . "/users");
 }
 
-redirect("/users");
+redirect(BASE_URL . "/users");

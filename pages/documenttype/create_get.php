@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Create Document Type");
 ?>
-<form method="post" action="/document-types/create">
+<form method="post" action="<?= BASE_URL ?>/document-types/create">
     <p>
         <label for="name">Name</label><br>
         <input id="name" name="name" type="text" required>
@@ -22,5 +22,5 @@ page_start("Create Document Type");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="/document-types">Back</a></p>
+<p><a href="<?= BASE_URL ?>/document-types">Back</a></p>
 <?php page_end(); ?>

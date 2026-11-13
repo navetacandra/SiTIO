@@ -10,7 +10,10 @@ $identifier = trim((string) ($_POST["identifier"] ?? ""));
 $password = (string) ($_POST["password"] ?? "");
 
 if ($identifier === "" || $password === "") {
-    fail_page("Email/phone and password are required.", "/users/login");
+    fail_page(
+        "Email/phone and password are required.",
+        BASE_URL . "/users/login",
+    );
 }
 
 $user = new User();
@@ -18,11 +21,14 @@ $user = new User();
 try {
     $loggedIn = $user->login($identifier, $password);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/users/login");
+    fail_page($e->getMessage(), BASE_URL . "/users/login");
 }
 
 if ($loggedIn === false) {
-    fail_page("Invalid credentials or inactive account.", "/users/login");
+    fail_page(
+        "Invalid credentials or inactive account.",
+        BASE_URL . "/users/login",
+    );
 }
 
-redirect("/users");
+redirect(BASE_URL . "/users");

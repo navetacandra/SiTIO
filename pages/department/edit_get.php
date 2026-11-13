@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Edit Department");
 ?>
-<form method="post" action="/departments/edit">
+<form method="post" action="<?= BASE_URL ?>/departments/edit">
     <input type="hidden" name="id" value="<?= e($id) ?>">
     <p>
         <label for="name">Name</label><br>
@@ -15,5 +15,5 @@ page_start("Edit Department");
     <button type="submit">Update</button>
 </form>
 
-<p><a href="/departments">Back</a></p>
+<p><a href="<?= BASE_URL ?>/departments">Back</a></p>
 <?php page_end(); ?>

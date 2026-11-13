@@ -13,10 +13,10 @@ $password = (string) ($_POST["password"] ?? "");
 $address = trim((string) ($_POST["address"] ?? ""));
 $birthDate = trim((string) ($_POST["birth_date"] ?? ""));
 $birthLocation = trim((string) ($_POST["birth_location"] ?? ""));
-$back = "/users/create?role=" . urlencode($role);
+$back = BASE_URL . "/users/create?role=" . urlencode($role);
 
 if (!in_array($role, ["struktural", "dosen", "mahasiswa"], true)) {
-    fail_page("Role is invalid.", "/users/create");
+    fail_page("Role is invalid.", BASE_URL . "/users/create");
 }
 
 $user = new User();
@@ -87,4 +87,4 @@ try {
     fail_page($e->getMessage(), $back);
 }
 
-redirect("/users");
+redirect(BASE_URL . "/users");

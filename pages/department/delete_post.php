@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("Department ID is required.", "/departments");
+    fail_page("Department ID is required.", BASE_URL . "/departments");
 }
 
 $department = new Department();
@@ -17,7 +17,7 @@ $department = new Department();
 try {
     $department->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/departments");
+    fail_page($e->getMessage(), BASE_URL . "/departments");
 }
 
-redirect("/departments");
+redirect(BASE_URL . "/departments");

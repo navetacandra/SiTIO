@@ -9,7 +9,7 @@ require_post();
 $userId = trim((string) ($_POST["user_id"] ?? ""));
 
 if ($userId === "") {
-    fail_page("User ID is required.", "/user-legal");
+    fail_page("User ID is required.", BASE_URL . "/user-legal");
 }
 
 $nullable = static function (string $key): ?string {
@@ -32,8 +32,8 @@ try {
 } catch (Throwable $e) {
     fail_page(
         $e->getMessage(),
-        "/user-legal/edit?user_id=" . urlencode($userId),
+        BASE_URL . "/user-legal/edit?user_id=" . urlencode($userId),
     );
 }
 
-redirect("/user-legal");
+redirect(BASE_URL . "/user-legal");

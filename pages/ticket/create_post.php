@@ -11,11 +11,11 @@ $question = trim((string) ($_POST["question"] ?? ""));
 $answer = trim((string) ($_POST["answer"] ?? ""));
 
 if ($mail === "") {
-    fail_page("Mail is required.", "/tickets/create");
+    fail_page("Mail is required.", BASE_URL . "/tickets/create");
 }
 
 if ($question === "") {
-    fail_page("Question is required.", "/tickets/create");
+    fail_page("Question is required.", BASE_URL . "/tickets/create");
 }
 
 $ticket = new Ticket();
@@ -23,7 +23,7 @@ $ticket = new Ticket();
 try {
     $ticket->create($mail, $question, $answer === "" ? null : $answer);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/tickets/create");
+    fail_page($e->getMessage(), BASE_URL . "/tickets/create");
 }
 
-redirect("/tickets");
+redirect(BASE_URL . "/tickets");

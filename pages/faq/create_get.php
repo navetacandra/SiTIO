@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Create FAQ");
 ?>
-<form method="post" action="/faqs/create">
+<form method="post" action="<?= BASE_URL ?>/faqs/create">
     <p>
         <label for="question">Question</label><br>
         <input id="question" name="question" type="text" required>
@@ -16,5 +16,5 @@ page_start("Create FAQ");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="/faqs">Back</a></p>
+<p><a href="<?= BASE_URL ?>/faqs">Back</a></p>
 <?php page_end(); ?>

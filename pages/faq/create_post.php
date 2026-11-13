@@ -10,11 +10,11 @@ $question = trim((string) ($_POST["question"] ?? ""));
 $answer = trim((string) ($_POST["answer"] ?? ""));
 
 if ($question === "") {
-    fail_page("Question is required.", "/faqs/create");
+    fail_page("Question is required.", BASE_URL . "/faqs/create");
 }
 
 if ($answer === "") {
-    fail_page("Answer is required.", "/faqs/create");
+    fail_page("Answer is required.", BASE_URL . "/faqs/create");
 }
 
 $faq = new Faq();
@@ -22,7 +22,7 @@ $faq = new Faq();
 try {
     $faq->create($question, $answer);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/faqs/create");
+    fail_page($e->getMessage(), BASE_URL . "/faqs/create");
 }
 
-redirect("/faqs");
+redirect(BASE_URL . "/faqs");

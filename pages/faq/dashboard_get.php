@@ -30,8 +30,10 @@ page_start("FAQs");
                 <td><?= e($row["question"]) ?></td>
                 <td><?= e($row["answer"]) ?></td>
                 <td>
-                    <a href="/faqs/edit?id=<?= e($row["faq_id"]) ?>">Edit</a>
-                    <form method="post" action="/faqs/delete">
+                    <a href="<?= BASE_URL ?>/faqs/edit?id=<?= e(
+    $row["faq_id"],
+) ?>">Edit</a>
+                    <form method="post" action="<?= BASE_URL ?>/faqs/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["faq_id"],
                         ) ?>">
@@ -43,6 +45,6 @@ page_start("FAQs");
     </tbody>
 </table>
 
-<p><a href="/faqs/create">Create FAQ</a></p>
-<p><a href="/faqs">Back to list</a></p>
+<p><a href="<?= BASE_URL ?>/faqs/create">Create FAQ</a></p>
+<p><a href="<?= BASE_URL ?>/faqs">Back to list</a></p>
 <?php page_end(); ?>

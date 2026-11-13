@@ -34,13 +34,13 @@ page_start("Users");
                 <td><?= e($row["role"]) ?></td>
                 <td><?= $row["is_active"] ? "Yes" : "No" ?></td>
                 <td>
-                    <a href="/users/edit?id=<?= e(
-                        urlencode($row["user_id"]),
-                    ) ?>">Edit</a>
-                    <a href="/user-legal/edit?user_id=<?= e(
-                        urlencode($row["user_id"]),
-                    ) ?>">Legal</a>
-                    <form method="post" action="/users/delete">
+                    <a href="<?= BASE_URL ?>/users/edit?id=<?= e(
+    urlencode($row["user_id"]),
+) ?>">Edit</a>
+                    <a href="<?= BASE_URL ?>/user-legal/edit?user_id=<?= e(
+    urlencode($row["user_id"]),
+) ?>">Legal</a>
+                    <form method="post" action="<?= BASE_URL ?>/users/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["user_id"],
                         ) ?>">
@@ -52,9 +52,9 @@ page_start("Users");
     </tbody>
 </table>
 
-<p><a href="/users/create">Create user</a></p>
+<p><a href="<?= BASE_URL ?>/users/create">Create user</a></p>
 
-<form method="post" action="/users/logout">
+<form method="post" action="<?= BASE_URL ?>/users/logout">
     <button type="submit">Logout</button>
 </form>
 <?php page_end(); ?>

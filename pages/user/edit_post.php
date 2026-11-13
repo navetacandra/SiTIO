@@ -14,10 +14,10 @@ $birthDate = trim((string) ($_POST["birth_date"] ?? ""));
 $birthLocation = trim((string) ($_POST["birth_location"] ?? ""));
 $isActive = isset($_POST["is_active"]);
 $password = trim((string) ($_POST["password"] ?? ""));
-$back = "edit_get.php?id=" . urlencode($id);
+$back = BASE_URL . "/users/edit?id=" . urlencode($id);
 
 if ($id === "") {
-    fail_page("User ID is required.", "/users");
+    fail_page("User ID is required.", BASE_URL . "/users");
 }
 
 $user = new User();
@@ -25,7 +25,7 @@ $row = $user->find($id);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("User not found.", "/users");
+    fail_page("User not found.", BASE_URL . "/users");
 }
 
 $position = null;
@@ -82,4 +82,4 @@ try {
     fail_page($e->getMessage(), $back);
 }
 
-redirect("/users");
+redirect(BASE_URL . "/users");

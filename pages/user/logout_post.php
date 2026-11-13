@@ -9,4 +9,4 @@ require_post();
 $user = new User();
 $user->logout();
 
-redirect("/users/login");
+redirect(BASE_URL . "/users/login");

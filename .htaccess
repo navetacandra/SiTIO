@@ -1,7 +1,7 @@
 RewriteEngine On
 
 # block direct acces file system
-RewriteRule \.(log|ini|php|sql|old)$ - [F,END,NC]
+# RewriteRule \.(log|ini|php|sql|old)$ - [F,END,NC]
 
 <IfModule mod_suphp.c>
     suPHP_ConfigPath php.ini

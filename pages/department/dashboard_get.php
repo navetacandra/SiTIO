@@ -28,10 +28,10 @@ page_start("Departments");
                 <td><?= e($row["department_id"]) ?></td>
                 <td><?= e($row["department_name"]) ?></td>
                 <td>
-                    <a href="/departments/edit?id=<?= e(
-                        $row["department_id"],
-                    ) ?>">Edit</a>
-                    <form method="post" action="/departments/delete">
+                    <a href="<?= BASE_URL ?>/departments/edit?id=<?= e(
+    $row["department_id"],
+) ?>">Edit</a>
+                    <form method="post" action="<?= BASE_URL ?>/departments/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["department_id"],
                         ) ?>">
@@ -43,6 +43,6 @@ page_start("Departments");
     </tbody>
 </table>
 
-<p><a href="/departments/create">Create department</a></p>
-<p><a href="/departments">Back to list</a></p>
+<p><a href="<?= BASE_URL ?>/departments/create">Create department</a></p>
+<p><a href="<?= BASE_URL ?>/departments">Back to list</a></p>
 <?php page_end(); ?>

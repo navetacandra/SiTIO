@@ -9,7 +9,7 @@ require_once __DIR__ . "/../../models/User.php";
 $id = trim((string) ($_GET["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("User ID is required.", "/users");
+    fail_page("User ID is required.", BASE_URL . "/users");
 }
 
 $user = new User();
@@ -17,7 +17,7 @@ $row = $user->find($id);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("User not found.", "/users");
+    fail_page("User not found.", BASE_URL . "/users");
 }
 
 $departments = [];
@@ -35,7 +35,7 @@ if ($row["role"] === "mahasiswa") {
 
 page_start("Edit User");
 ?>
-<form method="post" action="/users/edit">
+<form method="post" action="<?= BASE_URL ?>/users/edit">
     <input type="hidden" name="id" value="<?= e($id) ?>">
     <p>
         <label>Role</label><br>
@@ -139,5 +139,5 @@ $row["study_program_id"]
     <button type="submit">Update</button>
 </form>
 
-<p><a href="/users">Back</a></p>
+<p><a href="<?= BASE_URL ?>/users">Back</a></p>
 <?php page_end(); ?>

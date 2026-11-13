@@ -11,15 +11,15 @@ $question = trim((string) ($_POST["question"] ?? ""));
 $answer = trim((string) ($_POST["answer"] ?? ""));
 
 if ($id === "") {
-    fail_page("FAQ ID is required.", "/faqs");
+    fail_page("FAQ ID is required.", BASE_URL . "/faqs");
 }
 
 if ($question === "") {
-    fail_page("Question is required.", "/faqs/edit");
+    fail_page("Question is required.", BASE_URL . "/faqs/edit");
 }
 
 if ($answer === "") {
-    fail_page("Answer is required.", "/faqs/edit");
+    fail_page("Answer is required.", BASE_URL . "/faqs/edit");
 }
 
 $faq = new Faq();
@@ -27,7 +27,7 @@ $faq = new Faq();
 try {
     $faq->update($id, $question, $answer);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "/faqs/edit");
+    fail_page($e->getMessage(), BASE_URL . "/faqs/edit");
 }
 
-redirect("/faqs");
+redirect(BASE_URL . "/faqs");

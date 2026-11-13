@@ -38,9 +38,9 @@ page_start("User Legal");
                 <td><?= e((string) $row["ktp"]) ?></td>
                 <td><?= e((string) $row["paspor"]) ?></td>
                 <td>
-                    <a href="/user-legal/edit?user_id=<?= e(
-                        urlencode($row["user_id"]),
-                    ) ?>">Edit</a>
+                    <a href="<?= BASE_URL ?>/user-legal/edit?user_id=<?= e(
+    urlencode($row["user_id"]),
+) ?>">Edit</a>
                 </td>
             </tr>
         <?php endforeach; ?>

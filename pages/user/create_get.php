@@ -14,7 +14,9 @@ if (!in_array($role, $roles, true)) {
     echo "<ul>\n";
 
     foreach ($roles as $option) {
-        echo '<li><a href="/users/create?role=' .
+        echo '<li><a href="' .
+            BASE_URL .
+            "/users/create?role=" .
             e(urlencode($option)) .
             '">' .
             e(ucfirst($option)) .
@@ -22,7 +24,7 @@ if (!in_array($role, $roles, true)) {
     }
 
     echo "</ul>\n";
-    echo '<p><a href="/users">Back</a></p>' . "\n";
+    echo '<p><a href="' . BASE_URL . '/users">Back</a></p>' . "\n";
     page_end();
     exit();
 }
@@ -42,7 +44,7 @@ if ($role === "mahasiswa") {
 
 page_start("Create " . ucfirst($role) . " User");
 ?>
-<form method="post" action="/users/create">
+<form method="post" action="<?= BASE_URL ?>/users/create">
     <input type="hidden" name="role" value="<?= e($role) ?>">
     <p>
         <label for="email">Email</label><br>
@@ -113,5 +115,5 @@ page_start("Create " . ucfirst($role) . " User");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="/users">Back</a></p>
+<p><a href="<?= BASE_URL ?>/users">Back</a></p>
 <?php page_end(); ?>

@@ -9,7 +9,7 @@ $departments = $department->all();
 
 page_start("Create Study Program");
 ?>
-<form method="post" action="/study-programs/create">
+<form method="post" action="<?= BASE_URL ?>/study-programs/create">
     <p>
         <label for="department_id">Department</label><br>
         <select id="department_id" name="department_id" required>
@@ -28,5 +28,5 @@ page_start("Create Study Program");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="/study-programs">Back</a></p>
+<p><a href="<?= BASE_URL ?>/study-programs">Back</a></p>
 <?php page_end(); ?>

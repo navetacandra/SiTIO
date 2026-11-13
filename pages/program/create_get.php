@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Create Program");
 ?>
-<form method="post" action="/programs/create">
+<form method="post" action="<?= BASE_URL ?>/programs/create">
     <p>
         <label for="type">Type</label><br>
         <select id="type" name="type" required>
@@ -27,5 +27,5 @@ page_start("Create Program");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="/programs">Back</a></p>
+<p><a href="<?= BASE_URL ?>/programs">Back</a></p>
 <?php page_end(); ?>

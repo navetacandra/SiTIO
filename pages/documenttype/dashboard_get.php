@@ -34,10 +34,10 @@ page_start("Document Types");
                 <td><?= $row["is_required"] ? "Yes" : "No" ?></td>
                 <td><?= e($row["max_size"]) ?></td>
                 <td>
-                    <a href="/document-types/edit?id=<?= e(
-                        $row["document_type_id"],
-                    ) ?>">Edit</a>
-                    <form method="post" action="/document-types/delete">
+                    <a href="<?= BASE_URL ?>/document-types/edit?id=<?= e(
+    $row["document_type_id"],
+) ?>">Edit</a>
+                    <form method="post" action="<?= BASE_URL ?>/document-types/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["document_type_id"],
                         ) ?>">
@@ -49,6 +49,6 @@ page_start("Document Types");
     </tbody>
 </table>
 
-<p><a href="/document-types/create">Create document type</a></p>
-<p><a href="/document-types">Back to list</a></p>
+<p><a href="<?= BASE_URL ?>/document-types/create">Create document type</a></p>
+<p><a href="<?= BASE_URL ?>/document-types">Back to list</a></p>
 <?php page_end(); ?>

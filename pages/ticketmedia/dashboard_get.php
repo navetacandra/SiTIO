@@ -31,10 +31,10 @@ page_start("Ticket Media");
                 <td><?= e($row["type"]) ?></td>
                 <td><?= e($row["path"]) ?></td>
                 <td>
-                    <a href="/ticket-media/edit?ticket_id=<?= e(
-                        urlencode($row["ticket_id"]),
-                    ) ?>&path=<?= e(urlencode($row["path"])) ?>">Edit</a>
-                    <form method="post" action="/ticket-media/delete">
+                    <a href="<?= BASE_URL ?>/ticket-media/edit?ticket_id=<?= e(
+    urlencode($row["ticket_id"]),
+) ?>&path=<?= e(urlencode($row["path"])) ?>">Edit</a>
+                    <form method="post" action="<?= BASE_URL ?>/ticket-media/delete">
                         <input type="hidden" name="ticket_id" value="<?= e(
                             $row["ticket_id"],
                         ) ?>">
@@ -49,6 +49,8 @@ page_start("Ticket Media");
     </tbody>
 </table>
 
-<p><a href="/ticket-media/create">Create ticket media</a></p>
-<p><a href="/ticket-media?ticket_id=<?= e($ticketId) ?>">Back</a></p>
+<p><a href="<?= BASE_URL ?>/ticket-media/create">Create ticket media</a></p>
+<p><a href="<?= BASE_URL ?>/ticket-media?ticket_id=<?= e(
+    $ticketId,
+) ?>">Back</a></p>
 <?php page_end(); ?>

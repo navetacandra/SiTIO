@@ -32,13 +32,13 @@ page_start("Tickets");
                 <td><?= e($row["question"]) ?></td>
                 <td><?= e((string) $row["answer"]) ?></td>
                 <td>
-                    <a href="/tickets/edit?id=<?= e(
-                        $row["ticket_id"],
-                    ) ?>">Edit</a>
-                    <a href="/ticket-media?ticket_id=<?= e(
-                        $row["ticket_id"],
-                    ) ?>">Media</a>
-                    <form method="post" action="/tickets/delete">
+                    <a href="<?= BASE_URL ?>/tickets/edit?id=<?= e(
+    $row["ticket_id"],
+) ?>">Edit</a>
+                    <a href="<?= BASE_URL ?>/ticket-media?ticket_id=<?= e(
+    $row["ticket_id"],
+) ?>">Media</a>
+                    <form method="post" action="<?= BASE_URL ?>/tickets/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["ticket_id"],
                         ) ?>">
@@ -50,6 +50,6 @@ page_start("Tickets");
     </tbody>
 </table>
 
-<p><a href="/tickets/create">Create ticket</a></p>
-<p><a href="/tickets">Back to list</a></p>
+<p><a href="<?= BASE_URL ?>/tickets/create">Create ticket</a></p>
+<p><a href="<?= BASE_URL ?>/tickets">Back to list</a></p>
 <?php page_end(); ?>

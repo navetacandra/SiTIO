@@ -12,13 +12,17 @@ $type = trim((string) ($_POST["type"] ?? ""));
 $path = trim((string) ($_POST["path"] ?? ""));
 
 if ($ticketId === "" || $oldPath === "") {
-    fail_page("Ticket ID and old path are required.", "/ticket-media");
+    fail_page(
+        "Ticket ID and old path are required.",
+        BASE_URL . "/ticket-media",
+    );
 }
 
 if (!in_array($type, ["image", "pdf"], true)) {
     fail_page(
         "Type is invalid.",
-        "/ticket-media/edit?ticket_id=" .
+        BASE_URL .
+            "/ticket-media/edit?ticket_id=" .
             urlencode($ticketId) .
             "&path=" .
             urlencode($oldPath),
@@ -28,7 +32,8 @@ if (!in_array($type, ["image", "pdf"], true)) {
 if ($path === "") {
     fail_page(
         "Path is required.",
-        "/ticket-media/edit?ticket_id=" .
+        BASE_URL .
+            "/ticket-media/edit?ticket_id=" .
             urlencode($ticketId) .
             "&path=" .
             urlencode($oldPath),
@@ -42,11 +47,12 @@ try {
 } catch (Throwable $e) {
     fail_page(
         $e->getMessage(),
-        "/ticket-media/edit?ticket_id=" .
+        BASE_URL .
+            "/ticket-media/edit?ticket_id=" .
             urlencode($ticketId) .
             "&path=" .
             urlencode($oldPath),
     );
 }
 
-redirect("/ticket-media");
+redirect(BASE_URL . "/ticket-media");
