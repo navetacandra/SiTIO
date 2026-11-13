@@ -7,7 +7,7 @@ require_once __DIR__ . "/../../models/Ticket.php";
 $id = trim((string) ($_GET["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("Ticket ID is required.", "dashboard_get.php");
+    fail_page("Ticket ID is required.", "/tickets");
 }
 
 $ticket = new Ticket();
@@ -15,12 +15,12 @@ $row = $ticket->find($id);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("Ticket not found.", "dashboard_get.php");
+    fail_page("Ticket not found.", "/tickets");
 }
 
 page_start("Edit Ticket");
 ?>
-<form method="post" action="edit_post.php">
+<form method="post" action="/tickets/edit">
     <input type="hidden" name="id" value="<?= e($id) ?>">
     <p>
         <label for="mail">Mail</label><br>
@@ -43,5 +43,5 @@ page_start("Edit Ticket");
     <button type="submit">Update</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/tickets">Back</a></p>
 <?php page_end(); ?>

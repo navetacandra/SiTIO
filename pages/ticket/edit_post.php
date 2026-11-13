@@ -12,15 +12,15 @@ $question = trim((string) ($_POST["question"] ?? ""));
 $answer = trim((string) ($_POST["answer"] ?? ""));
 
 if ($id === "") {
-    fail_page("Ticket ID is required.", "dashboard_get.php");
+    fail_page("Ticket ID is required.", "/tickets");
 }
 
 if ($mail === "") {
-    fail_page("Mail is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Mail is required.", "/tickets/edit");
 }
 
 if ($question === "") {
-    fail_page("Question is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Question is required.", "/tickets/edit");
 }
 
 $ticket = new Ticket();
@@ -28,7 +28,7 @@ $ticket = new Ticket();
 try {
     $ticket->update($id, $mail, $question, $answer === "" ? null : $answer);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "edit_get.php?id=" . urlencode($id));
+    fail_page($e->getMessage(), "/tickets/edit");
 }
 
-redirect("dashboard_get.php");
+redirect("/tickets");

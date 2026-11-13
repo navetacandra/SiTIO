@@ -9,7 +9,7 @@ $tickets = $ticket->all();
 
 page_start("Create Ticket Media");
 ?>
-<form method="post" action="create_post.php">
+<form method="post" action="/ticket-media/create">
     <p>
         <label for="ticket_id">Ticket</label><br>
         <select id="ticket_id" name="ticket_id" required>
@@ -35,5 +35,5 @@ page_start("Create Ticket Media");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/ticket-media">Back</a></p>
 <?php page_end(); ?>

@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("Ticket ID is required.", "dashboard_get.php");
+    fail_page("Ticket ID is required.", "/tickets");
 }
 
 $ticket = new Ticket();
@@ -17,7 +17,7 @@ $ticket = new Ticket();
 try {
     $ticket->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "dashboard_get.php");
+    fail_page($e->getMessage(), "/tickets");
 }
 
-redirect("dashboard_get.php");
+redirect("/tickets");

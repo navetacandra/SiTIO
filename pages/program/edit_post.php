@@ -13,18 +13,15 @@ $startAt = trim((string) ($_POST["start_at"] ?? ""));
 $endAt = trim((string) ($_POST["end_at"] ?? ""));
 
 if ($id === "") {
-    fail_page("Program ID is required.", "dashboard_get.php");
+    fail_page("Program ID is required.", "/programs");
 }
 
 if (!in_array($type, ["inbound", "outbound"], true)) {
-    fail_page("Type is invalid.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Type is invalid.", "/programs/edit");
 }
 
 if ($name === "" || $startAt === "" || $endAt === "") {
-    fail_page(
-        "Name, start, and end are required.",
-        "edit_get.php?id=" . urlencode($id),
-    );
+    fail_page("Name, start, and end are required.", "/programs/edit");
 }
 
 $program = new Program();
@@ -32,7 +29,7 @@ $program = new Program();
 try {
     $program->update($id, $type, $name, $startAt, $endAt);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "edit_get.php?id=" . urlencode($id));
+    fail_page($e->getMessage(), "/programs/edit");
 }
 
-redirect("dashboard_get.php");
+redirect("/programs");

@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("User ID is required.", "dashboard_get.php");
+    fail_page("User ID is required.", "/users");
 }
 
 $user = new User();
@@ -17,7 +17,7 @@ $user = new User();
 try {
     $user->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "dashboard_get.php");
+    fail_page($e->getMessage(), "/users");
 }
 
-redirect("dashboard_get.php");
+redirect("/users");

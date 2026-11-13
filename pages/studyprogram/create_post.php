@@ -10,11 +10,7 @@ $departmentId = trim((string) ($_POST["department_id"] ?? ""));
 $name = trim((string) ($_POST["name"] ?? ""));
 
 if ($departmentId === "") {
-    fail_page("Department is required.", "create_get.php");
-}
-
-if ($name === "") {
-    fail_page("Name is required.", "create_get.php");
+    fail_page("Department is required.", "/study-programs/create");
 }
 
 $studyProgram = new StudyProgram();
@@ -22,7 +18,7 @@ $studyProgram = new StudyProgram();
 try {
     $studyProgram->create($departmentId, $name);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "create_get.php");
+    fail_page($e->getMessage(), "/study-programs/create");
 }
 
-redirect("dashboard_get.php");
+redirect("/study-programs");

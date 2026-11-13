@@ -11,11 +11,11 @@ $isRequired = isset($_POST["is_required"]);
 $maxSize = filter_var($_POST["max_size"] ?? null, FILTER_VALIDATE_INT);
 
 if ($name === "") {
-    fail_page("Name is required.", "create_get.php");
+    fail_page("Name is required.", "/document-types/create");
 }
 
 if ($maxSize === false || $maxSize < 1) {
-    fail_page("Max size must be a positive integer.", "create_get.php");
+    fail_page("Max size must be a positive integer.", "/document-types/create");
 }
 
 $documentType = new DocumentType();
@@ -23,7 +23,7 @@ $documentType = new DocumentType();
 try {
     $documentType->create($name, $isRequired, $maxSize);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "create_get.php");
+    fail_page($e->getMessage(), "/document-types/create");
 }
 
-redirect("dashboard_get.php");
+redirect("/document-types");

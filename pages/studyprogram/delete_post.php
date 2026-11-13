@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("Study program ID is required.", "dashboard_get.php");
+    fail_page("Study program ID is required.", "/study-programs");
 }
 
 $studyProgram = new StudyProgram();
@@ -17,7 +17,7 @@ $studyProgram = new StudyProgram();
 try {
     $studyProgram->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "dashboard_get.php");
+    fail_page($e->getMessage(), "/study-programs");
 }
 
-redirect("dashboard_get.php");
+redirect("/study-programs");

@@ -14,7 +14,7 @@ if (!in_array($role, $roles, true)) {
     echo "<ul>\n";
 
     foreach ($roles as $option) {
-        echo '<li><a href="create_get.php?role=' .
+        echo '<li><a href="/users/create?role=' .
             e(urlencode($option)) .
             '">' .
             e(ucfirst($option)) .
@@ -22,7 +22,7 @@ if (!in_array($role, $roles, true)) {
     }
 
     echo "</ul>\n";
-    echo '<p><a href="dashboard_get.php">Back</a></p>' . "\n";
+    echo '<p><a href="/users">Back</a></p>' . "\n";
     page_end();
     exit();
 }
@@ -42,7 +42,7 @@ if ($role === "mahasiswa") {
 
 page_start("Create " . ucfirst($role) . " User");
 ?>
-<form method="post" action="create_post.php">
+<form method="post" action="/users/create">
     <input type="hidden" name="role" value="<?= e($role) ?>">
     <p>
         <label for="email">Email</label><br>
@@ -95,9 +95,11 @@ page_start("Create " . ucfirst($role) . " User");
             <label for="study_program_id">Study program</label><br>
             <select id="study_program_id" name="study_program_id" required>
                 <option value="">Select study program</option>
-                <?php foreach ($studyPrograms as $row): ?>
-                    <option value="<?= e($row["study_program_id"]) ?>"><?= e(
-    $row["department_name"] . " - " . $row["study_program_name"],
+                <?php foreach ($studyPrograms as $programRow): ?>
+                    <option value="<?= e(
+                        $programRow["study_program_id"],
+                    ) ?>"><?= e(
+    $programRow["department_name"] . " - " . $programRow["study_program_name"],
 ) ?></option>
                 <?php endforeach; ?>
             </select>
@@ -111,5 +113,5 @@ page_start("Create " . ucfirst($role) . " User");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/users">Back</a></p>
 <?php page_end(); ?>

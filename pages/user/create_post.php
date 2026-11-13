@@ -13,10 +13,10 @@ $password = (string) ($_POST["password"] ?? "");
 $address = trim((string) ($_POST["address"] ?? ""));
 $birthDate = trim((string) ($_POST["birth_date"] ?? ""));
 $birthLocation = trim((string) ($_POST["birth_location"] ?? ""));
-$back = "create_get.php?role=" . urlencode($role);
+$back = "/users/create?role=" . urlencode($role);
 
 if (!in_array($role, ["struktural", "dosen", "mahasiswa"], true)) {
-    fail_page("Role is invalid.", "create_get.php");
+    fail_page("Role is invalid.", "/users/create");
 }
 
 $user = new User();
@@ -87,4 +87,4 @@ try {
     fail_page($e->getMessage(), $back);
 }
 
-redirect("dashboard_get.php");
+redirect("/users");

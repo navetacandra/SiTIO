@@ -11,15 +11,15 @@ $departmentId = trim((string) ($_POST["department_id"] ?? ""));
 $name = trim((string) ($_POST["name"] ?? ""));
 
 if ($id === "") {
-    fail_page("Study program ID is required.", "dashboard_get.php");
+    fail_page("Study program ID is required.", "/study-programs");
 }
 
 if ($departmentId === "") {
-    fail_page("Department is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Department is required.", "/study-programs/edit");
 }
 
 if ($name === "") {
-    fail_page("Name is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Name is required.", "/study-programs/edit");
 }
 
 $studyProgram = new StudyProgram();
@@ -27,7 +27,7 @@ $studyProgram = new StudyProgram();
 try {
     $studyProgram->update($id, $departmentId, $name);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "edit_get.php?id=" . urlencode($id));
+    fail_page($e->getMessage(), "/study-programs/edit");
 }
 
-redirect("dashboard_get.php");
+redirect("/study-programs");

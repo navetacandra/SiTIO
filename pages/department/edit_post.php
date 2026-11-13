@@ -10,11 +10,11 @@ $id = trim((string) ($_POST["id"] ?? ""));
 $name = trim((string) ($_POST["name"] ?? ""));
 
 if ($id === "") {
-    fail_page("Department ID is required.", "dashboard_get.php");
+    fail_page("Department ID is required.", "/departments");
 }
 
 if ($name === "") {
-    fail_page("Name is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Name is required.", "/departments/edit");
 }
 
 $department = new Department();
@@ -22,7 +22,7 @@ $department = new Department();
 try {
     $department->update($id, $name);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "edit_get.php?id=" . urlencode($id));
+    fail_page($e->getMessage(), "/departments/edit");
 }
 
-redirect("dashboard_get.php");
+redirect("/departments");

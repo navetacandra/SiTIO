@@ -9,7 +9,7 @@ require_post();
 $userId = trim((string) ($_POST["user_id"] ?? ""));
 
 if ($userId === "") {
-    fail_page("User ID is required.", "dashboard_get.php");
+    fail_page("User ID is required.", "/user-legal");
 }
 
 $nullable = static function (string $key): ?string {
@@ -30,7 +30,10 @@ try {
         $nullable("paspor"),
     );
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "edit_get.php?user_id=" . urlencode($userId));
+    fail_page(
+        $e->getMessage(),
+        "/user-legal/edit?user_id=" . urlencode($userId),
+    );
 }
 
-redirect("dashboard_get.php");
+redirect("/user-legal");

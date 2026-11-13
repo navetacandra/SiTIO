@@ -28,10 +28,10 @@ page_start("Departments");
                 <td><?= e($row["department_id"]) ?></td>
                 <td><?= e($row["department_name"]) ?></td>
                 <td>
-                    <a href="edit_get.php?id=<?= e(
+                    <a href="/departments/edit?id=<?= e(
                         $row["department_id"],
                     ) ?>">Edit</a>
-                    <form method="post" action="delete_post.php">
+                    <form method="post" action="/departments/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["department_id"],
                         ) ?>">
@@ -43,5 +43,6 @@ page_start("Departments");
     </tbody>
 </table>
 
-<p><a href="create_get.php">Create department</a></p>
+<p><a href="/departments/create">Create department</a></p>
+<p><a href="/departments">Back to list</a></p>
 <?php page_end(); ?>

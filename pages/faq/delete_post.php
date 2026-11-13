@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("FAQ ID is required.", "dashboard_get.php");
+    fail_page("FAQ ID is required.", "/faqs");
 }
 
 $faq = new Faq();
@@ -17,7 +17,7 @@ $faq = new Faq();
 try {
     $faq->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "dashboard_get.php");
+    fail_page($e->getMessage(), "/faqs");
 }
 
-redirect("dashboard_get.php");
+redirect("/faqs");

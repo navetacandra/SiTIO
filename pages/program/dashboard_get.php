@@ -34,10 +34,10 @@ page_start("Programs");
                 <td><?= e($row["start_at"]) ?></td>
                 <td><?= e($row["end_at"]) ?></td>
                 <td>
-                    <a href="edit_get.php?id=<?= e(
+                    <a href="/programs/edit?id=<?= e(
                         $row["program_id"],
                     ) ?>">Edit</a>
-                    <form method="post" action="delete_post.php">
+                    <form method="post" action="/programs/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["program_id"],
                         ) ?>">
@@ -49,5 +49,6 @@ page_start("Programs");
     </tbody>
 </table>
 
-<p><a href="create_get.php">Create program</a></p>
+<p><a href="/programs/create">Create program</a></p>
+<p><a href="/programs">Back to list</a></p>
 <?php page_end(); ?>

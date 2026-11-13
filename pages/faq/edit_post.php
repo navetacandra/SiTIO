@@ -11,15 +11,15 @@ $question = trim((string) ($_POST["question"] ?? ""));
 $answer = trim((string) ($_POST["answer"] ?? ""));
 
 if ($id === "") {
-    fail_page("FAQ ID is required.", "dashboard_get.php");
+    fail_page("FAQ ID is required.", "/faqs");
 }
 
 if ($question === "") {
-    fail_page("Question is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Question is required.", "/faqs/edit");
 }
 
 if ($answer === "") {
-    fail_page("Answer is required.", "edit_get.php?id=" . urlencode($id));
+    fail_page("Answer is required.", "/faqs/edit");
 }
 
 $faq = new Faq();
@@ -27,7 +27,7 @@ $faq = new Faq();
 try {
     $faq->update($id, $question, $answer);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "edit_get.php?id=" . urlencode($id));
+    fail_page($e->getMessage(), "/faqs/edit");
 }
 
-redirect("dashboard_get.php");
+redirect("/faqs");

@@ -38,7 +38,7 @@ page_start("User Legal");
                 <td><?= e((string) $row["ktp"]) ?></td>
                 <td><?= e((string) $row["paspor"]) ?></td>
                 <td>
-                    <a href="edit_get.php?user_id=<?= e(
+                    <a href="/user-legal/edit?user_id=<?= e(
                         urlencode($row["user_id"]),
                     ) ?>">Edit</a>
                 </td>

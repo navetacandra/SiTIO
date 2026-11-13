@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Login");
 ?>
-<form method="post" action="login_post.php">
+<form method="post" action="/users/login">
     <p>
         <label for="identifier">Email or phone</label><br>
         <input id="identifier" name="identifier" type="text" required>
@@ -16,5 +16,5 @@ page_start("Login");
     <button type="submit">Login</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/users">Back</a></p>
 <?php page_end(); ?>

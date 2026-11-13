@@ -9,7 +9,7 @@ require_post();
 $id = trim((string) ($_POST["id"] ?? ""));
 
 if ($id === "") {
-    fail_page("Department ID is required.", "dashboard_get.php");
+    fail_page("Department ID is required.", "/departments");
 }
 
 $department = new Department();
@@ -17,7 +17,7 @@ $department = new Department();
 try {
     $department->delete($id);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "dashboard_get.php");
+    fail_page($e->getMessage(), "/departments");
 }
 
-redirect("dashboard_get.php");
+redirect("/departments");

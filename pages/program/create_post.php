@@ -12,11 +12,11 @@ $startAt = trim((string) ($_POST["start_at"] ?? ""));
 $endAt = trim((string) ($_POST["end_at"] ?? ""));
 
 if (!in_array($type, ["inbound", "outbound"], true)) {
-    fail_page("Type is invalid.", "create_get.php");
+    fail_page("Type is invalid.", "/programs/create");
 }
 
 if ($name === "" || $startAt === "" || $endAt === "") {
-    fail_page("Name, start, and end are required.", "create_get.php");
+    fail_page("Name, start, and end are required.", "/programs/create");
 }
 
 $program = new Program();
@@ -24,7 +24,7 @@ $program = new Program();
 try {
     $program->create($type, $name, $startAt, $endAt);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "create_get.php");
+    fail_page($e->getMessage(), "/programs/create");
 }
 
-redirect("dashboard_get.php");
+redirect("/programs");

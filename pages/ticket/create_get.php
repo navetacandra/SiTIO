@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Create Ticket");
 ?>
-<form method="post" action="create_post.php">
+<form method="post" action="/tickets/create">
     <p>
         <label for="mail">Mail</label><br>
         <input id="mail" name="mail" type="email" required>
@@ -20,5 +20,5 @@ page_start("Create Ticket");
     <button type="submit">Save</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/tickets">Back</a></p>
 <?php page_end(); ?>

@@ -30,10 +30,10 @@ page_start("Study Programs");
                 <td><?= e($row["department_name"]) ?></td>
                 <td><?= e($row["study_program_name"]) ?></td>
                 <td>
-                    <a href="edit_get.php?id=<?= e(
+                    <a href="/study-programs/edit?id=<?= e(
                         $row["study_program_id"],
                     ) ?>">Edit</a>
-                    <form method="post" action="delete_post.php">
+                    <form method="post" action="/study-programs/delete">
                         <input type="hidden" name="id" value="<?= e(
                             $row["study_program_id"],
                         ) ?>">
@@ -45,5 +45,6 @@ page_start("Study Programs");
     </tbody>
 </table>
 
-<p><a href="create_get.php">Create study program</a></p>
+<p><a href="/study-programs/create">Create study program</a></p>
+<p><a href="/study-programs">Back to list</a></p>
 <?php page_end(); ?>

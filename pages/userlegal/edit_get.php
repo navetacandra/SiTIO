@@ -7,7 +7,7 @@ require_once __DIR__ . "/../../models/UserLegal.php";
 $userId = trim((string) ($_GET["user_id"] ?? ""));
 
 if ($userId === "") {
-    fail_page("User ID is required.", "dashboard_get.php");
+    fail_page("User ID is required.", "/user-legal");
 }
 
 $userLegal = new UserLegal();
@@ -15,12 +15,12 @@ $row = $userLegal->find($userId);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("User legal data not found.", "dashboard_get.php");
+    fail_page("User legal data not found.", "/user-legal");
 }
 
 page_start("Edit User Legal");
 ?>
-<form method="post" action="edit_post.php">
+<form method="post" action="/user-legal/edit">
     <input type="hidden" name="user_id" value="<?= e($userId) ?>">
     <p>
         <label>User ID</label><br>
@@ -65,5 +65,5 @@ page_start("Edit User Legal");
     <button type="submit">Update</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/user-legal">Back</a></p>
 <?php page_end(); ?>

@@ -8,7 +8,7 @@ $ticketId = trim((string) ($_GET["ticket_id"] ?? ""));
 $path = trim((string) ($_GET["path"] ?? ""));
 
 if ($ticketId === "" || $path === "") {
-    fail_page("Ticket ID and path are required.", "dashboard_get.php");
+    fail_page("Ticket ID and path are required.", "/ticket-media");
 }
 
 $ticketMedia = new TicketMedia();
@@ -16,12 +16,12 @@ $row = $ticketMedia->find($ticketId, $path);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("Ticket media not found.", "dashboard_get.php");
+    fail_page("Ticket media not found.", "/ticket-media");
 }
 
 page_start("Edit Ticket Media");
 ?>
-<form method="post" action="edit_post.php">
+<form method="post" action="/ticket-media/edit">
     <input type="hidden" name="ticket_id" value="<?= e($ticketId) ?>">
     <input type="hidden" name="old_path" value="<?= e($path) ?>">
     <p>
@@ -48,5 +48,5 @@ page_start("Edit Ticket Media");
     <button type="submit">Update</button>
 </form>
 
-<p><a href="dashboard_get.php">Back</a></p>
+<p><a href="/ticket-media">Back</a></p>
 <?php page_end(); ?>

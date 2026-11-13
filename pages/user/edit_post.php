@@ -17,7 +17,7 @@ $password = trim((string) ($_POST["password"] ?? ""));
 $back = "edit_get.php?id=" . urlencode($id);
 
 if ($id === "") {
-    fail_page("User ID is required.", "dashboard_get.php");
+    fail_page("User ID is required.", "/users");
 }
 
 $user = new User();
@@ -25,7 +25,7 @@ $row = $user->find($id);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("User not found.", "dashboard_get.php");
+    fail_page("User not found.", "/users");
 }
 
 $position = null;
@@ -82,4 +82,4 @@ try {
     fail_page($e->getMessage(), $back);
 }
 
-redirect("dashboard_get.php");
+redirect("/users");
