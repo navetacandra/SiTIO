@@ -18,7 +18,6 @@ if ($row === false) {
     fail_page("Department not found.", BASE_URL . "/departments");
 }
 
-
 page_start("Edit Department");
 ?>
 <form method="post" action="<?= BASE_URL ?>/departments/edit">
