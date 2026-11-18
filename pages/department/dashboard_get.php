@@ -24,7 +24,9 @@ admin_page_start("Departments", "departments", $extraHead);
             confirmButtonText: 'Delete',
             confirmButtonColor: 'var(--red)',
             html: `
-                <form method="POST" action="<?= e(BASE_URL . "/departments/delete") ?>" id="delete-form" style="display: none;">
+                <form method="POST" action="<?= e(
+                    BASE_URL . "/departments/delete",
+                ) ?>" id="delete-form" style="display: none;">
                     <input type="hidden" name="id" value="${id}">
                 </form>
             `,

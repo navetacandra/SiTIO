@@ -1,58 +1,70 @@
-lockfileVersion: '9.0'
+lockfileVersion: "9.0"
 
 settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
+    autoInstallPeers: true
+    excludeLinksFromLockfile: false
 
 importers:
-
-  .:
-    devDependencies:
-      '@prettier/plugin-php':
-        specifier: ^0.26.0
-        version: 0.26.0(prettier@3.10.1)
-      husky:
-        specifier: ^9.1.7
-        version: 9.1.7
-      prettier:
-        specifier: ^3.9.10
-        version: 3.10.1
+    .:
+        devDependencies:
+            "@prettier/plugin-php":
+                specifier: ^0.26.0
+                version: 0.26.0(prettier@3.10.1)
+            husky:
+                specifier: ^9.1.7
+                version: 9.1.7
+            prettier:
+                specifier: ^3.9.10
+                version: 3.10.1
 
 packages:
+    "@prettier/plugin-php@0.26.0":
+        resolution:
+            {
+                integrity: sha512-qaKv27XSAPSnEpieY+H6Ktgzn7bQIjPKYmVWDVY4pJwnm7E1RC0whzMYHidWlfyyZK3qpnY7HPnjmecTnNC/uA==,
+            }
+        peerDependencies:
+            prettier: ^3.0.0
 
-  '@prettier/plugin-php@0.26.0':
-    resolution: {integrity: sha512-qaKv27XSAPSnEpieY+H6Ktgzn7bQIjPKYmVWDVY4pJwnm7E1RC0whzMYHidWlfyyZK3qpnY7HPnjmecTnNC/uA==}
-    peerDependencies:
-      prettier: ^3.0.0
+    husky@9.1.7:
+        resolution:
+            {
+                integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==,
+            }
+        engines: { node: ">=18" }
+        hasBin: true
 
-  husky@9.1.7:
-    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
-    engines: {node: '>=18'}
-    hasBin: true
+    linguist-languages@9.5.0:
+        resolution:
+            {
+                integrity: sha512-Wtg9O6iHNBYFJQVtPNwWCaWkNEqZqiCGI4gSkeH8TqvgZUyb1IUWmFSa9Z9UhT392/aX6Peoa91bH9sDah1ZVw==,
+            }
 
-  linguist-languages@9.5.0:
-    resolution: {integrity: sha512-Wtg9O6iHNBYFJQVtPNwWCaWkNEqZqiCGI4gSkeH8TqvgZUyb1IUWmFSa9Z9UhT392/aX6Peoa91bH9sDah1ZVw==}
+    php-parser@3.7.0:
+        resolution:
+            {
+                integrity: sha512-JRc1t78GZAEa+MuzVC5A5RJS1NDFTS4UnprUEu/NnsN9cyHbGZLUqghO9IQZUSCay62HYQiWd3PxyWAEF45zmA==,
+            }
 
-  php-parser@3.7.0:
-    resolution: {integrity: sha512-JRc1t78GZAEa+MuzVC5A5RJS1NDFTS4UnprUEu/NnsN9cyHbGZLUqghO9IQZUSCay62HYQiWd3PxyWAEF45zmA==}
-
-  prettier@3.10.1:
-    resolution: {integrity: sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==}
-    engines: {node: '>=14'}
-    hasBin: true
+    prettier@3.10.1:
+        resolution:
+            {
+                integrity: sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==,
+            }
+        engines: { node: ">=14" }
+        hasBin: true
 
 snapshots:
+    "@prettier/plugin-php@0.26.0(prettier@3.10.1)":
+        dependencies:
+            linguist-languages: 9.5.0
+            php-parser: 3.7.0
+            prettier: 3.10.1
 
-  '@prettier/plugin-php@0.26.0(prettier@3.10.1)':
-    dependencies:
-      linguist-languages: 9.5.0
-      php-parser: 3.7.0
-      prettier: 3.10.1
+    husky@9.1.7: {}
 
-  husky@9.1.7: {}
+    linguist-languages@9.5.0: {}
 
-  linguist-languages@9.5.0: {}
+    php-parser@3.7.0: {}
 
-  php-parser@3.7.0: {}
-
-  prettier@3.10.1: {}
+    prettier@3.10.1: {}
