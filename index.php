@@ -11,14 +11,14 @@ unset($_GET["page"]); // remove unused
 
 $routes = [
     "/" => [
-        "GET" => BASE_URL . "/users/login_get.php",
+        "GET" => BASE_URL . "/pages/user/login_get.php",
     ],
     "/login" => [
-        "GET" => BASE_URL . "/users/login_get.php",
-        "POST" => BASE_URL . "/users/login_post.php",
+        "GET" => BASE_URL . "/pages/user/login_get.php",
+        "POST" => BASE_URL . "/pages/user/login_post.php",
     ],
     "/logout" => [
-        "POST" => BASE_URL . "/users/logout_post.php",
+        "POST" => BASE_URL . "/pages/user/logout_post.php",
     ],
     "/departments" => [
         "GET" => BASE_URL . "/pages/department/dashboard_get.php",

@@ -6,17 +6,12 @@ require_once __DIR__ . "/../../models/Department.php";
 
 require_post();
 
-$id = trim((string) ($_POST["id"] ?? ""));
 $name = trim((string) ($_POST["name"] ?? ""));
-
-if ($id === "") {
-    fail_page("Department ID is required.", BASE_URL . "/departments");
-}
 
 $department = new Department();
 
 try {
-    $department->update($id, $name);
+    $department->create($name);
 } catch (Throwable $e) {
     fail_page($e->getMessage(), BASE_URL . "/departments");
 }

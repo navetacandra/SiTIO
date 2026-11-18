@@ -1,6 +1,23 @@
 <?php declare(strict_types=1);
 
 require_once __DIR__ . "/../_helpers.php";
+require_once __DIR__ . "/../../database.php";
+require_once __DIR__ . "/../../models/Department.php";
+
+$id = trim((string) ($_GET["id"] ?? ""));
+
+if ($id === "") {
+    fail_page("Department ID is required.", BASE_URL . "/departments");
+}
+
+$department = new Department();
+$row = $department->find($id);
+
+if ($row === false) {
+    http_response_code(404);
+    fail_page("Department not found.", BASE_URL . "/departments");
+}
+
 
 page_start("Edit Department");
 ?>

@@ -5,16 +5,23 @@
 ROLLBACK;
 
 BEGIN;
+DROP TABLE IF EXISTS user_legal;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS ticket_media;
+DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS faqs;
+DROP TABLE IF EXISTS document_types;
+DROP TABLE IF EXISTS programs;
+DROP TABLE IF EXISTS study_programs;
+DROP TABLE IF EXISTS departments;
+COMMIT;
 
+BEGIN;
 CREATE TABLE IF NOT EXISTS departments (
     department_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     department_name VARCHAR(128),
     deleted_at TIMESTAMPTZ
 );
-
--- Migrate existing departments table created before soft delete.
-ALTER TABLE departments
-    ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
 
 ALTER TABLE departments
     DROP CONSTRAINT IF EXISTS departments_department_name_key;
@@ -30,10 +37,6 @@ CREATE TABLE IF NOT EXISTS study_programs (
     study_program_name VARCHAR(128),
     deleted_at TIMESTAMPTZ
 );
-
--- Migrate existing study_programs table created before soft delete.
-ALTER TABLE study_programs
-    ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMPTZ;
 
 ALTER TABLE study_programs
     DROP CONSTRAINT IF EXISTS study_programs_study_program_name_key;
@@ -158,5 +161,4 @@ CREATE TABLE IF NOT EXISTS user_legal (
     paspor TEXT,
     deleted_at TIMESTAMPTZ
 );
-
 COMMIT;

@@ -4,7 +4,7 @@ require_once __DIR__ . "/../_helpers.php";
 
 page_start("Login");
 ?>
-<form method="post" action="<?= BASE_URL ?>/users/login">
+<form method="post" action="<?= BASE_URL ?>/login">
     <p>
         <label for="identifier">Email or phone</label><br>
         <input id="identifier" name="identifier" type="text" required>

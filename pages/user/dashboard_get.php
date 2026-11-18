@@ -2,9 +2,11 @@
 
 require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
+require_once __DIR__ . "/../../models/User.php";
 require_once __DIR__ . "/../../models/Department.php";
 require_once __DIR__ . "/../../models/StudyProgram.php";
 
+$user = new User();
 $rows = $user->all();
 
 page_start("Users");
@@ -54,7 +56,7 @@ page_start("Users");
 
 <p><a href="<?= BASE_URL ?>/users/create">Create user</a></p>
 
-<form method="post" action="<?= BASE_URL ?>/users/logout">
+<form method="post" action="<?= BASE_URL ?>/logout">
     <button type="submit">Logout</button>
 </form>
 <?php page_end(); ?>
