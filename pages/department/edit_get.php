@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_helpers.php";
+require_once __DIR__ . "/../_layout.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Department.php";
 
@@ -18,18 +18,28 @@ if ($row === false) {
     fail_page("Department not found.", BASE_URL . "/departments");
 }
 
-page_start("Edit Department");
+admin_page_start("Edit Department", "departments");
 ?>
-<form method="post" action="<?= BASE_URL ?>/departments/edit">
+
+<form method="post" action="<?= e(BASE_URL . "/departments/edit") ?>">
+    <div class="card">
+        <div class="title-container">
+            <h3 class="title">Edit Department</h3>
+        </div>
+        <div class="form-input">
+            <label for="name">Name<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <input type="text" placeholder="Name of the department" id="name" name="name" value="<?= e(
+                    $row["department_name"],
+                ) ?>" required>
+            </div>
+        </div>
+    </div>
     <input type="hidden" name="id" value="<?= e($id) ?>">
-    <p>
-        <label for="name">Name</label><br>
-        <input id="name" name="name" type="text" value="<?= e(
-            $row["department_name"],
-        ) ?>" required>
-    </p>
-    <button type="submit">Update</button>
+    <div class="input-box3">
+        <button type="submit" class="btn-submit">Update Department</button>
+        <a href="<?= e(BASE_URL . "/departments") ?>" class="back">Cancel</a>
+    </div>
 </form>
 
-<p><a href="<?= BASE_URL ?>/departments">Back</a></p>
-<?php page_end(); ?>
+<?php admin_page_end(); ?>
