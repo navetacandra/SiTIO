@@ -11,6 +11,8 @@ RewriteEngine On
     php_value error_log php_error.log
     php_value date.timezone Asia/Jakarta
     php_value extension pdo_pgsql
+    php_value upload_max_filesize 5M
+    php_value post_max_size 8M
 </IfModule>
 
 RewriteCond %{REQUEST_FILENAME} !-f

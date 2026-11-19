@@ -7,27 +7,32 @@ require_once __DIR__ . "/../../models/TicketMedia.php";
 require_post();
 
 $ticketId = trim((string) ($_POST["ticket_id"] ?? ""));
-$type = trim((string) ($_POST["type"] ?? ""));
-$path = trim((string) ($_POST["path"] ?? ""));
+$attachment = $_FILES["attachment"] ?? null;
+
+$backUrl =
+    BASE_URL .
+    "/ticket-media/create" .
+    ($ticketId === "" ? "" : "?ticket_id=" . urlencode($ticketId));
 
 if ($ticketId === "") {
-    fail_page("Ticket is required.", "create_get.php");
+    fail_page("Ticket is required.", $backUrl);
 }
 
-if (!in_array($type, ["image", "pdf"], true)) {
-    fail_page("Type is invalid.", "create_get.php");
+if (!has_ticket_upload($attachment)) {
+    fail_page("File is required.", $backUrl);
 }
-
-if ($path === "") {
-    fail_page("Path is required.", "create_get.php");
-}
-
-$ticketMedia = new TicketMedia();
 
 try {
-    $ticketMedia->create($ticketId, $type, $path);
+    $upload = save_ticket_upload($attachment, $ticketId);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), "create_get.php");
+    fail_page($e->getMessage(), $backUrl);
 }
 
-redirect("dashboard_get.php");
+try {
+    (new TicketMedia())->create($ticketId, $upload["type"], $upload["path"]);
+} catch (Throwable $e) {
+    @unlink($upload["absolute"]);
+    fail_page($e->getMessage(), $backUrl);
+}
+
+redirect(ticket_media_url($ticketId));

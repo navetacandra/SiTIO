@@ -47,12 +47,14 @@ final class Ticket
         string $mail,
         string $question,
         ?string $answer = null,
-    ): int {
+    ): string {
         $stmt = $this->db->prepare(
-            "INSERT INTO tickets (mail, question, answer) VALUES (?, ?, ?)",
+            "INSERT INTO tickets (mail, question, answer)
+            VALUES (?, ?, ?)
+            RETURNING ticket_id",
         );
         $stmt->execute([$mail, $question, $answer]);
-        return $stmt->rowCount();
+        return (string) $stmt->fetchColumn();
     }
 
     public function update(

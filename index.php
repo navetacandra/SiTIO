@@ -115,6 +115,9 @@ $routes = [
         "GET" => BASE_URL . "/pages/ticket/edit_get.php",
         "POST" => BASE_URL . "/pages/ticket/edit_post.php",
     ],
+    "/tickets/details" => [
+        "GET" => BASE_URL . "/pages/ticket/details_get.php",
+    ],
     "/tickets/delete" => [
         "POST" => BASE_URL . "/pages/ticket/delete_post.php",
     ],

@@ -18,7 +18,7 @@ $ticketMedia = new TicketMedia();
 try {
     $ticketMedia->delete($ticketId, $path);
 } catch (Throwable $e) {
-    fail_page($e->getMessage(), BASE_URL . "/ticket-media");
+    fail_page($e->getMessage(), ticket_media_url($ticketId));
 }
 
-redirect(BASE_URL . "/ticket-media");
+redirect(ticket_media_url($ticketId));

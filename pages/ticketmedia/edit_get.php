@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_helpers.php";
+require_once __DIR__ . "/../_layout.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/TicketMedia.php";
 
@@ -16,37 +16,56 @@ $row = $ticketMedia->find($ticketId, $path);
 
 if ($row === false) {
     http_response_code(404);
-    fail_page("Ticket media not found.", BASE_URL . "/ticket-media");
+    fail_page("Ticket media not found.", ticket_media_url($ticketId));
 }
 
-page_start("Edit Ticket Media");
+$backUrl = ticket_media_url($ticketId);
+
+admin_page_start("Edit Ticket Media", "tickets");
 ?>
-<form method="post" action="<?= BASE_URL ?>/ticket-media/edit">
+
+<div class="title-container">
+    <h2 class="title">Edit Ticket Media</h2>
+    <p class="subtitle">Ticket #<?= e(substr($ticketId, 0, 8)) ?></p>
+</div>
+
+<form method="post" action="<?= e(BASE_URL . "/ticket-media/edit") ?>">
     <input type="hidden" name="ticket_id" value="<?= e($ticketId) ?>">
     <input type="hidden" name="old_path" value="<?= e($path) ?>">
-    <p>
-        <label>Ticket ID</label><br>
-        <input type="text" value="<?= e($row["ticket_id"]) ?>" readonly>
-    </p>
-    <p>
-        <label for="type">Type</label><br>
-        <select id="type" name="type" required>
-            <option value="image"<?= $row["type"] === "image"
-                ? " selected"
-                : "" ?>>Image</option>
-            <option value="pdf"<?= $row["type"] === "pdf"
-                ? " selected"
-                : "" ?>>PDF</option>
-        </select>
-    </p>
-    <p>
-        <label for="path">Path</label><br>
-        <input id="path" name="path" type="text" value="<?= e(
-            $row["path"],
-        ) ?>" required>
-    </p>
-    <button type="submit">Update</button>
+
+    <div class="card">
+        <div class="title-container">
+            <h3 class="title">Media Details</h3>
+        </div>
+
+        <div class="form-input">
+            <label for="type">Type<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <select id="type" name="type" required>
+                    <option value="image" <?= $row["type"] === "image"
+                        ? "selected"
+                        : "" ?>>Image</option>
+                    <option value="pdf" <?= $row["type"] === "pdf"
+                        ? "selected"
+                        : "" ?>>PDF</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-input">
+            <label for="path">Path<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <input type="text" placeholder="e.g. uploads/tickets/file.pdf" id="path" name="path" value="<?= e(
+                    $row["path"],
+                ) ?>" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-box3">
+        <button type="submit" class="btn-submit">Update Media</button>
+        <a href="<?= e($backUrl) ?>" class="back">Cancel</a>
+    </div>
 </form>
 
-<p><a href="<?= BASE_URL ?>/ticket-media">Back</a></p>
-<?php page_end(); ?>
+<?php admin_page_end(); ?>

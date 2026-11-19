@@ -1,96 +1,160 @@
 <?php
 
 /* ---------- Konfigurasi ---------- */
-$uploadDir  = __DIR__ . '/../../public/uploads/sp_setneg/'; // sesuaikan dengan struktur proyekmu
-$uploadUrl  = '/uploads/sp_setneg/';
-$maxSize    = 5 * 1024 * 1024; // 5 MB
-$statusList = ['Diproses', 'Disetujui', 'Ditolak'];
+$uploadDir = __DIR__ . "/../../public/uploads/sp_setneg/"; // sesuaikan dengan struktur proyekmu
+$uploadUrl = "/uploads/sp_setneg/";
+$maxSize = 5 * 1024 * 1024; // 5 MB
+$statusList = ["Diproses", "Disetujui", "Ditolak"];
 $badge = [
-    'Baru Diajukan' => 'bg-sky-100 text-sky-700',
-    'Diproses'      => 'bg-amber-100 text-amber-700',
-    'Disetujui'     => 'bg-green-100 text-green-700',
-    'Ditolak'       => 'bg-red-100 text-red-700',
+    "Baru Diajukan" => "bg-sky-100 text-sky-700",
+    "Diproses" => "bg-amber-100 text-amber-700",
+    "Disetujui" => "bg-green-100 text-green-700",
+    "Ditolak" => "bg-red-100 text-red-700",
 ];
-$e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, "UTF-8");
 
 /* ---------- Data dummy ---------- */
-if (!isset($_SESSION['pengajuan'])) {
-    $_SESSION['pengajuan'] = [
-        ['id' => 101, 'kegiatan' => 'Enthufest',          'peserta' => 'Ahmad Zulfikar',     'jabatan' => 'Mahasiswa',  'tanggal' => '2026-04-09', 'status' => 'Baru Diajukan', 'sp_setneg' => null],
-        ['id' => 102, 'kegiatan' => 'Hackathon',          'peserta' => 'Dr. Siti Nurhaliza', 'jabatan' => 'Dosen',      'tanggal' => '2026-05-02', 'status' => 'Disetujui',     'sp_setneg' => null],
-        ['id' => 103, 'kegiatan' => 'Campfest',           'peserta' => 'Budi Santoso',       'jabatan' => 'Tendik',     'tanggal' => '2026-05-20', 'status' => 'Diproses',      'sp_setneg' => null],
-        ['id' => 104, 'kegiatan' => 'Techno Expo',        'peserta' => 'Rina Marlina',       'jabatan' => 'Mahasiswa',  'tanggal' => '2026-06-03', 'status' => 'Ditolak',       'sp_setneg' => null],
-        ['id' => 105, 'kegiatan' => 'Seminar Nasional',   'peserta' => 'Prof. Hendra Wijaya', 'jabatan' => 'Struktural', 'tanggal' => '2026-06-17', 'status' => 'Baru Diajukan', 'sp_setneg' => null],
-        ['id' => 106, 'kegiatan' => 'Robotics Challenge', 'peserta' => 'Dimas Prasetyo',     'jabatan' => 'Mahasiswa',  'tanggal' => '2026-06-28', 'status' => 'Disetujui',     'sp_setneg' => null],
+if (!isset($_SESSION["pengajuan"])) {
+    $_SESSION["pengajuan"] = [
+        [
+            "id" => 101,
+            "kegiatan" => "Enthufest",
+            "peserta" => "Ahmad Zulfikar",
+            "jabatan" => "Mahasiswa",
+            "tanggal" => "2026-04-09",
+            "status" => "Baru Diajukan",
+            "sp_setneg" => null,
+        ],
+        [
+            "id" => 102,
+            "kegiatan" => "Hackathon",
+            "peserta" => "Dr. Siti Nurhaliza",
+            "jabatan" => "Dosen",
+            "tanggal" => "2026-05-02",
+            "status" => "Disetujui",
+            "sp_setneg" => null,
+        ],
+        [
+            "id" => 103,
+            "kegiatan" => "Campfest",
+            "peserta" => "Budi Santoso",
+            "jabatan" => "Tendik",
+            "tanggal" => "2026-05-20",
+            "status" => "Diproses",
+            "sp_setneg" => null,
+        ],
+        [
+            "id" => 104,
+            "kegiatan" => "Techno Expo",
+            "peserta" => "Rina Marlina",
+            "jabatan" => "Mahasiswa",
+            "tanggal" => "2026-06-03",
+            "status" => "Ditolak",
+            "sp_setneg" => null,
+        ],
+        [
+            "id" => 105,
+            "kegiatan" => "Seminar Nasional",
+            "peserta" => "Prof. Hendra Wijaya",
+            "jabatan" => "Struktural",
+            "tanggal" => "2026-06-17",
+            "status" => "Baru Diajukan",
+            "sp_setneg" => null,
+        ],
+        [
+            "id" => 106,
+            "kegiatan" => "Robotics Challenge",
+            "peserta" => "Dimas Prasetyo",
+            "jabatan" => "Mahasiswa",
+            "tanggal" => "2026-06-28",
+            "status" => "Disetujui",
+            "sp_setneg" => null,
+        ],
     ];
 }
-$_SESSION['csrf'] = $_SESSION['csrf'] ?? bin2hex(random_bytes(16));
+$_SESSION["csrf"] = $_SESSION["csrf"] ?? bin2hex(random_bytes(16));
 
 /* ---------- Handler POST ---------- */
-$flash = $_SESSION['flash'] ?? null;
-unset($_SESSION['flash']);
+$flash = $_SESSION["flash"] ?? null;
+unset($_SESSION["flash"]);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_status') {
-    $error  = null;
-    $id     = (int)($_POST['pengajuan_id'] ?? 0);
-    $status = (string)($_POST['status'] ?? '');
-    $idx    = array_search($id, array_column($_SESSION['pengajuan'], 'id'), true);
+if (
+    $_SERVER["REQUEST_METHOD"] === "POST" &&
+    ($_POST["action"] ?? "") === "update_status"
+) {
+    $error = null;
+    $id = (int) ($_POST["pengajuan_id"] ?? 0);
+    $status = (string) ($_POST["status"] ?? "");
+    $idx = array_search($id, array_column($_SESSION["pengajuan"], "id"), true);
 
-    $sessionCsrf = $_SESSION['csrf'] ?? '';
-    $submittedCsrf = (string)($_POST['csrf'] ?? '');
+    $sessionCsrf = $_SESSION["csrf"] ?? "";
+    $submittedCsrf = (string) ($_POST["csrf"] ?? "");
 
-    if (!is_string($sessionCsrf) || !hash_equals($sessionCsrf, $submittedCsrf)) {
-        $error = 'Sesi tidak valid, silakan muat ulang halaman.';
+    if (
+        !is_string($sessionCsrf) ||
+        !hash_equals($sessionCsrf, $submittedCsrf)
+    ) {
+        $error = "Sesi tidak valid, silakan muat ulang halaman.";
     } elseif ($idx === false) {
-        $error = 'Data pengajuan tidak ditemukan.';
+        $error = "Data pengajuan tidak ditemukan.";
     } elseif (!in_array($status, $statusList, true)) {
-        $error = 'Status tidak valid.';
+        $error = "Status tidak valid.";
     }
 
     // Upload SP Setneg (opsional kalau sudah pernah diupload)
-    $file = $_FILES['sp_setneg'] ?? null;
-    if (!$error && $file && $file['error'] !== UPLOAD_ERR_NO_FILE) {
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            $error = 'Upload gagal, coba lagi.';
-        } elseif ($file['size'] > $maxSize) {
-            $error = 'Ukuran file maksimal 5 MB.';
-        } elseif ((new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']) !== 'application/pdf') {
-            $error = 'File harus berformat PDF.';
+    $file = $_FILES["sp_setneg"] ?? null;
+    if (!$error && $file && $file["error"] !== UPLOAD_ERR_NO_FILE) {
+        if ($file["error"] !== UPLOAD_ERR_OK) {
+            $error = "Upload gagal, coba lagi.";
+        } elseif ($file["size"] > $maxSize) {
+            $error = "Ukuran file maksimal 5 MB.";
+        } elseif (
+            (new finfo(FILEINFO_MIME_TYPE))->file($file["tmp_name"]) !==
+            "application/pdf"
+        ) {
+            $error = "File harus berformat PDF.";
         } else {
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }
-            $name = 'sp_' . $id . '_' . bin2hex(random_bytes(6)) . '.pdf';
-            if (move_uploaded_file($file['tmp_name'], $uploadDir . $name)) {
-                $_SESSION['pengajuan'][$idx]['sp_setneg'] = $name;
+            $name = "sp_" . $id . "_" . bin2hex(random_bytes(6)) . ".pdf";
+            if (move_uploaded_file($file["tmp_name"], $uploadDir . $name)) {
+                $_SESSION["pengajuan"][$idx]["sp_setneg"] = $name;
             } else {
-                $error = 'File gagal disimpan di server.';
+                $error = "File gagal disimpan di server.";
             }
         }
     }
 
     // Aturan: untuk "Disetujui", SP Setneg wajib ada
-    if (!$error && $status === 'Disetujui' && empty($_SESSION['pengajuan'][$idx]['sp_setneg'])) {
-        $error = 'Upload SP Setneg dulu sebelum menyetujui pengajuan.';
+    if (
+        !$error &&
+        $status === "Disetujui" &&
+        empty($_SESSION["pengajuan"][$idx]["sp_setneg"])
+    ) {
+        $error = "Upload SP Setneg dulu sebelum menyetujui pengajuan.";
     }
 
     if (!$error) {
-        $_SESSION['pengajuan'][$idx]['status'] = $status;
-        $_SESSION['flash'] = ['type' => 'success', 'msg' => "Pengajuan #{$id} diperbarui menjadi {$status}."];
+        $_SESSION["pengajuan"][$idx]["status"] = $status;
+        $_SESSION["flash"] = [
+            "type" => "success",
+            "msg" => "Pengajuan #{$id} diperbarui menjadi {$status}.",
+        ];
     } else {
-        $_SESSION['flash'] = ['type' => 'error', 'msg' => $error];
+        $_SESSION["flash"] = ["type" => "error", "msg" => $error];
     }
 
     // Post-Redirect-Get (hanya jalan kalau belum ada output; kalau di-include sebagai partial, pindahkan handler ini ke atas index.view.php)
     if (!headers_sent()) {
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
+        header("Location: " . $_SERVER["REQUEST_URI"]);
+        exit();
     }
-    $flash = $_SESSION['flash'];
-    unset($_SESSION['flash']);
+    $flash = $_SESSION["flash"];
+    unset($_SESSION["flash"]);
 }
 
-$pengajuan = $_SESSION['pengajuan'];
+$pengajuan = $_SESSION["pengajuan"];
 ?>
 
 <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
@@ -100,8 +164,11 @@ $pengajuan = $_SESSION['pengajuan'];
   </div>
 
   <?php if ($flash): ?>
-    <div class="mb-4 px-4 py-3 rounded-lg text-sm <?= $flash['type'] === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200' ?>">
-      <?= $e($flash['msg']) ?>
+    <div class="mb-4 px-4 py-3 rounded-lg text-sm <?= $flash["type"] ===
+    "success"
+        ? "bg-green-50 text-green-700 border border-green-200"
+        : "bg-red-50 text-red-700 border border-red-200" ?>">
+      <?= $e($flash["msg"]) ?>
     </div>
   <?php endif; ?>
 
@@ -128,24 +195,34 @@ $pengajuan = $_SESSION['pengajuan'];
         <?php foreach ($pengajuan as $p): ?>
           <tr class="hover:bg-slate-50 align-middle">
             <th scope="row" class="px-4 py-3 font-normal">
-              <code class="font-mono text-xs text-blue-600">#<?= (int)$p['id'] ?></code>
+              <code class="font-mono text-xs text-blue-600">#<?= (int) $p[
+                  "id"
+              ] ?></code>
             </th>
-            <td class="px-4 py-3 font-medium text-slate-800"><?= $e($p['kegiatan']) ?></td>
-            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e($p['peserta']) ?></td>
-            <td class="px-4 py-3 text-slate-600"><?= $e($p['jabatan']) ?></td>
-            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e(date('d M Y', strtotime($p['tanggal']))) ?></td>
+            <td class="px-4 py-3 font-medium text-slate-800"><?= $e(
+                $p["kegiatan"],
+            ) ?></td>
+            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e(
+                $p["peserta"],
+            ) ?></td>
+            <td class="px-4 py-3 text-slate-600"><?= $e($p["jabatan"]) ?></td>
+            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e(
+                date("d M Y", strtotime($p["tanggal"])),
+            ) ?></td>
             <td class="px-4 py-3">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?= $badge[$p['status']] ?? 'bg-slate-100 text-slate-700' ?>">
-                <?= $e($p['status']) ?>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?= $badge[
+                  $p["status"]
+              ] ?? "bg-slate-100 text-slate-700" ?>">
+                <?= $e($p["status"]) ?>
               </span>
             </td>
             <td class="px-4 py-3">
               <button type="button" data-open-modal
-                data-id="<?= (int)$p['id'] ?>"
-                data-kegiatan="<?= $e($p['kegiatan']) ?>"
-                data-peserta="<?= $e($p['peserta']) ?>"
-                data-status="<?= $e($p['status']) ?>"
-                data-sp="<?= $e($p['sp_setneg'] ?? '') ?>"
+                data-id="<?= (int) $p["id"] ?>"
+                data-kegiatan="<?= $e($p["kegiatan"]) ?>"
+                data-peserta="<?= $e($p["peserta"]) ?>"
+                data-status="<?= $e($p["status"]) ?>"
+                data-sp="<?= $e($p["sp_setneg"] ?? "") ?>"
                 class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50">
                 View
               </button>
@@ -170,7 +247,7 @@ $pengajuan = $_SESSION['pengajuan'];
 
     <form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
       <input type="hidden" name="action" value="update_status">
-      <input type="hidden" name="csrf" value="<?= $e($_SESSION['csrf']) ?>">
+      <input type="hidden" name="csrf" value="<?= $e($_SESSION["csrf"]) ?>">
       <input type="hidden" name="pengajuan_id" id="modal-id">
 
       <div>

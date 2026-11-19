@@ -1,96 +1,172 @@
 <?php
 
 /* ---------- Konfigurasi ---------- */
-$uploadDir  = __DIR__ . '/../../public/uploads/laporan_outbound/'; // sesuaikan dengan struktur proyekmu
-$uploadUrl  = '/uploads/laporan_outbound/';
-$maxSize    = 5 * 1024 * 1024; // 5 MB
-$statusList = ['Terjadwal', 'Berlangsung', 'Selesai', 'Dibatalkan'];
+$uploadDir = __DIR__ . "/../../public/uploads/laporan_outbound/"; // sesuaikan dengan struktur proyekmu
+$uploadUrl = "/uploads/laporan_outbound/";
+$maxSize = 5 * 1024 * 1024; // 5 MB
+$statusList = ["Terjadwal", "Berlangsung", "Selesai", "Dibatalkan"];
 $badge = [
-    'Terjadwal'   => 'bg-sky-100 text-sky-700',
-    'Berlangsung' => 'bg-amber-100 text-amber-700',
-    'Selesai'     => 'bg-green-100 text-green-700',
-    'Dibatalkan'  => 'bg-red-100 text-red-700',
+    "Terjadwal" => "bg-sky-100 text-sky-700",
+    "Berlangsung" => "bg-amber-100 text-amber-700",
+    "Selesai" => "bg-green-100 text-green-700",
+    "Dibatalkan" => "bg-red-100 text-red-700",
 ];
-$e = fn($v) => htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
+$e = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, "UTF-8");
 
 /* ---------- Data dummy ---------- */
-if (!isset($_SESSION['outbound'])) {
-    $_SESSION['outbound'] = [
-        ['id' => 301, 'kegiatan' => 'Student Exchange',      'negara' => 'Jepang',        'peserta' => 'Rina Marlina',        'jabatan' => 'Mahasiswa',  'berangkat' => '2026-11-03', 'kembali' => '2026-11-17', 'status' => 'Terjadwal',   'dokumen' => null],
-        ['id' => 302, 'kegiatan' => 'Konferensi IEEE',       'negara' => 'Singapura',     'peserta' => 'Dr. Siti Nurhaliza',  'jabatan' => 'Dosen',      'berangkat' => '2026-10-20', 'kembali' => '2026-10-25', 'status' => 'Berlangsung', 'dokumen' => null],
-        ['id' => 303, 'kegiatan' => 'Magang Industri',       'negara' => 'Jerman',        'peserta' => 'Dimas Prasetyo',      'jabatan' => 'Mahasiswa',  'berangkat' => '2026-08-01', 'kembali' => '2026-09-30', 'status' => 'Selesai',     'dokumen' => null],
-        ['id' => 304, 'kegiatan' => 'Benchmarking Kampus',   'negara' => 'Malaysia',      'peserta' => 'Prof. Hendra Wijaya', 'jabatan' => 'Struktural', 'berangkat' => '2026-12-05', 'kembali' => '2026-12-09', 'status' => 'Terjadwal',   'dokumen' => null],
-        ['id' => 305, 'kegiatan' => 'Pelatihan Teknis',      'negara' => 'Korea Selatan', 'peserta' => 'Budi Santoso',        'jabatan' => 'Tendik',     'berangkat' => '2026-09-10', 'kembali' => '2026-09-14', 'status' => 'Dibatalkan',  'dokumen' => null],
-        ['id' => 306, 'kegiatan' => 'Lomba Robotik',         'negara' => 'Thailand',      'peserta' => 'Ahmad Zulfikar',      'jabatan' => 'Mahasiswa',  'berangkat' => '2026-07-15', 'kembali' => '2026-07-20', 'status' => 'Selesai',     'dokumen' => null],
+if (!isset($_SESSION["outbound"])) {
+    $_SESSION["outbound"] = [
+        [
+            "id" => 301,
+            "kegiatan" => "Student Exchange",
+            "negara" => "Jepang",
+            "peserta" => "Rina Marlina",
+            "jabatan" => "Mahasiswa",
+            "berangkat" => "2026-11-03",
+            "kembali" => "2026-11-17",
+            "status" => "Terjadwal",
+            "dokumen" => null,
+        ],
+        [
+            "id" => 302,
+            "kegiatan" => "Konferensi IEEE",
+            "negara" => "Singapura",
+            "peserta" => "Dr. Siti Nurhaliza",
+            "jabatan" => "Dosen",
+            "berangkat" => "2026-10-20",
+            "kembali" => "2026-10-25",
+            "status" => "Berlangsung",
+            "dokumen" => null,
+        ],
+        [
+            "id" => 303,
+            "kegiatan" => "Magang Industri",
+            "negara" => "Jerman",
+            "peserta" => "Dimas Prasetyo",
+            "jabatan" => "Mahasiswa",
+            "berangkat" => "2026-08-01",
+            "kembali" => "2026-09-30",
+            "status" => "Selesai",
+            "dokumen" => null,
+        ],
+        [
+            "id" => 304,
+            "kegiatan" => "Benchmarking Kampus",
+            "negara" => "Malaysia",
+            "peserta" => "Prof. Hendra Wijaya",
+            "jabatan" => "Struktural",
+            "berangkat" => "2026-12-05",
+            "kembali" => "2026-12-09",
+            "status" => "Terjadwal",
+            "dokumen" => null,
+        ],
+        [
+            "id" => 305,
+            "kegiatan" => "Pelatihan Teknis",
+            "negara" => "Korea Selatan",
+            "peserta" => "Budi Santoso",
+            "jabatan" => "Tendik",
+            "berangkat" => "2026-09-10",
+            "kembali" => "2026-09-14",
+            "status" => "Dibatalkan",
+            "dokumen" => null,
+        ],
+        [
+            "id" => 306,
+            "kegiatan" => "Lomba Robotik",
+            "negara" => "Thailand",
+            "peserta" => "Ahmad Zulfikar",
+            "jabatan" => "Mahasiswa",
+            "berangkat" => "2026-07-15",
+            "kembali" => "2026-07-20",
+            "status" => "Selesai",
+            "dokumen" => null,
+        ],
     ];
 }
-$_SESSION['csrf'] = $_SESSION['csrf'] ?? bin2hex(random_bytes(16));
+$_SESSION["csrf"] = $_SESSION["csrf"] ?? bin2hex(random_bytes(16));
 
 /* ---------- Handler POST ---------- */
-$flash = $_SESSION['flash'] ?? null;
-unset($_SESSION['flash']);
+$flash = $_SESSION["flash"] ?? null;
+unset($_SESSION["flash"]);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update_outbound') {
-    $error  = null;
-    $id     = (int)($_POST['outbound_id'] ?? 0);
-    $status = (string)($_POST['status'] ?? '');
-    $idx    = array_search($id, array_column($_SESSION['outbound'], 'id'), true);
+if (
+    $_SERVER["REQUEST_METHOD"] === "POST" &&
+    ($_POST["action"] ?? "") === "update_outbound"
+) {
+    $error = null;
+    $id = (int) ($_POST["outbound_id"] ?? 0);
+    $status = (string) ($_POST["status"] ?? "");
+    $idx = array_search($id, array_column($_SESSION["outbound"], "id"), true);
 
-    $sessionCsrf   = $_SESSION['csrf'] ?? '';
-    $submittedCsrf = (string)($_POST['csrf'] ?? '');
+    $sessionCsrf = $_SESSION["csrf"] ?? "";
+    $submittedCsrf = (string) ($_POST["csrf"] ?? "");
 
-    if (!is_string($sessionCsrf) || !hash_equals($sessionCsrf, $submittedCsrf)) {
-        $error = 'Sesi tidak valid, silakan muat ulang halaman.';
+    if (
+        !is_string($sessionCsrf) ||
+        !hash_equals($sessionCsrf, $submittedCsrf)
+    ) {
+        $error = "Sesi tidak valid, silakan muat ulang halaman.";
     } elseif ($idx === false) {
-        $error = 'Data outbound tidak ditemukan.';
+        $error = "Data outbound tidak ditemukan.";
     } elseif (!in_array($status, $statusList, true)) {
-        $error = 'Status tidak valid.';
+        $error = "Status tidak valid.";
     }
 
     // Upload laporan perjalanan (opsional kalau sudah pernah diupload)
-    $file = $_FILES['dokumen'] ?? null;
-    if (!$error && $file && $file['error'] !== UPLOAD_ERR_NO_FILE) {
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            $error = 'Upload gagal, coba lagi.';
-        } elseif ($file['size'] > $maxSize) {
-            $error = 'Ukuran file maksimal 5 MB.';
-        } elseif ((new finfo(FILEINFO_MIME_TYPE))->file($file['tmp_name']) !== 'application/pdf') {
-            $error = 'File harus berformat PDF.';
+    $file = $_FILES["dokumen"] ?? null;
+    if (!$error && $file && $file["error"] !== UPLOAD_ERR_NO_FILE) {
+        if ($file["error"] !== UPLOAD_ERR_OK) {
+            $error = "Upload gagal, coba lagi.";
+        } elseif ($file["size"] > $maxSize) {
+            $error = "Ukuran file maksimal 5 MB.";
+        } elseif (
+            (new finfo(FILEINFO_MIME_TYPE))->file($file["tmp_name"]) !==
+            "application/pdf"
+        ) {
+            $error = "File harus berformat PDF.";
         } else {
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0755, true);
             }
-            $name = 'laporan_' . $id . '_' . bin2hex(random_bytes(6)) . '.pdf';
-            if (move_uploaded_file($file['tmp_name'], $uploadDir . $name)) {
-                $_SESSION['outbound'][$idx]['dokumen'] = $name;
+            $name = "laporan_" . $id . "_" . bin2hex(random_bytes(6)) . ".pdf";
+            if (move_uploaded_file($file["tmp_name"], $uploadDir . $name)) {
+                $_SESSION["outbound"][$idx]["dokumen"] = $name;
             } else {
-                $error = 'File gagal disimpan di server.';
+                $error = "File gagal disimpan di server.";
             }
         }
     }
 
     // Aturan: untuk "Selesai", laporan perjalanan wajib ada
-    if (!$error && $status === 'Selesai' && empty($_SESSION['outbound'][$idx]['dokumen'])) {
-        $error = 'Upload laporan perjalanan dulu sebelum menandai selesai.';
+    if (
+        !$error &&
+        $status === "Selesai" &&
+        empty($_SESSION["outbound"][$idx]["dokumen"])
+    ) {
+        $error = "Upload laporan perjalanan dulu sebelum menandai selesai.";
     }
 
     if (!$error) {
-        $_SESSION['outbound'][$idx]['status'] = $status;
-        $_SESSION['flash'] = ['type' => 'success', 'msg' => "Outbound #{$id} diperbarui menjadi {$status}."];
+        $_SESSION["outbound"][$idx]["status"] = $status;
+        $_SESSION["flash"] = [
+            "type" => "success",
+            "msg" => "Outbound #{$id} diperbarui menjadi {$status}.",
+        ];
     } else {
-        $_SESSION['flash'] = ['type' => 'error', 'msg' => $error];
+        $_SESSION["flash"] = ["type" => "error", "msg" => $error];
     }
 
     // Post-Redirect-Get (hanya jalan kalau belum ada output)
     if (!headers_sent()) {
-        header('Location: ' . $_SERVER['REQUEST_URI']);
-        exit;
+        header("Location: " . $_SERVER["REQUEST_URI"]);
+        exit();
     }
-    $flash = $_SESSION['flash'];
-    unset($_SESSION['flash']);
+    $flash = $_SESSION["flash"];
+    unset($_SESSION["flash"]);
 }
 
-$outbound = $_SESSION['outbound'];
+$outbound = $_SESSION["outbound"];
 ?>
 
 <div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
@@ -99,8 +175,11 @@ $outbound = $_SESSION['outbound'];
   </div>
 
   <?php if ($flash): ?>
-    <div class="mb-4 px-4 py-3 rounded-lg text-sm <?= $flash['type'] === 'success' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-700 border border-red-200' ?>">
-      <?= $e($flash['msg']) ?>
+    <div class="mb-4 px-4 py-3 rounded-lg text-sm <?= $flash["type"] ===
+    "success"
+        ? "bg-green-50 text-green-700 border border-green-200"
+        : "bg-red-50 text-red-700 border border-red-200" ?>">
+      <?= $e($flash["msg"]) ?>
     </div>
   <?php endif; ?>
 
@@ -128,28 +207,38 @@ $outbound = $_SESSION['outbound'];
         <?php foreach ($outbound as $o): ?>
           <tr class="hover:bg-slate-50 align-middle">
             <th scope="row" class="px-4 py-3 font-normal">
-              <code class="font-mono text-xs text-blue-600">#<?= (int)$o['id'] ?></code>
+              <code class="font-mono text-xs text-blue-600">#<?= (int) $o[
+                  "id"
+              ] ?></code>
             </th>
-            <td class="px-4 py-3 font-medium text-slate-800"><?= $e($o['kegiatan']) ?></td>
-            <td class="px-4 py-3 text-slate-600"><?= $e($o['negara']) ?></td>
-            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e($o['peserta']) ?></td>
-            <td class="px-4 py-3 text-slate-600"><?= $e($o['jabatan']) ?></td>
+            <td class="px-4 py-3 font-medium text-slate-800"><?= $e(
+                $o["kegiatan"],
+            ) ?></td>
+            <td class="px-4 py-3 text-slate-600"><?= $e($o["negara"]) ?></td>
+            <td class="px-4 py-3 text-slate-600 whitespace-nowrap"><?= $e(
+                $o["peserta"],
+            ) ?></td>
+            <td class="px-4 py-3 text-slate-600"><?= $e($o["jabatan"]) ?></td>
             <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
-              <?= $e(date('d M', strtotime($o['berangkat']))) ?> – <?= $e(date('d M Y', strtotime($o['kembali']))) ?>
+              <?= $e(date("d M", strtotime($o["berangkat"]))) ?> – <?= $e(
+     date("d M Y", strtotime($o["kembali"])),
+ ) ?>
             </td>
             <td class="px-4 py-3">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?= $badge[$o['status']] ?? 'bg-slate-100 text-slate-700' ?>">
-                <?= $e($o['status']) ?>
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <?= $badge[
+                  $o["status"]
+              ] ?? "bg-slate-100 text-slate-700" ?>">
+                <?= $e($o["status"]) ?>
               </span>
             </td>
             <td class="px-4 py-3">
               <button type="button" data-open-modal
-                data-id="<?= (int)$o['id'] ?>"
-                data-kegiatan="<?= $e($o['kegiatan']) ?>"
-                data-peserta="<?= $e($o['peserta']) ?>"
-                data-negara="<?= $e($o['negara']) ?>"
-                data-status="<?= $e($o['status']) ?>"
-                data-doc="<?= $e($o['dokumen'] ?? '') ?>"
+                data-id="<?= (int) $o["id"] ?>"
+                data-kegiatan="<?= $e($o["kegiatan"]) ?>"
+                data-peserta="<?= $e($o["peserta"]) ?>"
+                data-negara="<?= $e($o["negara"]) ?>"
+                data-status="<?= $e($o["status"]) ?>"
+                data-doc="<?= $e($o["dokumen"] ?? "") ?>"
                 class="px-3 py-1 text-xs font-medium text-blue-600 border border-blue-200 rounded-md hover:bg-blue-50">
                 View
               </button>
@@ -174,7 +263,7 @@ $outbound = $_SESSION['outbound'];
 
     <form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
       <input type="hidden" name="action" value="update_outbound">
-      <input type="hidden" name="csrf" value="<?= $e($_SESSION['csrf']) ?>">
+      <input type="hidden" name="csrf" value="<?= $e($_SESSION["csrf"]) ?>">
       <input type="hidden" name="outbound_id" id="modal-id">
 
       <div>

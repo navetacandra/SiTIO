@@ -61,7 +61,7 @@ admin_page_start("Tickets", "tickets", $extraHead);
 
 <div class="between pdln-header">
     <div class="title-container">
-        <h2 class="title">Support Tickets</h2>
+        <h2 class="title">Tickets</h2>
         <p class="subtitle">Manage tickets for support and enquiries</p>
     </div>
     <button type="button" class="btn-create" onclick="window.location.href='<?= e(
@@ -74,8 +74,8 @@ admin_page_start("Tickets", "tickets", $extraHead);
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Question</th>
                 <th>Email</th>
+                <th>Question</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -89,31 +89,41 @@ admin_page_start("Tickets", "tickets", $extraHead);
             <?php foreach ($rows as $row): ?>
                 <?php $answered =
                     trim((string) ($row["answer"] ?? "")) !== ""; ?>
-                <?php $detailUrl =
-                    BASE_URL . "/tickets/edit?id=" . $row["ticket_id"]; ?>
+                <?php
+                $ticketId = (string) $row["ticket_id"];
+                $editUrl =
+                    BASE_URL . "/tickets/edit?id=" . urlencode($ticketId);
+                $detailUrl =
+                    BASE_URL . "/tickets/details?id=" . urlencode($ticketId);
+                $markDoneUrl = $detailUrl . "&focus=answer";
+                ?>
                 <tr>
-                    <td>#<?= e(substr((string) $row["ticket_id"], 0, 8)) ?></td>
-                    <td><?= e($row["question"]) ?></td>
+                    <td>#<?= e(substr($ticketId, 0, 8)) ?></td>
                     <td><?= e($row["mail"]) ?></td>
+                    <td><?= e($row["question"]) ?></td>
                     <td>
-                        <div class="badge <?= $answered
-                            ? "approved"
+                        <div class="badge ticket-status <?= $answered
+                            ? "done"
                             : "pending" ?>"><?= $answered
     ? "Done"
-    : "Pending" ?></div>
+    : "Pending" ?>
+                        </div>
                     </td>
                     <td>
+                        <button type="button" class="btn-edit" onclick="window.location.href='<?= e(
+                            $editUrl,
+                        ) ?>'">Edit</button>
                         <button type="button" class="btn-detail" onclick="window.location.href='<?= e(
                             $detailUrl,
                         ) ?>'">Details</button>
+                        <button type="button" class="btn-delete" onclick="showDelete('<?= e(
+                            $ticketId,
+                        ) ?>')">Delete</button>
                         <?php if (!$answered): ?>
-                            <button type="button" class="btn-markdone" onclick="window.location.href='<?= e(
-                                $detailUrl,
+                            <button type="button" class="btn-markdone-link" onclick="window.location.href='<?= e(
+                                $markDoneUrl,
                             ) ?>'">Mark Done</button>
                         <?php endif; ?>
-                        <button type="button" class="btn-delete" onclick="showDelete('<?= e(
-                            $row["ticket_id"],
-                        ) ?>')">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

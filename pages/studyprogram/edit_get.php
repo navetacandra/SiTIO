@@ -36,7 +36,12 @@ admin_page_start("Edit Study Program", "study-programs");
             <div class="input-group">
                 <select id="department_id" name="department_id" required>
                     <?php foreach ($departments as $departmentRow): ?>
-                        <option value="<?= e($departmentRow["department_id"]) ?>" <?= $departmentRow["department_id"] === $row["department_id"] ? "selected" : "" ?>>
+                        <option value="<?= e(
+                            $departmentRow["department_id"],
+                        ) ?>" <?= $departmentRow["department_id"] ===
+$row["department_id"]
+    ? "selected"
+    : "" ?>>
                             <?= e($departmentRow["department_name"]) ?>
                         </option>
                     <?php endforeach; ?>
@@ -47,7 +52,9 @@ admin_page_start("Edit Study Program", "study-programs");
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= e($row["study_program_name"]) ?>" required>
+                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= e(
+                    $row["study_program_name"],
+                ) ?>" required>
             </div>
         </div>
     </div>

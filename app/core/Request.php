@@ -1,47 +1,56 @@
 <?php declare(strict_types=1);
 
-class Request {
+class Request
+{
     protected array $headers = [];
 
-    public function json(): array {
+    public function json(): array
+    {
         $data = json_decode(file_get_contents("php://input"), true);
-        if(json_last_error() == JSON_ERROR_NONE) {
+        if (json_last_error() == JSON_ERROR_NONE) {
             return (array) $data;
         }
         return [];
     }
 
-    public function header(string $field): ?string {
+    public function header(string $field): ?string
+    {
         // initial header extraction
-        if(count($this->headers) < 1) {
+        if (count($this->headers) < 1) {
             // do nothing when success/false
-            if($this->headers = getallheaders()) {
-            } else if($this->headers = apache_request_headers()) {
+            if ($this->headers = getallheaders()) {
+            } elseif ($this->headers = apache_request_headers()) {
             }
         }
         return $this->headers[$field] ?? null;
     }
 
-    public function all(): array {
+    public function all(): array
+    {
         return [...$_REQUEST, ...$_FILES];
     }
 
-    public function get(string $field): mixed {
+    public function get(string $field): mixed
+    {
         return $_GET[$field] ?? null;
     }
 
-    public function post(string $field): mixed {
+    public function post(string $field): mixed
+    {
         return $_POST[$field] ?? null;
     }
 
-    public function file(string $field): array {
+    public function file(string $field): array
+    {
         $m_files = $_FILES[$field];
-        if(!is_array($m_files)) return $m_files;
+        if (!is_array($m_files)) {
+            return $m_files;
+        }
 
-        $files = array();
+        $files = [];
         $keys = array_keys($m_files);
-        for($i = 0; $i < count($m_files["name"]); $i++) {
-            foreach($keys as $k) {
+        for ($i = 0; $i < count($m_files["name"]); $i++) {
+            foreach ($keys as $k) {
                 $files[$i][$k] = $m_files[$k][$i];
             }
         }
