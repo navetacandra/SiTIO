@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_helpers.php";
+require_once __DIR__ . "/../_layout.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Department.php";
 require_once __DIR__ . "/../../models/StudyProgram.php";
@@ -22,31 +22,42 @@ if ($row === false) {
 $department = new Department();
 $departments = $department->all();
 
-page_start("Edit Study Program");
+admin_page_start("Edit Study Program", "study-programs");
 ?>
-<form method="post" action="<?= BASE_URL ?>/study-programs/edit">
+
+<form method="post" action="<?= e(BASE_URL . "/study-programs/edit") ?>">
+    <div class="card">
+        <div class="title-container">
+            <h3 class="title">Edit Study Program</h3>
+        </div>
+
+        <div class="form-input">
+            <label for="department_id">Department<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <select id="department_id" name="department_id" required>
+                    <?php foreach ($departments as $departmentRow): ?>
+                        <option value="<?= e($departmentRow["department_id"]) ?>" <?= $departmentRow["department_id"] === $row["department_id"] ? "selected" : "" ?>>
+                            <?= e($departmentRow["department_name"]) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-input">
+            <label for="name">Name<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= e($row["study_program_name"]) ?>" required>
+            </div>
+        </div>
+    </div>
+
     <input type="hidden" name="id" value="<?= e($id) ?>">
-    <p>
-        <label for="department_id">Department</label><br>
-        <select id="department_id" name="department_id" required>
-            <?php foreach ($departments as $departmentRow): ?>
-                <option value="<?= e(
-                    $departmentRow["department_id"],
-                ) ?>"<?= $departmentRow["department_id"] ===
-$row["department_id"]
-    ? " selected"
-    : "" ?>><?= e($departmentRow["department_name"]) ?></option>
-            <?php endforeach; ?>
-        </select>
-    </p>
-    <p>
-        <label for="name">Name</label><br>
-        <input id="name" name="name" type="text" value="<?= e(
-            $row["study_program_name"],
-        ) ?>" required>
-    </p>
-    <button type="submit">Update</button>
+
+    <div class="input-box3">
+        <button type="submit" class="btn-submit">Update Study Program</button>
+        <a href="<?= e(BASE_URL . "/study-programs") ?>" class="back">Cancel</a>
+    </div>
 </form>
 
-<p><a href="<?= BASE_URL ?>/study-programs">Back</a></p>
-<?php page_end(); ?>
+<?php admin_page_end(); ?>
