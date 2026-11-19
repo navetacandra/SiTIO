@@ -87,12 +87,12 @@ admin_page_start("Departments", "departments", $extraHead);
                 <tr>
                     <td><?= e($row["department_name"]) ?></td>
                     <td>
-                        <button type="button" class="yellow" onclick="window.location.href='<?= e(
+                        <button type="button" class="btn-edit" onclick="window.location.href='<?= e(
                             BASE_URL .
                                 "/departments/edit?id=" .
                                 $row["department_id"],
                         ) ?>'">Edit</button>
-                        <button type="button" class="red" onclick="showDelete('<?= e(
+                        <button type="button" class="btn-delete" onclick="showDelete('<?= e(
                             $row["department_id"],
                         ) ?>')">Delete</button>
                     </td>
