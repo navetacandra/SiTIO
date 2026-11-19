@@ -1,55 +1,124 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_helpers.php";
+require_once __DIR__ . "/../_layout.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Ticket.php";
 
 $ticket = new Ticket();
 $rows = $ticket->all();
 
-page_start("Tickets");
-?>
-<table border="1" cellpadding="6">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Mail</th>
-            <th>Question</th>
-            <th>Answer</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php if ($rows === []): ?>
-            <tr>
-                <td colspan="5">No tickets.</td>
-            </tr>
-        <?php endif; ?>
-        <?php foreach ($rows as $row): ?>
-            <tr>
-                <td><?= e($row["ticket_id"]) ?></td>
-                <td><?= e($row["mail"]) ?></td>
-                <td><?= e($row["question"]) ?></td>
-                <td><?= e((string) $row["answer"]) ?></td>
-                <td>
-                    <a href="<?= BASE_URL ?>/tickets/edit?id=<?= e(
-    $row["ticket_id"],
-) ?>">Edit</a>
-                    <a href="<?= BASE_URL ?>/ticket-media?ticket_id=<?= e(
-    $row["ticket_id"],
-) ?>">Media</a>
-                    <form method="post" action="<?= BASE_URL ?>/tickets/delete">
-                        <input type="hidden" name="id" value="<?= e(
-                            $row["ticket_id"],
-                        ) ?>">
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+$extraHead =
+    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">';
 
-<p><a href="<?= BASE_URL ?>/tickets/create">Create ticket</a></p>
-<p><a href="<?= BASE_URL ?>/tickets">Back to list</a></p>
-<?php page_end(); ?>
+admin_page_start("Tickets", "tickets", $extraHead);
+?>
+
+<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function showDelete(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            confirmButtonColor: 'var(--red)',
+            html: `
+                <form method="POST" action="<?= e(
+                    BASE_URL . "/tickets/delete",
+                ) ?>" id="delete-form" style="display: none;">
+                    <input type="hidden" name="id" value="${id}">
+                </form>
+            `,
+            preConfirm: () => {
+                sessionStorage.setItem('deleteSuccess', 'true');
+                document.querySelector('#delete-form').submit();
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (sessionStorage.getItem('deleteSuccess') === 'true') {
+            sessionStorage.removeItem('deleteSuccess');
+
+            Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            }).fire({
+                icon: 'success',
+                title: 'Deleted successfully'
+            });
+        }
+    });
+</script>
+
+<div class="between pdln-header">
+    <div class="title-container">
+        <h2 class="title">Support Tickets</h2>
+        <p class="subtitle">Manage tickets for support and enquiries</p>
+    </div>
+    <button type="button" class="btn-create" onclick="window.location.href='<?= e(
+        BASE_URL . "/tickets/create",
+    ) ?>'">Create Tickets</button>
+</div>
+
+<div class="table-container" style="width: 100%">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Question</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($rows === []): ?>
+                <tr>
+                    <td colspan="5">No tickets.</td>
+                </tr>
+            <?php endif; ?>
+            <?php foreach ($rows as $row): ?>
+                <?php $answered =
+                    trim((string) ($row["answer"] ?? "")) !== ""; ?>
+                <?php $detailUrl =
+                    BASE_URL . "/tickets/edit?id=" . $row["ticket_id"]; ?>
+                <tr>
+                    <td>#<?= e(substr((string) $row["ticket_id"], 0, 8)) ?></td>
+                    <td><?= e($row["question"]) ?></td>
+                    <td><?= e($row["mail"]) ?></td>
+                    <td>
+                        <div class="badge <?= $answered
+                            ? "approved"
+                            : "pending" ?>"><?= $answered
+    ? "Done"
+    : "Pending" ?></div>
+                    </td>
+                    <td>
+                        <button type="button" class="btn-detail" onclick="window.location.href='<?= e(
+                            $detailUrl,
+                        ) ?>'">Details</button>
+                        <?php if (!$answered): ?>
+                            <button type="button" class="btn-markdone" onclick="window.location.href='<?= e(
+                                $detailUrl,
+                            ) ?>'">Mark Done</button>
+                        <?php endif; ?>
+                        <button type="button" class="btn-delete" onclick="showDelete('<?= e(
+                            $row["ticket_id"],
+                        ) ?>')">Delete</button>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php admin_page_end(); ?>

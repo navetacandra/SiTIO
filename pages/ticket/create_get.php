@@ -1,24 +1,38 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_helpers.php";
+require_once __DIR__ . "/../_layout.php";
 
-page_start("Create Ticket");
+admin_page_start("Create Tickets", "tickets");
 ?>
-<form method="post" action="<?= BASE_URL ?>/tickets/create">
-    <p>
-        <label for="mail">Mail</label><br>
-        <input id="mail" name="mail" type="email" required>
-    </p>
-    <p>
-        <label for="question">Question</label><br>
-        <textarea id="question" name="question" rows="6" cols="60" required></textarea>
-    </p>
-    <p>
-        <label for="answer">Answer</label><br>
-        <textarea id="answer" name="answer" rows="6" cols="60"></textarea>
-    </p>
-    <button type="submit">Save</button>
+
+<div class="title-container">
+    <h2 class="title">Create Tickets</h2>
+    <p class="subtitle">Manage tickets for support and enquiries</p>
+</div>
+
+<form method="post" action="<?= e(BASE_URL . "/tickets/create") ?>">
+    <div class="card">
+        <div class="title-container">
+            <h2 class="title">Submit a Ticket</h2>
+            <h3 class="subtitle">No account needed. We will reply to the email you provide.</h3>
+        </div>
+        <div class="form-input">
+            <label for="mail">Email<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <input type="email" placeholder="Your email address" id="mail" name="mail" required>
+            </div>
+        </div>
+        <div class="form-input">
+            <label for="question">Question<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <textarea placeholder="Your question or issue" id="question" name="question" required></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="input-box3">
+        <button type="submit" class="btn-submit">Create Ticket</button>
+        <a href="<?= e(BASE_URL . "/tickets") ?>" class="back">Cancel</a>
+    </div>
 </form>
 
-<p><a href="<?= BASE_URL ?>/tickets">Back</a></p>
-<?php page_end(); ?>
+<?php admin_page_end(); ?>
