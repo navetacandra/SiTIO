@@ -48,6 +48,20 @@ $routes = [
     "/study-programs/delete" => [
         "POST" => BASE_URL . "/pages/studyprogram/delete_post.php",
     ],
+    "/faq" => [
+        "GET" => BASE_URL . "/pages/faq/dashboard_get.php",
+    ],
+    "/faq/create" => [
+        "GET" => BASE_URL . "/pages/faq/create_get.php",
+        "POST" => BASE_URL . "/pages/faq/create_post.php",
+    ],
+    "/faq/edit" => [
+        "GET" => BASE_URL . "/pages/faq/edit_get.php",
+        "POST" => BASE_URL . "/pages/faq/edit_post.php",
+    ],
+    "/faq/delete" => [
+        "POST" => BASE_URL . "/pages/faq/delete_post.php",
+    ],
     "/faqs" => [
         "GET" => BASE_URL . "/pages/faq/dashboard_get.php",
     ],
