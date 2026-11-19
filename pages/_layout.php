@@ -11,7 +11,7 @@ function admin_page_start(
     string $active = "",
     string $extraHead = "",
 ): void {
-    $link = static fn(string $key): string => $active === $key
+    $link = static fn(string $key): string => ($active === $key || ($key === "faqs" && $active === "faq"))
         ? "nav-link active"
         : "nav-link"; ?>
 <!doctype html>
@@ -144,10 +144,9 @@ function admin_page_start(
         </a>
         <a href="<?= e(BASE_URL . "/faqs") ?>" class="<?= $link("faqs") ?>">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
-                <path d="M13 5v2"></path>
-                <path d="M13 17v2"></path>
-                <path d="M13 11v2"></path>
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
             </svg>
             <span>FAQ</span>
         </a>

@@ -1,5 +1,9 @@
 <?php declare(strict_types=1);
 
+if (!defined("BASE_URL")) {
+    define("BASE_URL", "/SiTIO");
+}
+
 function e(mixed $value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, "UTF-8");
