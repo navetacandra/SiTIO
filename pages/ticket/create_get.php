@@ -10,7 +10,9 @@ admin_page_start("Create Tickets", "tickets");
     <p class="subtitle">Manage tickets for support and enquiries</p>
 </div>
 
-<form method="post" action="<?= e(BASE_URL . "/tickets/create") ?>">
+<form method="post" action="<?= e(
+    BASE_URL . "/tickets/create",
+) ?>" enctype="multipart/form-data">
     <div class="card">
         <div class="title-container">
             <h2 class="title">Submit a Ticket</h2>
@@ -28,11 +30,37 @@ admin_page_start("Create Tickets", "tickets");
                 <textarea placeholder="Your question or issue" id="question" name="question" required></textarea>
             </div>
         </div>
+        <div class="form-input">
+            <label for="attachment">Attachment (Optional)</label>
+            <div class="input-group">
+                <input type="file" id="attachment" name="attachment" accept=".pdf,.jpg,.jpeg,.png">
+                <label for="attachment" class="label-file">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3v12"></path>
+                        <path d="m17 8-5-5-5 5"></path>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    </svg>
+                    <div>
+                        <p id="attachment-name">Add File</p>
+                        <small class="input-hint">PDF, JPG, or PNG (max. 5MB)</small>
+                    </div>
+                </label>
+            </div>
+        </div>
     </div>
     <div class="input-box3">
         <button type="submit" class="btn-submit">Create Ticket</button>
         <a href="<?= e(BASE_URL . "/tickets") ?>" class="back">Cancel</a>
     </div>
 </form>
+
+<script>
+    document
+        .getElementById('attachment')
+        .addEventListener('change', function () {
+            const name = this.files.length > 0 ? this.files[0].name : 'Add File';
+            document.getElementById('attachment-name').textContent = name;
+        });
+</script>
 
 <?php admin_page_end(); ?>

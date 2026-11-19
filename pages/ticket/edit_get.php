@@ -21,110 +21,100 @@ if ($row === false) {
 
 $media = new TicketMedia();
 $attachments = $media->all($id);
-$answered = trim((string) ($row["answer"] ?? "")) !== "";
+$detailUrl = BASE_URL . "/tickets/details?id=" . urlencode($id);
 
-admin_page_start("Ticket Details", "tickets");
+admin_page_start("Edit Tickets", "tickets");
 ?>
 
-<div class="card4">
-    <div class="title-container">
-        <h3 class="title details-title">
-            <span>Tiket #<?= e(
-                substr((string) $row["ticket_id"], 0, 8),
-            ) ?></span>
-            <span class="badge <?= $answered
-                ? "approved"
-                : "pending" ?>"><?= $answered ? "Done" : "Pending" ?></span>
-        </h3>
-        <p class="subtitle2"><?= e($row["mail"]) ?></p>
-    </div>
-
-    <div class="card-detail">
-        <div style="padding-bottom: 1%">
-            <div class="input-cols">
-                <p class="content-question-title">QUESTION</p>
-            </div>
-            <div class="input-cols">
-                <p class="content-question-body"><?= e($row["question"]) ?></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="card-detail-answer" style="margin-top: 1.5%;">
-        <div style="padding-bottom: 1%">
-            <div class="input-cols">
-                <p class="content-answer-title">ANSWER</p>
-            </div>
-            <div class="input-cols">
-                <?php if ($answered): ?>
-                    <p class="content-answer-body"><?= e($row["answer"]) ?></p>
-                <?php else: ?>
-                    <p class="content-answer-body">Not answered yet.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
+<div class="title-container">
+    <h2 class="title">Edit Tickets</h2>
+    <p class="subtitle">Manage tickets for support and enquiries</p>
 </div>
 
-<div class="card4" style="margin-top: 2%;">
-    <div class="title-container">
-        <h3 class="title details-title">
-            <span>Attachments</span>
-        </h3>
-    </div>
-    <?php if ($attachments === []): ?>
-        <div class="content-body-thin">No Media Attached</div>
-    <?php else: ?>
-        <div class="content-body-thin">
-            <?php foreach ($attachments as $attachment): ?>
-                <?php
-                $path = (string) $attachment["path"];
-                $href =
-                    preg_match("~^(https?://|/)~", $path) === 1
-                        ? $path
-                        : BASE_URL . "/" . $path;
-                ?>
-                <p>
-                    <a href="<?= e(
-                        $href,
-                    ) ?>" target="_blank" rel="noopener"><?= e(
-    basename($path),
-) ?></a>
-                    <span class="badge <?= $attachment["type"] === "pdf"
-                        ? "mandatory"
-                        : "verification" ?>"><?= e(
-    $attachment["type"],
-) ?></span>
-                </p>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-</div>
-
-<form method="post" action="<?= e(BASE_URL . "/tickets/edit") ?>">
+<form method="post" action="<?= e(
+    BASE_URL . "/tickets/edit",
+) ?>" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= e($id) ?>">
-    <input type="hidden" name="mail" value="<?= e($row["mail"]) ?>">
-    <input type="hidden" name="question" value="<?= e($row["question"]) ?>">
+    <input type="hidden" name="answer" value="<?= e(
+        (string) $row["answer"],
+    ) ?>">
+    <input type="hidden" name="return_to" value="edit">
 
-    <div class="card4" style="margin-bottom: 40px; margin-top: 2%;">
+    <div class="card">
         <div class="title-container">
-            <h3 class="title">Update Answered</h3>
+            <h2 class="title">Edit a Ticket</h2>
+            <h3 class="subtitle">Update the ticket details or add an attachment.</h3>
         </div>
         <div class="form-input">
-            <label for="answer">Answer<small class="required-mark">*</small></label>
+            <label for="mail">Email<small class="required-mark">*</small></label>
             <div class="input-group">
-                <textarea placeholder id="answer" name="answer" required><?= e(
-                    (string) $row["answer"],
+                <input type="email" placeholder="Your email address" id="mail" name="mail" value="<?= e(
+                    $row["mail"],
+                ) ?>" required>
+            </div>
+        </div>
+        <div class="form-input">
+            <label for="question">Question<small class="required-mark">*</small></label>
+            <div class="input-group">
+                <textarea placeholder="Your question or issue" id="question" name="question" required><?= e(
+                    $row["question"],
                 ) ?></textarea>
             </div>
         </div>
-        <div class="input-box3">
-            <button type="submit" class="btn-submit">Save Answer</button>
-            <a href="<?= e(BASE_URL . "/tickets") ?>" class="back">Cancel</a>
+        <div class="form-input">
+            <label for="attachment">Attachment (Optional)</label>
+            <div class="input-group">
+                <input type="file" id="attachment" name="attachment" accept=".pdf,.jpg,.jpeg,.png">
+                <label for="attachment" class="label-file">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3v12"></path>
+                        <path d="m17 8-5-5-5 5"></path>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    </svg>
+                    <div>
+                        <p id="attachment-name">Add File</p>
+                        <small class="input-hint">PDF, JPG, or PNG (max. 5MB)</small>
+                    </div>
+                </label>
+            </div>
         </div>
+        <?php if ($attachments !== []): ?>
+            <div class="form-input">
+                <label>Current Attachments</label>
+                <div class="content-body-thin">
+                    <?php foreach ($attachments as $attachment): ?>
+                        <?php $path = (string) $attachment["path"]; ?>
+                        <p>
+                            <a href="<?= e(
+                                media_url($path),
+                            ) ?>" target="_blank" rel="noopener"><?= e(
+    basename($path),
+) ?></a>
+                            <span class="badge <?= $attachment["type"] === "pdf"
+                                ? "mandatory"
+                                : "verification" ?>"><?= e(
+    $attachment["type"],
+) ?></span>
+                        </p>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <div class="input-box3">
+        <button type="submit" class="btn-submit">Update Ticket</button>
+        <a href="<?= e($detailUrl) ?>" class="back">Cancel</a>
     </div>
 </form>
 
-<a href="<?= e(BASE_URL . "/tickets") ?>" class="back">Back to Tickets</a>
+<script>
+    document
+        .getElementById('attachment')
+        .addEventListener('change', function () {
+            const name = this.files.length > 0 ? this.files[0].name : 'Add File';
+            document.getElementById('attachment-name').textContent = name;
+        });
+</script>
 
 <?php admin_page_end(); ?>

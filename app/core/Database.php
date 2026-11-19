@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
-class DB {
+class DB
+{
     protected static ?PDO $pdo = null;
 
-    protected static function init() {
+    protected static function init()
+    {
         $driver = getenv("DB_DRIVER") ?: "mysql";
         $host = getenv("DB_HOST") ?: "localhost";
         $port = getenv("DB_PORT") ?: "3306";
@@ -17,32 +19,41 @@ class DB {
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             self::$pdo = $pdo;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             die($e->getMessage());
         }
     }
 
-    protected static function getConnection(): ?PDO {
-        if(self::$pdo === null) self::init();
+    protected static function getConnection(): ?PDO
+    {
+        if (self::$pdo === null) {
+            self::init();
+        }
         return self::$pdo;
     }
 
-    public static function beginTransaction() {
+    public static function beginTransaction()
+    {
         $pdo = self::getConnection();
         $pdo->beginTransaction();
     }
 
-    public static function commit() {
+    public static function commit()
+    {
         $pdo = self::getConnection();
         $pdo->commit();
     }
 
-    public static function rollBack() {
+    public static function rollBack()
+    {
         $pdo = self::getConnection();
         $pdo->rollBack();
     }
 
-    public static function query(string $sql="", array $parameter=[]): PDOStatement {
+    public static function query(
+        string $sql = "",
+        array $parameter = [],
+    ): PDOStatement {
         $pdo = self::getConnection();
         $stmt = $pdo->prepare($sql);
         $stmt->execute($parameter);

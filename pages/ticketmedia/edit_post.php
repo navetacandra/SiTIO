@@ -18,26 +18,19 @@ if ($ticketId === "" || $oldPath === "") {
     );
 }
 
+$editUrl =
+    BASE_URL .
+    "/ticket-media/edit?ticket_id=" .
+    urlencode($ticketId) .
+    "&path=" .
+    urlencode($oldPath);
+
 if (!in_array($type, ["image", "pdf"], true)) {
-    fail_page(
-        "Type is invalid.",
-        BASE_URL .
-            "/ticket-media/edit?ticket_id=" .
-            urlencode($ticketId) .
-            "&path=" .
-            urlencode($oldPath),
-    );
+    fail_page("Type is invalid.", $editUrl);
 }
 
 if ($path === "") {
-    fail_page(
-        "Path is required.",
-        BASE_URL .
-            "/ticket-media/edit?ticket_id=" .
-            urlencode($ticketId) .
-            "&path=" .
-            urlencode($oldPath),
-    );
+    fail_page("Path is required.", $editUrl);
 }
 
 $ticketMedia = new TicketMedia();
@@ -45,14 +38,7 @@ $ticketMedia = new TicketMedia();
 try {
     $ticketMedia->update($ticketId, $oldPath, $type, $path);
 } catch (Throwable $e) {
-    fail_page(
-        $e->getMessage(),
-        BASE_URL .
-            "/ticket-media/edit?ticket_id=" .
-            urlencode($ticketId) .
-            "&path=" .
-            urlencode($oldPath),
-    );
+    fail_page($e->getMessage(), $editUrl);
 }
 
-redirect(BASE_URL . "/ticket-media");
+redirect(ticket_media_url($ticketId));

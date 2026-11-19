@@ -90,7 +90,9 @@ admin_page_start("Study Programs", "study-programs", $extraHead);
                     <td><?= e($row["department_name"]) ?></td>
                     <td>
                         <button type="button" class="btn-edit" onclick="window.location.href='<?= e(
-                            BASE_URL . "/study-programs/edit?id=" . $row["study_program_id"],
+                            BASE_URL .
+                                "/study-programs/edit?id=" .
+                                $row["study_program_id"],
                         ) ?>'">Edit</button>
                         <button type="button" class="btn-delete" onclick="showDelete('<?= e(
                             $row["study_program_id"],

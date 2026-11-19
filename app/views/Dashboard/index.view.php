@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= ["pdln" => "Daftar PDLN", "outbound" => "Daftar Outbound", "inbound" => "Daftar Inbound", "tiket" => "Daftar Tiket"][$page ?? "dashboard"] ?? "Dashboard" ?></title>
-    <link rel="stylesheet" href="<?= (defined("BASE_URL") ? BASE_URL : "") ?>/dist/style.css">
+    <title><?= [
+        "pdln" => "Daftar PDLN",
+        "outbound" => "Daftar Outbound",
+        "inbound" => "Daftar Inbound",
+        "tiket" => "Daftar Tiket",
+    ][$page ?? "dashboard"] ?? "Dashboard" ?></title>
+    <link rel="stylesheet" href="<?= defined("BASE_URL")
+        ? BASE_URL
+        : "" ?>/dist/style.css">
 </head>
 <body class="min-h-screen bg-gradient-to-br  from-[#d1ddc1] via-[#9ec2be] to-[#D9E7E8] bg-fixed font-sans text-slate-800">
 
@@ -19,7 +26,9 @@
 
         <!-- Logo -->
         <div class="flex items-center gap-2 px-2 mb-10">
-            <img src="<?= (defined('BASE_URL') ? BASE_URL : '') ?>/assets/images/LogoPNJ.png" alt="Logo PNJ" class="w-20 h-20 object-contain">
+            <img src="<?= defined("BASE_URL")
+                ? BASE_URL
+                : "" ?>/assets/images/LogoPNJ.png" alt="Logo PNJ" class="w-20 h-20 object-contain">
             <span class="text-2gixl font-bold text-slate-800">STIO PNJ</span>
         </div>
 
@@ -29,29 +38,64 @@
             $basePath = defined("BASE_URL") ? rtrim(BASE_URL, "/") : "";
             $activePage = $page ?? "dashboard";
             $menu = [
-                ["key" => "dashboard", "href" => ($basePath ?: "") . "/",            "label" => "Dashboard",       "icon" => "M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10"],
-                ["key" => "pdln",      "href" => ($basePath ?: "") . "/daftar-pdln", "label" => "Daftar PDLN",     "icon" => "M3 12a9 9 0 1018 0 9 9 0 00-18 0zm0 0h18M12 3c2.5 2.5 3.5 5.5 3.5 9S14.5 18.5 12 21c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3z"],
-                ["key" => "outbound",  "href" => ($basePath ?: "") . "/daftar-outbound", "label" => "Daftar Outbound", "icon" => "M7 17L17 7m0 0H8m9 0v9"],
-                ["key" => "inbound",   "href" => ($basePath ?: "") . "/daftar-inbound",  "label" => "Daftar Inbound",  "icon" => "M17 7L7 17m0 0h9m-9 0V8"],
-                ["key" => "tiket",     "href" => ($basePath ?: "") . "/daftar-tiket",    "label" => "Daftar Tiket",    "icon" => "M3 9a2 2 0 002-2h14a2 2 0 002 2v1a2 2 0 100 4v1a2 2 0 00-2 2H5a2 2 0 00-2-2v-1a2 2 0 100-4V9z"],
+                [
+                    "key" => "dashboard",
+                    "href" => ($basePath ?: "") . "/",
+                    "label" => "Dashboard",
+                    "icon" => "M3 12l9-9 9 9M5 10v10h5v-6h4v6h5V10",
+                ],
+                [
+                    "key" => "pdln",
+                    "href" => ($basePath ?: "") . "/daftar-pdln",
+                    "label" => "Daftar PDLN",
+                    "icon" =>
+                        "M3 12a9 9 0 1018 0 9 9 0 00-18 0zm0 0h18M12 3c2.5 2.5 3.5 5.5 3.5 9S14.5 18.5 12 21c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3z",
+                ],
+                [
+                    "key" => "outbound",
+                    "href" => ($basePath ?: "") . "/daftar-outbound",
+                    "label" => "Daftar Outbound",
+                    "icon" => "M7 17L17 7m0 0H8m9 0v9",
+                ],
+                [
+                    "key" => "inbound",
+                    "href" => ($basePath ?: "") . "/daftar-inbound",
+                    "label" => "Daftar Inbound",
+                    "icon" => "M17 7L7 17m0 0h9m-9 0V8",
+                ],
+                [
+                    "key" => "tiket",
+                    "href" => ($basePath ?: "") . "/daftar-tiket",
+                    "label" => "Daftar Tiket",
+                    "icon" =>
+                        "M3 9a2 2 0 002-2h14a2 2 0 002 2v1a2 2 0 100 4v1a2 2 0 00-2 2H5a2 2 0 00-2-2v-1a2 2 0 100-4V9z",
+                ],
             ];
             foreach ($menu as $item):
-                $isActive = ($activePage === $item["key"]);
-            ?>
+                $isActive = $activePage === $item["key"]; ?>
             <li>
-                <a href="<?= $item["href"] ?>" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition <?= $isActive ? "bg-[#008C95] text-white shadow-md shadow-indigo-300/50" : "text-slate-700 hover:bg-white/70" ?>">
-                    <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="<?= $item["icon"] ?>"/></svg>
+                <a href="<?= $item[
+                    "href"
+                ] ?>" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition <?= $isActive
+    ? "bg-[#008C95] text-white shadow-md shadow-indigo-300/50"
+    : "text-slate-700 hover:bg-white/70" ?>">
+                    <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="<?= $item[
+                        "icon"
+                    ] ?>"/></svg>
                     <span class="flex-1"><?= $item["label"] ?></span>
                     <?php if ($isActive): ?>
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-5-5l5 5-5 5"/></svg>
                     <?php endif; ?>
                 </a>
             </li>
-            <?php endforeach; ?>
+            <?php
+            endforeach;
+            ?>
         </ul>
 
         <!-- Keluar -->
-        <a href="<?= ($basePath ?: '') ?>/logout.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white/70 transition">
+        <a href="<?= $basePath ?:
+            "" ?>/logout.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-white/70 transition">
             <svg class="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 12H4m12 0l-4 4m4-4l-4-4m3-4h2a3 3 0 013 3v10a3 3 0 01-3 3h-2"/></svg>
             <span>Keluar</span>
         </a>

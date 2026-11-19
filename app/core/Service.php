@@ -1,5 +1,6 @@
 <?php declare(strict_types=1);
 
-class Service {
+class Service
+{
     protected Repository $repository;
 }

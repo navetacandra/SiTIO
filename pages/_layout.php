@@ -11,7 +11,8 @@ function admin_page_start(
     string $active = "",
     string $extraHead = "",
 ): void {
-    $link = static fn(string $key): string => ($active === $key || ($key === "faqs" && $active === "faq"))
+    $link = static fn(string $key): string => $active === $key ||
+    ($key === "faqs" && $active === "faq")
         ? "nav-link active"
         : "nav-link"; ?>
 <!doctype html>
@@ -20,7 +21,9 @@ function admin_page_start(
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <meta name="author" content="navetacandra,dhaniwira,malikfadillah,rizkacahya,kesyarizqia">
-    <link rel="stylesheet" href="<?= e(BASE_URL . "/style.css?v=" . filemtime(__DIR__ . "/../style.css")) ?>">
+    <link rel="stylesheet" href="<?= e(
+        BASE_URL . "/style.css?v=" . filemtime(__DIR__ . "/../style.css"),
+    ) ?>">
     <link rel="icon" type="image/png" href="<?= e(BASE_URL . "/logo.png") ?>">
     <title><?= e($title) ?> - SiTIO PNJ</title>
     <?= $extraHead ?>
