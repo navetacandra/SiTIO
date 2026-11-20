@@ -1,19 +1,17 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Department.php";
 
 $department = new Department();
 $departments = $department->all();
 
-$extraHead =
-    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">';
-
-admin_page_start("Departments", "departments", $extraHead);
+$title = "Departments";
+$active = "departments";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
-<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function showDelete(id) {
         Swal.fire({
@@ -102,4 +100,4 @@ admin_page_start("Departments", "departments", $extraHead);
     </table>
 </div>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

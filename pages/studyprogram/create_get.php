@@ -1,13 +1,16 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Department.php";
 
 $department = new Department();
 $departments = $department->all();
+$selectedDepartment = (string) ($_POST["department_id"] ?? "");
 
-admin_page_start("Create Study Program", "study-programs");
+$title = "Create Study Program";
+$active = "study-programs";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <form method="post" action="<?= e(BASE_URL . "/study-programs/create") ?>">
@@ -22,7 +25,10 @@ admin_page_start("Create Study Program", "study-programs");
                 <select id="department_id" name="department_id" required>
                     <option value="">Select department</option>
                     <?php foreach ($departments as $row): ?>
-                        <option value="<?= e($row["department_id"]) ?>">
+                        <option value="<?= e($row["department_id"]) ?>"<?= $row["department_id"] ===
+$selectedDepartment
+    ? " selected"
+    : "" ?>>
                             <?= e($row["department_name"]) ?>
                         </option>
                     <?php endforeach; ?>
@@ -33,7 +39,7 @@ admin_page_start("Create Study Program", "study-programs");
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the study program" id="name" name="name" required>
+                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= old("name") ?>" required>
             </div>
         </div>
     </div>
@@ -44,4 +50,4 @@ admin_page_start("Create Study Program", "study-programs");
     </div>
 </form>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

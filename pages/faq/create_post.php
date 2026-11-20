@@ -25,4 +25,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/faqs/create");
 }
 
-redirect(BASE_URL . "/faqs");
+redirect("/faqs");

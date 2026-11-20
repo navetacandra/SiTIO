@@ -28,38 +28,44 @@ page_start("Edit User Legal");
     </p>
     <p>
         <label for="nik">NIK</label><br>
-        <input id="nik" name="nik" type="text" value="<?= e(
-            (string) $row["nik"],
+        <input id="nik" name="nik" type="text" value="<?= old(
+            "nik",
+            $row["nik"],
         ) ?>">
     </p>
     <p>
         <label for="nim">NIM</label><br>
-        <input id="nim" name="nim" type="text" value="<?= e(
-            (string) $row["nim"],
+        <input id="nim" name="nim" type="text" value="<?= old(
+            "nim",
+            $row["nim"],
         ) ?>">
     </p>
     <p>
         <label for="nip">NIP</label><br>
-        <input id="nip" name="nip" type="text" value="<?= e(
-            (string) $row["nip"],
+        <input id="nip" name="nip" type="text" value="<?= old(
+            "nip",
+            $row["nip"],
         ) ?>">
     </p>
     <p>
         <label for="paspor_num">Passport number</label><br>
-        <input id="paspor_num" name="paspor_num" type="text" value="<?= e(
-            (string) $row["paspor_num"],
+        <input id="paspor_num" name="paspor_num" type="text" value="<?= old(
+            "paspor_num",
+            $row["paspor_num"],
         ) ?>">
     </p>
     <p>
         <label for="ktp">KTP</label><br>
-        <input id="ktp" name="ktp" type="text" value="<?= e(
-            (string) $row["ktp"],
+        <input id="ktp" name="ktp" type="text" value="<?= old(
+            "ktp",
+            $row["ktp"],
         ) ?>">
     </p>
     <p>
         <label for="paspor">Passport</label><br>
-        <input id="paspor" name="paspor" type="text" value="<?= e(
-            (string) $row["paspor"],
+        <input id="paspor" name="paspor" type="text" value="<?= old(
+            "paspor",
+            $row["paspor"],
         ) ?>">
     </p>
     <button type="submit">Update</button>

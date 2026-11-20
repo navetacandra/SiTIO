@@ -25,4 +25,4 @@ if ($loggedIn === false) {
     fail_page("Invalid credentials or inactive account.", BASE_URL . "/login");
 }
 
-redirect(BASE_URL . "/users");
+redirect("/users");

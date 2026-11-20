@@ -33,6 +33,12 @@ if ($row["role"] === "mahasiswa") {
     $studyPrograms = $studyProgram->all();
 }
 
+$selectedDepartment = (string) ($_POST["department_id"] ?? $row["department_id"]);
+$selectedStudyProgram = (string) ($_POST["study_program_id"] ?? $row["study_program_id"]);
+$isActiveChecked = ($_SERVER["REQUEST_METHOD"] ?? "") === "POST"
+    ? isset($_POST["is_active"])
+    : (bool) $row["is_active"];
+
 page_start("Edit User");
 ?>
 <form method="post" action="<?= BASE_URL ?>/users/edit">
@@ -43,31 +49,36 @@ page_start("Edit User");
     </p>
     <p>
         <label for="email">Email</label><br>
-        <input id="email" name="email" type="email" value="<?= e(
+        <input id="email" name="email" type="email" value="<?= old(
+            "email",
             $row["email"],
         ) ?>" required>
     </p>
     <p>
         <label for="phone">Phone</label><br>
-        <input id="phone" name="phone" type="text" value="<?= e(
+        <input id="phone" name="phone" type="text" value="<?= old(
+            "phone",
             $row["phone"],
         ) ?>" required>
     </p>
     <p>
         <label for="address">Address</label><br>
-        <textarea id="address" name="address" rows="4" cols="60" required><?= e(
+        <textarea id="address" name="address" rows="4" cols="60" required><?= old(
+            "address",
             $row["address"],
         ) ?></textarea>
     </p>
     <p>
         <label for="birth_date">Birth date</label><br>
-        <input id="birth_date" name="birth_date" type="date" value="<?= e(
+        <input id="birth_date" name="birth_date" type="date" value="<?= old(
+            "birth_date",
             $row["birth_date"],
         ) ?>" required>
     </p>
     <p>
         <label for="birth_location">Birth location</label><br>
-        <input id="birth_location" name="birth_location" type="text" value="<?= e(
+        <input id="birth_location" name="birth_location" type="text" value="<?= old(
+            "birth_location",
             $row["birth_location"],
         ) ?>" required>
     </p>
@@ -75,8 +86,9 @@ page_start("Edit User");
     <?php if ($row["role"] === "struktural"): ?>
         <p>
             <label for="position">Position</label><br>
-            <input id="position" name="position" type="text" value="<?= e(
-                (string) $row["position"],
+            <input id="position" name="position" type="text" value="<?= old(
+                "position",
+                $row["position"],
             ) ?>" required>
         </p>
     <?php endif; ?>
@@ -89,7 +101,7 @@ page_start("Edit User");
                     <option value="<?= e(
                         $departmentRow["department_id"],
                     ) ?>"<?= $departmentRow["department_id"] ===
-$row["department_id"]
+$selectedDepartment
     ? " selected"
     : "" ?>><?= e($departmentRow["department_name"]) ?></option>
                 <?php endforeach; ?>
@@ -105,7 +117,7 @@ $row["department_id"]
                     <option value="<?= e(
                         $programRow["study_program_id"],
                     ) ?>"<?= $programRow["study_program_id"] ===
-$row["study_program_id"]
+$selectedStudyProgram
     ? " selected"
     : "" ?>><?= e(
     $programRow["department_name"] . " - " . $programRow["study_program_name"],
@@ -115,7 +127,8 @@ $row["study_program_id"]
         </p>
         <p>
             <label for="admission_date">Admission date</label><br>
-            <input id="admission_date" name="admission_date" type="date" value="<?= e(
+            <input id="admission_date" name="admission_date" type="date" value="<?= old(
+                "admission_date",
                 $row["admission_date"],
             ) ?>" required>
         </p>
@@ -123,9 +136,7 @@ $row["study_program_id"]
 
     <p>
         <label for="is_active">
-            <input id="is_active" name="is_active" type="checkbox" value="1"<?= $row[
-                "is_active"
-            ]
+            <input id="is_active" name="is_active" type="checkbox" value="1"<?= $isActiveChecked
                 ? " checked"
                 : "" ?>>
             Active

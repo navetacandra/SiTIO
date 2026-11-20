@@ -112,28 +112,10 @@ $routes = [
         "POST" => BASE_URL . "/pages/ticket/create_post.php",
     ],
     "/tickets/edit" => [
-        "GET" => BASE_URL . "/pages/ticket/edit_get.php",
         "POST" => BASE_URL . "/pages/ticket/edit_post.php",
     ],
     "/tickets/details" => [
         "GET" => BASE_URL . "/pages/ticket/details_get.php",
-    ],
-    "/tickets/delete" => [
-        "POST" => BASE_URL . "/pages/ticket/delete_post.php",
-    ],
-    "/ticket-media" => [
-        "GET" => BASE_URL . "/pages/ticketmedia/dashboard_get.php",
-    ],
-    "/ticket-media/create" => [
-        "GET" => BASE_URL . "/pages/ticketmedia/create_get.php",
-        "POST" => BASE_URL . "/pages/ticketmedia/create_post.php",
-    ],
-    "/ticket-media/edit" => [
-        "GET" => BASE_URL . "/pages/ticketmedia/edit_get.php",
-        "POST" => BASE_URL . "/pages/ticketmedia/edit_post.php",
-    ],
-    "/ticket-media/delete" => [
-        "POST" => BASE_URL . "/pages/ticketmedia/delete_post.php",
     ],
     "/users" => [
         "GET" => BASE_URL . "/pages/user/dashboard_get.php",

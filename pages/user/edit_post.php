@@ -82,4 +82,4 @@ try {
     fail_page($e->getMessage(), $back);
 }
 
-redirect(BASE_URL . "/users");
+redirect("/users");

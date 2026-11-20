@@ -1,63 +1,16 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Ticket.php";
 
 $ticket = new Ticket();
 $rows = $ticket->all();
 
-$extraHead =
-    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">';
-
-admin_page_start("Tickets", "tickets", $extraHead);
+$title = "Tickets";
+$active = "tickets";
+require __DIR__ . "/../_layouts/header.php";
 ?>
-
-<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    function showDelete(id) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Delete',
-            confirmButtonColor: 'var(--red)',
-            html: `
-                <form method="POST" action="<?= e(
-                    BASE_URL . "/tickets/delete",
-                ) ?>" id="delete-form" style="display: none;">
-                    <input type="hidden" name="id" value="${id}">
-                </form>
-            `,
-            preConfirm: () => {
-                sessionStorage.setItem('deleteSuccess', 'true');
-                document.querySelector('#delete-form').submit();
-            }
-        });
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        if (sessionStorage.getItem('deleteSuccess') === 'true') {
-            sessionStorage.removeItem('deleteSuccess');
-
-            Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            }).fire({
-                icon: 'success',
-                title: 'Deleted successfully'
-            });
-        }
-    });
-</script>
 
 <div class="between pdln-header">
     <div class="title-container">
@@ -91,8 +44,6 @@ admin_page_start("Tickets", "tickets", $extraHead);
                     trim((string) ($row["answer"] ?? "")) !== ""; ?>
                 <?php
                 $ticketId = (string) $row["ticket_id"];
-                $editUrl =
-                    BASE_URL . "/tickets/edit?id=" . urlencode($ticketId);
                 $detailUrl =
                     BASE_URL . "/tickets/details?id=" . urlencode($ticketId);
                 $markDoneUrl = $detailUrl . "&focus=answer";
@@ -110,15 +61,9 @@ admin_page_start("Tickets", "tickets", $extraHead);
                         </div>
                     </td>
                     <td>
-                        <button type="button" class="btn-edit" onclick="window.location.href='<?= e(
-                            $editUrl,
-                        ) ?>'">Edit</button>
                         <button type="button" class="btn-detail" onclick="window.location.href='<?= e(
                             $detailUrl,
                         ) ?>'">Details</button>
-                        <button type="button" class="btn-delete" onclick="showDelete('<?= e(
-                            $ticketId,
-                        ) ?>')">Delete</button>
                         <?php if (!$answered): ?>
                             <button type="button" class="btn-markdone-link" onclick="window.location.href='<?= e(
                                 $markDoneUrl,
@@ -131,4 +76,4 @@ admin_page_start("Tickets", "tickets", $extraHead);
     </table>
 </div>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 
-admin_page_start("Create Department", "departments");
+$title = "Create Department";
+$active = "departments";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <form method="post" action="<?= e(BASE_URL . "/departments/create") ?>">
@@ -13,7 +15,7 @@ admin_page_start("Create Department", "departments");
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the department" id="name" name="name" required>
+                <input type="text" placeholder="Name of the department" id="name" name="name" value="<?= old("name") ?>" required>
             </div>
         </div>
     </div>
@@ -23,4 +25,4 @@ admin_page_start("Create Department", "departments");
     </div>
 </form>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

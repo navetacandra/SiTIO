@@ -21,4 +21,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/study-programs/create");
 }
 
-redirect(BASE_URL . "/study-programs");
+redirect("/study-programs");

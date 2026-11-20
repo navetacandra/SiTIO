@@ -35,4 +35,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/programs/edit");
 }
 
-redirect(BASE_URL . "/programs");
+redirect("/programs");

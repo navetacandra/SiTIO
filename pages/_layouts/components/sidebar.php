@@ -1,34 +1,3 @@
-<?php declare(strict_types=1);
-
-require_once __DIR__ . "/_helpers.php";
-
-/**
- * Layout admin (sidebar + navbar) yang dipakai halaman-halaman CRUD.
- * Markup diambil dari desain HTML yang sudah jadi.
- */
-function admin_page_start(
-    string $title,
-    string $active = "",
-    string $extraHead = "",
-): void {
-    $link = static fn(string $key): string => $active === $key ||
-    ($key === "faqs" && $active === "faq")
-        ? "nav-link active"
-        : "nav-link"; ?>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="author" content="navetacandra,dhaniwira,malikfadillah,rizkacahya,kesyarizqia">
-    <link rel="stylesheet" href="<?= e(
-        BASE_URL . "/style.css?v=" . filemtime(__DIR__ . "/../style.css"),
-    ) ?>">
-    <link rel="icon" type="image/png" href="<?= e(BASE_URL . "/logo.png") ?>">
-    <title><?= e($title) ?> - SiTIO PNJ</title>
-    <?= $extraHead ?>
-</head>
-<body>
 <aside>
     <input type="checkbox" id="aside-toggler" style="display: none;">
     <label for="aside-toggler"><span class="close">&times;</span></label>
@@ -155,41 +124,3 @@ function admin_page_start(
         </a>
     </div>
 </aside>
-<nav>
-    <label for="aside-toggler">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="burger-menu">
-            <path d="M4 5h16"></path>
-            <path d="M4 12h16"></path>
-            <path d="M4 19h16"></path>
-        </svg>
-    </label>
-    <div class="user-info">
-        <label for="user-action">
-            <div class="initial">U</div>
-            <p>User</p>
-        </label>
-        <div class="user-action">
-            <input type="checkbox" id="user-action" style="display: none;">
-            <a href="<?= e(
-                BASE_URL . "/profile",
-            ) ?>" onclick="window.location.href='<?= e(
-    BASE_URL . "/profile",
-) ?>'">Profile</a>
-            <a href="#">Logout</a>
-        </div>
-    </div>
-</nav>
-<main id="dashboard">
-    <div class="container">
-<?php
-}
-
-function admin_page_end(): void
-{
-    ?>
-    </div>
-</main>
-</body>
-</html>
-<?php
-}

@@ -20,6 +20,7 @@ if ($row === false) {
 
 $startAt = date("Y-m-d\TH:i", strtotime($row["start_at"]));
 $endAt = date("Y-m-d\TH:i", strtotime($row["end_at"]));
+$selectedType = (string) ($_POST["type"] ?? $row["program_type"]);
 
 page_start("Edit Program");
 ?>
@@ -28,29 +29,32 @@ page_start("Edit Program");
     <p>
         <label for="type">Type</label><br>
         <select id="type" name="type" required>
-            <option value="inbound"<?= $row["program_type"] === "inbound"
+            <option value="inbound"<?= $selectedType === "inbound"
                 ? " selected"
                 : "" ?>>Inbound</option>
-            <option value="outbound"<?= $row["program_type"] === "outbound"
+            <option value="outbound"<?= $selectedType === "outbound"
                 ? " selected"
                 : "" ?>>Outbound</option>
         </select>
     </p>
     <p>
         <label for="name">Name</label><br>
-        <input id="name" name="name" type="text" value="<?= e(
+        <input id="name" name="name" type="text" value="<?= old(
+            "name",
             $row["program_name"],
         ) ?>" required>
     </p>
     <p>
         <label for="start_at">Start</label><br>
-        <input id="start_at" name="start_at" type="datetime-local" value="<?= e(
+        <input id="start_at" name="start_at" type="datetime-local" value="<?= old(
+            "start_at",
             $startAt,
         ) ?>" required>
     </p>
     <p>
         <label for="end_at">End</label><br>
-        <input id="end_at" name="end_at" type="datetime-local" value="<?= e(
+        <input id="end_at" name="end_at" type="datetime-local" value="<?= old(
+            "end_at",
             $endAt,
         ) ?>" required>
     </p>

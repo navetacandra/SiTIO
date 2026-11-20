@@ -25,4 +25,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/departments/edit");
 }
 
-redirect(BASE_URL . "/departments");
+redirect("/departments");

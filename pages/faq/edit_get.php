@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Faq.php";
 
@@ -18,7 +18,9 @@ if ($row === false) {
     fail_page("FAQ not found.", BASE_URL . "/faqs");
 }
 
-admin_page_start("Edit FAQ", "faqs");
+$title = "Edit FAQ";
+$active = "faqs";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <form method="post" action="<?= e(BASE_URL . "/faqs/edit") ?>">
@@ -29,7 +31,8 @@ admin_page_start("Edit FAQ", "faqs");
         <div class="form-input">
             <label for="question">Question<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Question" id="question" name="question" value="<?= e(
+                <input type="text" placeholder="Question" id="question" name="question" value="<?= old(
+                    "question",
                     $row["question"],
                 ) ?>" required>
             </div>
@@ -37,7 +40,8 @@ admin_page_start("Edit FAQ", "faqs");
         <div class="form-input">
             <label for="answer">Answer<small class="required-mark">*</small></label>
             <div class="input-group">
-                <textarea placeholder="Answer" id="answer" name="answer" rows="6" required><?= e(
+                <textarea placeholder="Answer" id="answer" name="answer" rows="6" required><?= old(
+                    "answer",
                     $row["answer"],
                 ) ?></textarea>
             </div>
@@ -50,4 +54,4 @@ admin_page_start("Edit FAQ", "faqs");
     </div>
 </form>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

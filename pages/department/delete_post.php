@@ -20,4 +20,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/departments");
 }
 
-redirect(BASE_URL . "/departments");
+redirect("/departments");

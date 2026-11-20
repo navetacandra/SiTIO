@@ -57,17 +57,13 @@ final class Ticket
         return (string) $stmt->fetchColumn();
     }
 
-    public function update(
-        string $id,
-        string $mail,
-        string $question,
-        ?string $answer,
-    ): int {
+    public function update(string $id, ?string $answer): int
+    {
         $stmt = $this->db->prepare(
-            "UPDATE tickets SET mail = ?, question = ?, answer = ?
+            "UPDATE tickets SET answer = ?
             WHERE ticket_id = ? AND deleted_at IS NULL",
         );
-        $stmt->execute([$mail, $question, $answer, $id]);
+        $stmt->execute([$answer, $id]);
         return $stmt->rowCount();
     }
 

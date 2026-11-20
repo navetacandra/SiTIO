@@ -1,19 +1,17 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Faq.php";
 
 $faq = new Faq();
 $rows = $faq->all();
 
-$extraHead =
-    '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">';
-
-admin_page_start("FAQ", "faqs", $extraHead);
+$title = "FAQ";
+$active = "faqs";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
-<script defer src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function showDelete(id) {
         Swal.fire({
@@ -102,4 +100,4 @@ admin_page_start("FAQ", "faqs", $extraHead);
     </table>
 </div>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

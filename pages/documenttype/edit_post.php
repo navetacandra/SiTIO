@@ -34,4 +34,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/document-types/edit");
 }
 
-redirect(BASE_URL . "/document-types");
+redirect("/document-types");

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Ticket.php";
 require_once __DIR__ . "/../../models/TicketMedia.php";
@@ -25,7 +25,9 @@ $attachments = $media->all($id);
 $answered = trim((string) ($row["answer"] ?? "")) !== "";
 $detailUrl = BASE_URL . "/tickets/details?id=" . urlencode($id);
 
-admin_page_start("Ticket Details", "tickets");
+$title = "Ticket Details";
+$active = "tickets";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <div class="card4">
@@ -99,6 +101,7 @@ admin_page_start("Ticket Details", "tickets");
     <?php endif; ?>
 </div>
 
+<?php if (!$answered): ?>
 <form method="post" action="<?= e(BASE_URL . "/tickets/edit") ?>">
     <input type="hidden" name="id" value="<?= e($id) ?>">
     <input type="hidden" name="mail" value="<?= e($row["mail"]) ?>">
@@ -123,9 +126,10 @@ admin_page_start("Ticket Details", "tickets");
         </div>
     </div>
 </form>
+<?php endif; ?>
 
 <a href="<?= e(
     BASE_URL . "/tickets",
 ) ?>" class="btn-markdone">Back to Tickets</a>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

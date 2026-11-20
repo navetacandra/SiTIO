@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 
-admin_page_start("Create Tickets", "tickets");
+$title = "Create Tickets";
+$active = "tickets";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <div class="title-container">
@@ -21,13 +23,13 @@ admin_page_start("Create Tickets", "tickets");
         <div class="form-input">
             <label for="mail">Email<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="email" placeholder="Your email address" id="mail" name="mail" required>
+                <input type="email" placeholder="Your email address" id="mail" name="mail" value="<?= old("mail") ?>" required>
             </div>
         </div>
         <div class="form-input">
             <label for="question">Question<small class="required-mark">*</small></label>
             <div class="input-group">
-                <textarea placeholder="Your question or issue" id="question" name="question" required></textarea>
+                <textarea placeholder="Your question or issue" id="question" name="question" required><?= old("question") ?></textarea>
             </div>
         </div>
         <div class="form-input">
@@ -63,4 +65,4 @@ admin_page_start("Create Tickets", "tickets");
         });
 </script>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

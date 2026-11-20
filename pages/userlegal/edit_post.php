@@ -36,4 +36,4 @@ try {
     );
 }
 
-redirect(BASE_URL . "/user-legal");
+redirect("/user-legal");

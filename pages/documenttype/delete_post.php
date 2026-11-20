@@ -20,4 +20,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/document-types");
 }
 
-redirect(BASE_URL . "/document-types");
+redirect("/document-types");

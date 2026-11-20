@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Department.php";
 
@@ -18,7 +18,9 @@ if ($row === false) {
     fail_page("Department not found.", BASE_URL . "/departments");
 }
 
-admin_page_start("Edit Department", "departments");
+$title = "Edit Department";
+$active = "departments";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <form method="post" action="<?= e(BASE_URL . "/departments/edit") ?>">
@@ -29,7 +31,8 @@ admin_page_start("Edit Department", "departments");
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the department" id="name" name="name" value="<?= e(
+                <input type="text" placeholder="Name of the department" id="name" name="name" value="<?= old(
+                    "name",
                     $row["department_name"],
                 ) ?>" required>
             </div>
@@ -42,4 +45,4 @@ admin_page_start("Edit Department", "departments");
     </div>
 </form>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

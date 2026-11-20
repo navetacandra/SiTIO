@@ -18,13 +18,18 @@ if ($row === false) {
     fail_page("Document type not found.", BASE_URL . "/document-types");
 }
 
+$isRequiredChecked = ($_SERVER["REQUEST_METHOD"] ?? "") === "POST"
+    ? isset($_POST["is_required"])
+    : (bool) $row["is_required"];
+
 page_start("Edit Document Type");
 ?>
 <form method="post" action="<?= BASE_URL ?>/document-types/edit">
     <input type="hidden" name="id" value="<?= e($id) ?>">
     <p>
         <label for="name">Name</label><br>
-        <input id="name" name="name" type="text" value="<?= e(
+        <input id="name" name="name" type="text" value="<?= old(
+            "name",
             $row["document_type_name"],
         ) ?>" required>
     </p>
@@ -36,9 +41,7 @@ page_start("Edit Document Type");
     </p>
     <p>
         <label for="is_required">
-            <input id="is_required" name="is_required" type="checkbox" value="1"<?= $row[
-                "is_required"
-            ]
+            <input id="is_required" name="is_required" type="checkbox" value="1"<?= $isRequiredChecked
                 ? " checked"
                 : "" ?>>
             Required
@@ -46,7 +49,8 @@ page_start("Edit Document Type");
     </p>
     <p>
         <label for="max_size">Max size (KB)</label><br>
-        <input id="max_size" name="max_size" type="number" min="1" value="<?= e(
+        <input id="max_size" name="max_size" type="number" min="1" value="<?= old(
+            "max_size",
             $row["max_size"],
         ) ?>" required>
     </p>

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-require_once __DIR__ . "/../_layout.php";
+require_once __DIR__ . "/../_helpers.php";
 require_once __DIR__ . "/../../database.php";
 require_once __DIR__ . "/../../models/Department.php";
 require_once __DIR__ . "/../../models/StudyProgram.php";
@@ -21,8 +21,11 @@ if ($row === false) {
 
 $department = new Department();
 $departments = $department->all();
+$selectedDepartment = (string) ($_POST["department_id"] ?? $row["department_id"]);
 
-admin_page_start("Edit Study Program", "study-programs");
+$title = "Edit Study Program";
+$active = "study-programs";
+require __DIR__ . "/../_layouts/header.php";
 ?>
 
 <form method="post" action="<?= e(BASE_URL . "/study-programs/edit") ?>">
@@ -39,7 +42,7 @@ admin_page_start("Edit Study Program", "study-programs");
                         <option value="<?= e(
                             $departmentRow["department_id"],
                         ) ?>" <?= $departmentRow["department_id"] ===
-$row["department_id"]
+$selectedDepartment
     ? "selected"
     : "" ?>>
                             <?= e($departmentRow["department_name"]) ?>
@@ -52,7 +55,8 @@ $row["department_id"]
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= e(
+                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= old(
+                    "name",
                     $row["study_program_name"],
                 ) ?>" required>
             </div>
@@ -67,4 +71,4 @@ $row["department_id"]
     </div>
 </form>
 
-<?php admin_page_end(); ?>
+<?php require __DIR__ . "/../_layouts/footer.php"; ?>

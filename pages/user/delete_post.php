@@ -20,4 +20,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/users");
 }
 
-redirect(BASE_URL . "/users");
+redirect("/users");

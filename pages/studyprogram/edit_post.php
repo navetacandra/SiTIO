@@ -30,4 +30,4 @@ try {
     fail_page($e->getMessage(), BASE_URL . "/study-programs/edit");
 }
 
-redirect(BASE_URL . "/study-programs");
+redirect("/study-programs");
