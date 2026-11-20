@@ -64,7 +64,8 @@ $saveUpload = static function (array $file, string $id): array {
         );
     }
 
-    $fileName = $id . "-" . bin2hex(random_bytes(4)) . "." . $types[$mime]["ext"];
+    $fileName =
+        $id . "-" . bin2hex(random_bytes(4)) . "." . $types[$mime]["ext"];
     $relativePath = "uploads/tickets/" . $fileName;
     $uploadDir = dirname(__DIR__, 2) . "/uploads/tickets";
     $destination = $uploadDir . "/" . $fileName;

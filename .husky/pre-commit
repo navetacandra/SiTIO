@@ -1,1 +1,9 @@
-npm run format
+#!/usr/bin/env sh
+
+# Format only staged files and put the formatted result back into the index.
+# --ignore-unknown skips binaries (images, PDFs) without extra filtering.
+git diff --cached --name-only --diff-filter=ACMR -z |
+    xargs -0 -r npx prettier --write --ignore-unknown
+
+git diff --cached --name-only --diff-filter=ACMR -z |
+    xargs -0 -r git add --

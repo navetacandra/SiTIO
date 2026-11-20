@@ -21,7 +21,8 @@ if ($row === false) {
 
 $department = new Department();
 $departments = $department->all();
-$selectedDepartment = (string) ($_POST["department_id"] ?? $row["department_id"]);
+$selectedDepartment =
+    (string) ($_POST["department_id"] ?? $row["department_id"]);
 
 $title = "Edit Study Program";
 $active = "study-programs";

@@ -15,13 +15,17 @@ require __DIR__ . "/../_layouts/header.php";
         <div class="form-input">
             <label for="question">Question<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Question" id="question" name="question" value="<?= old("question") ?>" required>
+                <input type="text" placeholder="Question" id="question" name="question" value="<?= old(
+                    "question",
+                ) ?>" required>
             </div>
         </div>
         <div class="form-input">
             <label for="answer">Answer<small class="required-mark">*</small></label>
             <div class="input-group">
-                <textarea placeholder="Answer" id="answer" name="answer" rows="6" required><?= old("answer") ?></textarea>
+                <textarea placeholder="Answer" id="answer" name="answer" rows="6" required><?= old(
+                    "answer",
+                ) ?></textarea>
             </div>
         </div>
     </div>

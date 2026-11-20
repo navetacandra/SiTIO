@@ -25,8 +25,9 @@ require __DIR__ . "/../_layouts/header.php";
                 <select id="department_id" name="department_id" required>
                     <option value="">Select department</option>
                     <?php foreach ($departments as $row): ?>
-                        <option value="<?= e($row["department_id"]) ?>"<?= $row["department_id"] ===
-$selectedDepartment
+                        <option value="<?= e($row["department_id"]) ?>"<?= $row[
+    "department_id"
+] === $selectedDepartment
     ? " selected"
     : "" ?>>
                             <?= e($row["department_name"]) ?>
@@ -39,7 +40,9 @@ $selectedDepartment
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= old("name") ?>" required>
+                <input type="text" placeholder="Name of the study program" id="name" name="name" value="<?= old(
+                    "name",
+                ) ?>" required>
             </div>
         </div>
     </div>

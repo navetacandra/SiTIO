@@ -33,11 +33,14 @@ if ($row["role"] === "mahasiswa") {
     $studyPrograms = $studyProgram->all();
 }
 
-$selectedDepartment = (string) ($_POST["department_id"] ?? $row["department_id"]);
-$selectedStudyProgram = (string) ($_POST["study_program_id"] ?? $row["study_program_id"]);
-$isActiveChecked = ($_SERVER["REQUEST_METHOD"] ?? "") === "POST"
-    ? isset($_POST["is_active"])
-    : (bool) $row["is_active"];
+$selectedDepartment =
+    (string) ($_POST["department_id"] ?? $row["department_id"]);
+$selectedStudyProgram =
+    (string) ($_POST["study_program_id"] ?? $row["study_program_id"]);
+$isActiveChecked =
+    ($_SERVER["REQUEST_METHOD"] ?? "") === "POST"
+        ? isset($_POST["is_active"])
+        : (bool) $row["is_active"];
 
 page_start("Edit User");
 ?>

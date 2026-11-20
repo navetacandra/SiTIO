@@ -18,9 +18,10 @@ if ($row === false) {
     fail_page("Document type not found.", BASE_URL . "/document-types");
 }
 
-$isRequiredChecked = ($_SERVER["REQUEST_METHOD"] ?? "") === "POST"
-    ? isset($_POST["is_required"])
-    : (bool) $row["is_required"];
+$isRequiredChecked =
+    ($_SERVER["REQUEST_METHOD"] ?? "") === "POST"
+        ? isset($_POST["is_required"])
+        : (bool) $row["is_required"];
 
 page_start("Edit Document Type");
 ?>

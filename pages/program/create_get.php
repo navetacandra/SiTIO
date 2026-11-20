@@ -10,21 +10,31 @@ page_start("Create Program");
     <p>
         <label for="type">Type</label><br>
         <select id="type" name="type" required>
-            <option value="inbound"<?= $selectedType === "inbound" ? " selected" : "" ?>>Inbound</option>
-            <option value="outbound"<?= $selectedType === "outbound" ? " selected" : "" ?>>Outbound</option>
+            <option value="inbound"<?= $selectedType === "inbound"
+                ? " selected"
+                : "" ?>>Inbound</option>
+            <option value="outbound"<?= $selectedType === "outbound"
+                ? " selected"
+                : "" ?>>Outbound</option>
         </select>
     </p>
     <p>
         <label for="name">Name</label><br>
-        <input id="name" name="name" type="text" value="<?= old("name") ?>" required>
+        <input id="name" name="name" type="text" value="<?= old(
+            "name",
+        ) ?>" required>
     </p>
     <p>
         <label for="start_at">Start</label><br>
-        <input id="start_at" name="start_at" type="datetime-local" value="<?= old("start_at") ?>" required>
+        <input id="start_at" name="start_at" type="datetime-local" value="<?= old(
+            "start_at",
+        ) ?>" required>
     </p>
     <p>
         <label for="end_at">End</label><br>
-        <input id="end_at" name="end_at" type="datetime-local" value="<?= old("end_at") ?>" required>
+        <input id="end_at" name="end_at" type="datetime-local" value="<?= old(
+            "end_at",
+        ) ?>" required>
     </p>
     <button type="submit">Save</button>
 </form>

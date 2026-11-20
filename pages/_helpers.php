@@ -31,7 +31,7 @@ function media_url(string $path): string
  */
 function old(string $field, mixed $alternative = null): string
 {
-    $value = $_POST[$field] ?? $alternative ?? "";
+    $value = $_POST[$field] ?? ($alternative ?? "");
     return e(is_scalar($value) ? (string) $value : "");
 }
 

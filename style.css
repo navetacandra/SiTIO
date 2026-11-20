@@ -701,9 +701,9 @@ form {
     border-radius: 5px;
     padding: 9px;
     border: none;
-    box-shadow: none; 
+    box-shadow: none;
     transform: translateX(5px);
-  }
+}
 
 .btn-detail {
     background-color: #afafaf;

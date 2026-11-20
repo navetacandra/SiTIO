@@ -9,7 +9,8 @@ $extraHead = $extraHead ?? "";
 $link = static fn(string $key): string => $active === $key ||
 ($key === "faqs" && $active === "faq")
     ? "nav-link active"
-    : "nav-link"; ?>
+    : "nav-link";
+?>
 <!doctype html>
 <html lang="en">
 <head>

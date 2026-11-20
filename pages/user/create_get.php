@@ -51,11 +51,15 @@ page_start("Create " . ucfirst($role) . " User");
     <input type="hidden" name="role" value="<?= e($role) ?>">
     <p>
         <label for="email">Email</label><br>
-        <input id="email" name="email" type="email" value="<?= old("email") ?>" required>
+        <input id="email" name="email" type="email" value="<?= old(
+            "email",
+        ) ?>" required>
     </p>
     <p>
         <label for="phone">Phone</label><br>
-        <input id="phone" name="phone" type="text" value="<?= old("phone") ?>" required>
+        <input id="phone" name="phone" type="text" value="<?= old(
+            "phone",
+        ) ?>" required>
     </p>
     <p>
         <label for="password">Password</label><br>
@@ -63,21 +67,29 @@ page_start("Create " . ucfirst($role) . " User");
     </p>
     <p>
         <label for="address">Address</label><br>
-        <textarea id="address" name="address" rows="4" cols="60" required><?= old("address") ?></textarea>
+        <textarea id="address" name="address" rows="4" cols="60" required><?= old(
+            "address",
+        ) ?></textarea>
     </p>
     <p>
         <label for="birth_date">Birth date</label><br>
-        <input id="birth_date" name="birth_date" type="date" value="<?= old("birth_date") ?>" required>
+        <input id="birth_date" name="birth_date" type="date" value="<?= old(
+            "birth_date",
+        ) ?>" required>
     </p>
     <p>
         <label for="birth_location">Birth location</label><br>
-        <input id="birth_location" name="birth_location" type="text" value="<?= old("birth_location") ?>" required>
+        <input id="birth_location" name="birth_location" type="text" value="<?= old(
+            "birth_location",
+        ) ?>" required>
     </p>
 
     <?php if ($role === "struktural"): ?>
         <p>
             <label for="position">Position</label><br>
-            <input id="position" name="position" type="text" value="<?= old("position") ?>" required>
+            <input id="position" name="position" type="text" value="<?= old(
+                "position",
+            ) ?>" required>
         </p>
     <?php endif; ?>
 
@@ -87,8 +99,9 @@ page_start("Create " . ucfirst($role) . " User");
             <select id="department_id" name="department_id" required>
                 <option value="">Select department</option>
                 <?php foreach ($departments as $row): ?>
-                    <option value="<?= e($row["department_id"]) ?>"<?= $row["department_id"] ===
-$selectedDepartment
+                    <option value="<?= e($row["department_id"]) ?>"<?= $row[
+    "department_id"
+] === $selectedDepartment
     ? " selected"
     : "" ?>><?= e($row["department_name"]) ?></option>
                 <?php endforeach; ?>
@@ -115,7 +128,9 @@ $selectedStudyProgram
         </p>
         <p>
             <label for="admission_date">Admission date</label><br>
-            <input id="admission_date" name="admission_date" type="date" value="<?= old("admission_date") ?>" required>
+            <input id="admission_date" name="admission_date" type="date" value="<?= old(
+                "admission_date",
+            ) ?>" required>
         </p>
     <?php endif; ?>
 

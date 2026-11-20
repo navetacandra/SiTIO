@@ -15,7 +15,9 @@ require __DIR__ . "/../_layouts/header.php";
         <div class="form-input">
             <label for="name">Name<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="text" placeholder="Name of the department" id="name" name="name" value="<?= old("name") ?>" required>
+                <input type="text" placeholder="Name of the department" id="name" name="name" value="<?= old(
+                    "name",
+                ) ?>" required>
             </div>
         </div>
     </div>

@@ -23,13 +23,17 @@ require __DIR__ . "/../_layouts/header.php";
         <div class="form-input">
             <label for="mail">Email<small class="required-mark">*</small></label>
             <div class="input-group">
-                <input type="email" placeholder="Your email address" id="mail" name="mail" value="<?= old("mail") ?>" required>
+                <input type="email" placeholder="Your email address" id="mail" name="mail" value="<?= old(
+                    "mail",
+                ) ?>" required>
             </div>
         </div>
         <div class="form-input">
             <label for="question">Question<small class="required-mark">*</small></label>
             <div class="input-group">
-                <textarea placeholder="Your question or issue" id="question" name="question" required><?= old("question") ?></textarea>
+                <textarea placeholder="Your question or issue" id="question" name="question" required><?= old(
+                    "question",
+                ) ?></textarea>
             </div>
         </div>
         <div class="form-input">
