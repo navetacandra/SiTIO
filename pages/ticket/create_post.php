@@ -113,4 +113,4 @@ if (
     }
 }
 
-redirect("/");
+redirect("/tickets");
