@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="stylesheet" href="/style.css" />
+        <title>Sign In | STIO PNJ</title>
+        <script>
+            (function () {
+                try {
+                    if (
+                        sessionStorage.getItem("login-intro") === "1" ||
+                        matchMedia("(max-width: 768px)").matches ||
+                        matchMedia("(prefers-reduced-motion: reduce)").matches
+                    )
+                        document.documentElement.classList.add("no-intro");
+                } catch (e) {}
+            })();
+        </script>
+        <noscript
+            ><style>
+                .login__sheet,
+                .login__character,
+                .login__hand {
+                    animation: none !important;
+                }
+                .login__brand,
+                .login__content {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    transform: none !important;
+                }
+            </style></noscript
+        >
+    </head>
+    <body>
+        <main class="login" id="login">
+            <section class="login__sheet">
+                <div class="login__brand">
+                    <img src="/logo.png" alt="Logo PNJ" />
+                    <div>
+                        <strong>STIO PNJ</strong
+                        ><span>Sistem Terpusat International Office</span>
+                    </div>
+                </div>
+                <div class="login__content">
+                    <h1 class="login__title">Sign In</h1>
+                    <form class="login__form" id="login-form">
+                        <div class="login__field">
+                            <label class="login__sr" for="username"
+                                >Username / Email / Phone</label
+                            ><input
+                                id="username"
+                                name="username"
+                                type="text"
+                                placeholder="Username / Email"
+                                autocomplete="username"
+                                required
+                            />
+                        </div>
+                        <div class="login__field">
+                            <label class="login__sr" for="password"
+                                >Password</label
+                            ><input
+                                id="password"
+                                name="password"
+                                type="password"
+                                placeholder="Password"
+                                autocomplete="current-password"
+                                required
+                            />
+                        </div>
+                        <label class="login__show"
+                            ><input type="checkbox" id="show-password" />Show
+                            Password</label
+                        ><button
+                            class="login__submit"
+                            type="submit"
+                            id="submit-btn"
+                        >
+                            Login<svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"
+                                ></path>
+                                <polyline points="10 17 15 12 10 7"></polyline>
+                                <line x1="15" y1="12" x2="3" y2="12"></line>
+                            </svg>
+                        </button>
+                    </form>
+                    <p class="login__signup">
+                        Don't have an account?
+                        <a href="/registrasi/mahasiswa">Sign Up here</a>
+                    </p>
+                </div>
+                <div class="login__character" aria-hidden="true">
+                    <img class="login__body" src="/nengok.png" alt="" /><img
+                        class="login__hand"
+                        src="/nengok.png"
+                        alt=""
+                    />
+                </div>
+            </section>
+        </main>
+        <script type="module">
+            var e = document.querySelector(`#login`);
+            if (e) {
+                let t = document.documentElement,
+                    n = e.querySelector(`.login__hand`),
+                    r = e.querySelector(`#username`),
+                    i = [`keydown`, `pointerdown`],
+                    a = !1;
+                function o() {
+                    if (!a) {
+                        ((a = !0),
+                            i.forEach((e) => removeEventListener(e, s)),
+                            e.classList.add(`is-ready`));
+                        try {
+                            sessionStorage.setItem(`login-intro`, `1`);
+                        } catch {}
+                        matchMedia(`(hover: hover)`).matches &&
+                            setTimeout(
+                                () => r?.focus({ preventScroll: !0 }),
+                                500
+                            );
+                    }
+                }
+                function s() {
+                    (t.classList.add(`no-intro`), o());
+                }
+                t.classList.contains(`no-intro`)
+                    ? o()
+                    : (n?.addEventListener(`animationend`, o, { once: !0 }),
+                      i.forEach((e) => addEventListener(e, s)),
+                      setTimeout(o, 7e3));
+                let c = e.querySelector(`#password`);
+                (e
+                    .querySelector(`#show-password`)
+                    ?.addEventListener(`change`, (e) => {
+                        c && (c.type = e.target.checked ? `text` : `password`);
+                    }),
+                    e
+                        .querySelector(`#login-form`)
+                        ?.addEventListener(`submit`, async (t) => {
+                            t.preventDefault();
+                            let n = (
+                                    e.querySelector(`#username`)?.value || ``
+                                ).trim(),
+                                r = e.querySelector(`#password`)?.value || ``;
+                            if (!n || !r)
+                                alert(`Harap isi username dan password!`);
+                            else {
+                                try {
+                                    let e = new FormData();
+                                    (e.append(`identifier`, n),
+                                        e.append(`password`, r));
+                                    let t = await fetch(
+                                        `http://localhost/SiTIO/login`,
+                                        {
+                                            method: `POST`,
+                                            body: e,
+                                            credentials: `include`,
+                                        }
+                                    ).catch(() => null);
+                                    if (t && t.ok) {
+                                        window.location.href = `/admin/dashboard`;
+                                        return;
+                                    }
+                                } catch (e) {
+                                    console.warn(
+                                        `Backend not reached, navigating to dashboard...`,
+                                        e
+                                    );
+                                }
+                                window.location.href = `/admin/dashboard`;
+                            }
+                        }));
+            }
+        </script>
+    </body>
+</html>

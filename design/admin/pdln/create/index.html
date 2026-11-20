@@ -1,0 +1,1001 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta
+            name="author"
+            content="navetacandra,dhaniwira,malikfadillah,rizkacahya,kesyarizqia"
+        />
+        <link rel="stylesheet" href="/style.css" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <title>Create PDLN - SiTIO PNJ</title>
+        <style>
+            tr[data-astro-cid-qx3rwest] td[data-astro-cid-qx3rwest] {
+                padding: 8px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <aside>
+            <input
+                type="checkbox"
+                id="aside-toggler"
+                style="display: none"
+            /><label for="aside-toggler"
+                ><span class="close">&times;</span></label
+            >
+            <div class="brand">
+                <img src="/logo.png" alt="SiTIO Icon" />
+                <div class="brand-text">
+                    <span>SiTIO PNJ</span
+                    ><span>Sistem Terpusat International Office</span>
+                </div>
+            </div>
+            <div class="menu">
+                <span class="menu-title">Menu</span
+                ><a href="/admin/dashboard" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"
+                        ></path>
+                        <path
+                            d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+                        ></path></svg
+                    ><span>Dashboard</span></a
+                ><a href="/admin/pdln" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="6" cy="19" r="3"></circle>
+                        <path
+                            d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"
+                        ></path>
+                        <circle cx="18" cy="5" r="3"></circle></svg
+                    ><span>PDLN</span></a
+                ><a href="/admin/inbound" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M2 22h20"></path>
+                        <path
+                            d="M3.77 10.77 2 9l2-4.5 1.1.55c.55.28.9.84.9 1.45s.35 1.17.9 1.45L8 8.5l3-6 1.05.53a2 2 0 0 1 1.09 1.52l.72 5.4a2 2 0 0 0 1.09 1.52l4.4 2.2c.42.22.78.55 1.01.96l.6 1.03c.49.88-.06 1.98-1.06 2.1l-1.18.15c-.47.06-.95-.02-1.37-.24L4.29 11.15a2 2 0 0 1-.52-.38Z"
+                        ></path></svg
+                    ><span>Inbound</span></a
+                ><a href="/admin/outbound" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M2 22h20"></path>
+                        <path
+                            d="M6.36 17.4 4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l.9-.45a2 2 0 0 1 2.09.2l4.02 3a2 2 0 0 0 2.1.2l4.19-2.06a2.41 2.41 0 0 1 1.73-.17L21 7a1.4 1.4 0 0 1 .87 1.99l-.38.76c-.23.46-.6.84-1.07 1.08L7.58 17.2a2 2 0 0 1-1.22.18Z"
+                        ></path></svg
+                    ><span>Outbound</span></a
+                ><a href="/admin/pasporDinas" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"
+                        ></path>
+                        <path d="m9 9.5 2 2 4-4"></path></svg
+                    ><span>Paspor Dinas</span></a
+                ><a href="/admin/tickets" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                        ></path>
+                        <path d="M13 5v2"></path>
+                        <path d="M13 17v2"></path>
+                        <path d="M13 11v2"></path></svg
+                    ><span>Tickets</span></a
+                >
+            </div>
+            <div class="menu">
+                <span class="menu-title">Master Data</span
+                ><a href="/admin/inboundPrograms" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                        ></path>
+                        <path d="M13 5v2"></path>
+                        <path d="M13 17v2"></path>
+                        <path d="M13 11v2"></path></svg
+                    ><span>Inbound Programs</span></a
+                ><a href="/admin/departments" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M14 21v-3a2 2 0 0 0-4 0v3"></path>
+                        <path d="M18 12h.01"></path>
+                        <path d="M18 16h.01"></path>
+                        <path
+                            d="M22 7a1 1 0 0 0-1-1h-2a2 2 0 0 1-1.143-.359L13.143 2.36a2 2 0 0 0-2.286-.001L6.143 5.64A2 2 0 0 1 5 6H3a1 1 0 0 0-1 1v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2z"
+                        ></path>
+                        <path d="M6 12h.01"></path>
+                        <path d="M6 16h.01"></path>
+                        <circle cx="12" cy="10" r="2"></circle></svg
+                    ><span>Departments</span></a
+                ><a href="/admin/studyPrograms" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"
+                        ></path>
+                        <path d="M22 10v6"></path>
+                        <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg
+                    ><span>Study Programs</span></a
+                ><a href="/admin/programs" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                        ></path>
+                        <path d="M13 5v2"></path>
+                        <path d="M13 17v2"></path>
+                        <path d="M13 11v2"></path></svg
+                    ><span>Programs</span></a
+                ><a href="/admin/faq" class="nav-link"
+                    ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
+                        ></path>
+                        <path d="M13 5v2"></path>
+                        <path d="M13 17v2"></path>
+                        <path d="M13 11v2"></path></svg
+                    ><span>FAQ</span></a
+                >
+            </div>
+        </aside>
+        <nav>
+            <label for="aside-toggler"
+                ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="burger-menu"
+                >
+                    <path d="M4 5h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 19h16"></path></svg
+            ></label>
+            <div class="user-info">
+                <label for="user-action"
+                    ><div class="initial">U</div>
+                    <p>User</p></label
+                >
+                <div class="user-action">
+                    <input
+                        type="checkbox"
+                        id="user-action"
+                        style="display: none"
+                    /><a
+                        href="#"
+                        onclick="window.location.href = '/admin/profile'"
+                        >Profile</a
+                    ><a href="#">Logout</a>
+                </div>
+            </div>
+        </nav>
+        <main data-astro-cid-qx3rwest>
+            <div class="container" data-astro-cid-qx3rwest>
+                <div class="title-container" data-astro-cid-qx3rwest>
+                    <h2 class="title" data-astro-cid-qx3rwest>Create PDLN</h2>
+                    <p class="subtitle" data-astro-cid-qx3rwest>
+                        A new PDLN starts in Pending status and includes you as
+                        a participant.
+                    </p>
+                </div>
+                <div class="card" data-astro-cid-qx3rwest>
+                    <div class="title-container" data-astro-cid-qx3rwest>
+                        <h3 class="title" data-astro-cid-qx3rwest>Activity</h3>
+                    </div>
+                    <div class="form-input">
+                        <label for="activity_name">Activity Name</label>
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                placeholder="Name of activity"
+                                id="activity_name"
+                                name="activity_name"
+                                style
+                            />
+                        </div>
+                        <small class="error-message">Contoh text error</small>
+                    </div>
+                    <div class="input-cols" data-astro-cid-qx3rwest>
+                        <div class="form-input">
+                            <label for="activity_type"
+                                >Activity Type<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Type of activity (e.g International Confrence)"
+                                    id="activity_type"
+                                    name="activity_type"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="destination_country"
+                                >Destination Country<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Country where activities take place"
+                                    id="destination_country"
+                                    name="destination_country"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-cols" data-astro-cid-qx3rwest>
+                        <div class="form-input">
+                            <label for="destination_city"
+                                >Destination City<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="City where activities take place"
+                                    id="destination_city"
+                                    name="destination_city"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="destination_institution"
+                                >Destination Institution<small
+                                    class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Institution where activities take place or which invites"
+                                    id="destination_institution"
+                                    name="destination_institution"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-cols" data-astro-cid-qx3rwest>
+                        <div class="form-input">
+                            <label for="start_date"
+                                >Start Date<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="date"
+                                    id="start_date"
+                                    name="start_date"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="end_date"
+                                >End Date<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="date"
+                                    id="end_date"
+                                    name="end_date"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label for="followup_plan"
+                            >Follow Up Plan<small class="required-mark"
+                                >*</small
+                            ></label
+                        >
+                        <div class="input-group">
+                            <textarea
+                                placeholder="Follow up plan after this activity"
+                                id="followup_plan"
+                                name="followup_plan"
+                                required
+                            ></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" data-astro-cid-qx3rwest>
+                    <div class="title-container" data-astro-cid-qx3rwest>
+                        <h3 class="title" data-astro-cid-qx3rwest>
+                            Participants
+                        </h3>
+                        <p
+                            class="subtitle"
+                            style="
+                                font-size: 14px;
+                                font-weight: 500;
+                                color: rgb(54, 54, 54);
+                                padding-top: 4px;
+                            "
+                            data-astro-cid-qx3rwest
+                        >
+                            You are always included automatically
+                        </p>
+                    </div>
+                    <div
+                        style="
+                            width: 20%;
+                            border-color: #d9d9d9;
+                            margin-left: 80%;
+                        "
+                        data-astro-cid-qx3rwest
+                    >
+                        <div class="form-input">
+                            <label></label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Filter by name, email"
+                                    style
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="card2"
+                        style="margin-top: -2px"
+                        data-astro-cid-qx3rwest
+                    >
+                        <table data-astro-cid-qx3rwest>
+                            <tbody data-astro-cid-qx3rwest>
+                                <tr data-astro-cid-qx3rwest>
+                                    <td data-astro-cid-qx3rwest>
+                                        <img
+                                            src="checkbox.png"
+                                            alt="Checkbox"
+                                            width="35"
+                                            height="35"
+                                            data-astro-cid-qx3rwest
+                                        />
+                                    </td>
+                                    <td
+                                        style="transform: translatex(-5%)"
+                                        data-astro-cid-qx3rwest
+                                    >
+                                        Agus Setiawan
+                                        <div
+                                            style="opacity: 0.65"
+                                            data-astro-cid-qx3rwest
+                                        >
+                                            MAHASISWA -
+                                            agus.setiawan@io.pnj.ac.id
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-astro-cid-qx3rwest>
+                                    <td data-astro-cid-qx3rwest>
+                                        <img
+                                            src="checkbox.png"
+                                            alt="Checkbox"
+                                            width="35"
+                                            height="35"
+                                            data-astro-cid-qx3rwest
+                                        />
+                                    </td>
+                                    <td
+                                        style="transform: translatex(-5%)"
+                                        data-astro-cid-qx3rwest
+                                    >
+                                        Agus Setiawan
+                                        <div
+                                            style="opacity: 0.65"
+                                            data-astro-cid-qx3rwest
+                                        >
+                                            MAHASISWA -
+                                            agus.setiawan@io.pnj.ac.id
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-astro-cid-qx3rwest>
+                                    <td data-astro-cid-qx3rwest>
+                                        <img
+                                            src="checkbox.png"
+                                            alt="Checkbox"
+                                            width="35"
+                                            height="35"
+                                            data-astro-cid-qx3rwest
+                                        />
+                                    </td>
+                                    <td
+                                        style="transform: translatex(-5%)"
+                                        data-astro-cid-qx3rwest
+                                    >
+                                        Agus Setiawan
+                                        <div
+                                            style="opacity: 0.65"
+                                            data-astro-cid-qx3rwest
+                                        >
+                                            MAHASISWA -
+                                            agus.setiawan@io.pnj.ac.id
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr data-astro-cid-qx3rwest>
+                                    <td data-astro-cid-qx3rwest>
+                                        <img
+                                            src="checkbox.png"
+                                            alt="Checkbox"
+                                            width="35"
+                                            height="35"
+                                            data-astro-cid-qx3rwest
+                                        />
+                                    </td>
+                                    <td
+                                        style="transform: translatex(-5%)"
+                                        data-astro-cid-qx3rwest
+                                    >
+                                        Agus Setiawan
+                                        <div
+                                            style="opacity: 0.65"
+                                            data-astro-cid-qx3rwest
+                                        >
+                                            MAHASISWA -
+                                            agus.setiawan@io.pnj.ac.id
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card" data-astro-cid-qx3rwest>
+                    <div class="title-container" data-astro-cid-qx3rwest>
+                        <h3 class="title" data-astro-cid-qx3rwest>Documents</h3>
+                    </div>
+                    <div class="input-flex" data-astro-cid-qx3rwest>
+                        <div class="form-input">
+                            <label for="brosur"
+                                >Brosur<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="brosur"
+                                    name="brosur"
+                                    style="display: hidden"
+                                    required
+                                /><label for="brosur" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Bukti_Registrasi"
+                                >Bukti Registrasi<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Bukti_Registrasi"
+                                    name="Bukti_Registrasi"
+                                    style="display: hidden"
+                                    required
+                                /><label
+                                    for="Bukti_Registrasi"
+                                    class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Clearance_Letter"
+                                >Clearance Letter<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Clearance_Letter"
+                                    name="Clearance_Letter"
+                                    style="display: hidden"
+                                    required
+                                /><label
+                                    for="Clearance_Letter"
+                                    class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Draft_MOU/MOA"
+                                >Draft MOU / MOA<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Draft_MOU/MOA"
+                                    name="Draft_MOU/MOA"
+                                    style="display: hidden"
+                                    required
+                                /><label for="Draft_MOU/MOA" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Jadwal_Kegiatan"
+                                >Jadwal Kegiatan<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Jadwal_Kegiatan"
+                                    name="Jadwal_Kegiatan"
+                                    style="display: hidden"
+                                    required
+                                /><label
+                                    for="Jadwal_Kegiatan"
+                                    class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Memo_Persetujuan"
+                                >Memo Persetujuan<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Memo_Persetujuan"
+                                    name="Memo_Persetujuan"
+                                    style="display: hidden"
+                                    required
+                                /><label
+                                    for="Memo_Persetujuan"
+                                    class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="SK_Relevansi"
+                                >SK Relevansi<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="SK_Relevansi"
+                                    name="SK_Relevansi"
+                                    style="display: hidden"
+                                    required
+                                /><label for="SK_Relevansi" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="SP_Pembiayaan"
+                                >SP Pembiayaan<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="SP_Pembiayaan"
+                                    name="SP_Pembiayaan"
+                                    style="display: hidden"
+                                    required
+                                /><label for="SP_Pembiayaan" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Surat_Tugas"
+                                >Surat Tugas<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Surat_Tugas"
+                                    name="Surat_Tugas"
+                                    style="display: hidden"
+                                    required
+                                /><label for="Surat_Tugas" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="TOR_Kegiatan"
+                                >TOR Kegiatan<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="TOR_Kegiatan"
+                                    name="TOR_Kegiatan"
+                                    style="display: hidden"
+                                    required
+                                /><label for="TOR_Kegiatan" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="Undangan"
+                                >Undangan<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="file"
+                                    id="Undangan"
+                                    name="Undangan"
+                                    style="display: hidden"
+                                    required
+                                /><label for="Undangan" class="label-file"
+                                    ><svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M12 3v12"></path>
+                                        <path d="m17 8-5-5-5 5"></path>
+                                        <path
+                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"
+                                        ></path>
+                                    </svg>
+                                    <div>
+                                        <p>Add File</p>
+                                        <small class="input-hint"
+                                            >PDF, JPG, or PNG (max. 5MB)</small
+                                        >
+                                    </div></label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-box3" data-astro-cid-qx3rwest>
+                    <button
+                        type="button"
+                        class="btn-submit"
+                        onclick="document.location = '/admin/pdln/details'"
+                        data-astro-cid-qx3rwest
+                    >
+                        Create PDLN</button
+                    ><a href="/admin/pdln" class="back" data-astro-cid-qx3rwest
+                        >Cancel</a
+                    >
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta
+            name="author"
+            content="navetacandra,dhaniwira,malikfadillah,rizkacahya,kesyarizqia"
+        />
+        <link rel="stylesheet" href="/style.css" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <title>Registrasi Mahasiswa - SiTIO PNJ</title>
+    </head>
+    <body>
+        <nav>
+            <label for="aside-toggler"
+                ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="burger-menu"
+                >
+                    <path d="M4 5h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 19h16"></path></svg
+            ></label>
+            <div class="user-info">
+                <label for="user-action"
+                    ><div class="initial">U</div>
+                    <p>User</p></label
+                >
+                <div class="user-action">
+                    <input
+                        type="checkbox"
+                        id="user-action"
+                        style="display: none"
+                    /><a
+                        href="#"
+                        onclick="window.location.href = '/admin/profile'"
+                        >Profile</a
+                    ><a href="#">Logout</a>
+                </div>
+            </div>
+        </nav>
+        <main id="/admin/dashboard">
+            <div class="container">
+                <div class="title-container">
+                    <h1 class="title">Registrasi Mahasiswa</h1>
+                </div>
+                <div class="card">
+                    <div class="title-container">
+                        <h3 class="title">Personal Details</h3>
+                    </div>
+                    <div class="form-input">
+                        <label for="full_name"
+                            >Full Name<small class="required-mark"
+                                >*</small
+                            ></label
+                        >
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                placeholder="Full name of the applicant"
+                                id="full_name"
+                                name="full_name"
+                                style
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div class="input-cols">
+                        <div class="form-input">
+                            <label for="nik"
+                                >NIK<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="number"
+                                    placeholder="Nomor Induk Keluarga"
+                                    id="nik"
+                                    name="nik"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="phone"
+                                >Phone<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="number"
+                                    placeholder="Ex.085232******"
+                                    id="phone"
+                                    name="phone"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="email"
+                                >Email<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="email"
+                                    placeholder="jhon@example.com"
+                                    id="email"
+                                    name="email"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="password"
+                                >Password<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="password"
+                                    placeholder="Enter your password"
+                                    id="password"
+                                    name="password"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="birth-place"
+                                >Birthplace<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Enter your birthpalce"
+                                    id="birth-place"
+                                    name="birth-place"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="birth-date"
+                                >Birthdate<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="date"
+                                    placeholder
+                                    id="birth-date"
+                                    name="birth-date"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label for="address"
+                            >Address<small class="required-mark"
+                                >*</small
+                            ></label
+                        >
+                        <div class="input-group">
+                            <textarea
+                                placeholder="Enter your address"
+                                id="address"
+                                name="address"
+                                required
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="input-cols">
+                        <div class="form-input">
+                            <label for="nim"
+                                >NIM<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="number"
+                                    placeholder="Nomor Induk Mahasiswa"
+                                    id="nim"
+                                    name="nim"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="phone"
+                                >Admission date<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="date"
+                                    placeholder
+                                    id="phone"
+                                    name="phone"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="major"
+                                >Major<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Major of the applicant"
+                                    id="major"
+                                    name="major"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="form-input">
+                            <label for="study-program"
+                                >Study Program<small class="required-mark"
+                                    >*</small
+                                ></label
+                            >
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    placeholder="Study Program of the applicant"
+                                    id="study-program"
+                                    name="study-program"
+                                    style
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-input">
+                        <label for="program"
+                            >Program<small class="required-mark"
+                                >*</small
+                            ></label
+                        >
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                placeholder="Program of the applicant"
+                                id="program"
+                                name="program"
+                                style
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div class="input-box3">
+                        <button
+                            type="button"
+                            class="btn-submit"
+                            onclick="document.location = 'login'"
+                        >
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
